@@ -1,0 +1,132 @@
+﻿<#@ import namespace="System" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+
+<#+
+	public struct typedef
+	{ 
+		public string TypeName;
+		public bool IsArray;
+		public bool PassByRef;
+		public bool ReadOnly;
+
+		public typedef(string TypeName, bool IsArray, bool PassByRef, bool ReadOnly)
+		{
+			this.TypeName = TypeName;
+			this.IsArray = IsArray;
+			this.PassByRef = PassByRef;
+			this.ReadOnly = ReadOnly;
+		}
+	}
+#>
+<#+
+	public struct vardef
+	{ 
+		public string Name;
+		public typedef Type;
+
+		public vardef(typedef Type, string Name)
+		{
+			this.Type = Type;
+			this.Name = Name;
+		}
+	}
+#>
+<#+
+	public delegate void CtorGenContentDelegate(vardef[] aParamsList);
+#>
+<#+
+	void Generate_Aggressive_Inlining_Attribute()
+	{
+#>
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+<#+
+	}
+#>
+<#+
+	void Begin_Region(string sRegionTitle)
+	{
+#>
+		#region <#=sRegionTitle#>
+<#+
+	}
+#>
+<#+
+	void End_Region()
+	{
+#>
+		#endregion
+<#+
+	}
+#>
+<#+
+	void Generate_Constructor_Value_Type_Overload_Series(string sAccessModifiers, string sClassName, string[] TypeList, int MinParamCount, int MaxParamCount, CtorGenContentDelegate ContentGenerator, string sParamNameFormat = "v{0}")
+	{
+		foreach(var TypeName in TypeList)
+		{
+			Generate_Constructor_Value_Type_Series(sAccessModifiers, sClassName, 
+			new typedef(
+				TypeName: TypeName,
+				IsArray: false,
+				PassByRef: false,
+				ReadOnly: false
+			), 
+			MinParamCount, MaxParamCount, ContentGenerator, sParamNameFormat);
+		}
+	}
+#>
+<#+
+	void Generate_Constructor_Value_Type_Overload_Series(string sAccessModifiers, string sClassName, typedef[] TypeList, int MinParamCount, int MaxParamCount, CtorGenContentDelegate ContentGenerator, string sParamNameFormat = "v{0}")
+	{
+		foreach(var sType in TypeList)
+		{
+			Generate_Constructor_Value_Type_Series(sAccessModifiers, sClassName, sType, MinParamCount, MaxParamCount, ContentGenerator, sParamNameFormat);
+		}
+	}
+#>
+<#+
+	void Generate_Constructor_Value_Type_Series(string sAccessModifiers, string sClassName, typedef TypeInfo, int MinParamCount, int MaxParamCount, CtorGenContentDelegate ContentGenerator, string sParamNameFormat = "v{0}")
+	{
+		var TypeName = TypeInfo.TypeName;
+		Begin_Region(TypeName);
+
+		var paramsList = new List<vardef>();
+		if (MinParamCount > 0)
+		{
+			for (int paramNum=0; paramNum < MinParamCount; paramNum++) 
+			{
+				string paramName = string.Format(sParamNameFormat, paramNum);
+				paramsList.Add(new vardef(TypeInfo, paramName));
+			}
+		}
+
+		for (int paramNum=MinParamCount; paramNum < MaxParamCount; paramNum++)
+		{
+			string paramName = string.Format(sParamNameFormat, paramNum);
+			paramsList.Add(new vardef(TypeInfo, paramName));
+
+			Generate_Constructor_Value_Type_Overload_Single(sAccessModifiers, sClassName, paramsList.ToArray(), ContentGenerator);
+		}
+
+		End_Region();
+	}
+#>
+<#+
+	void Generate_Constructor_Value_Type_Overload_Single(string sAccessModifiers, string sClassName, vardef[] ParamsList, CtorGenContentDelegate ContentGenerator)
+	{
+		var eArgsFormatted = from vardef kvArg in ParamsList 
+		select $"{(!kvArg.Type.PassByRef ? "" : (kvArg.Type.ReadOnly ? "in " : "ref "))}{kvArg.Type.TypeName.ToLower()}{(kvArg.Type.IsArray ? "[]" : "")} {kvArg.Name}";
+
+		var sArgList = string.Join(", ", eArgsFormatted);
+#>
+		<#=sAccessModifiers#> <#=sClassName#>(<#=sArgList#>)
+		{
+<#+
+			ContentGenerator(ParamsList);
+#>
+		}
+
+<#+
+	}
+#>

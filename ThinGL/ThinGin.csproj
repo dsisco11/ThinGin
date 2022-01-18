@@ -1,0 +1,67 @@
+﻿<Project Sdk="Microsoft.NET.Sdk">
+
+  <PropertyGroup>
+    <TargetFramework>netcoreapp3.1</TargetFramework>
+    <AllowUnsafeBlocks>true</AllowUnsafeBlocks>
+    <Configurations>Debug;Release;Debug - CodeGen</Configurations>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+    <DefineConstants>$(DefineConstants)TRACE;</DefineConstants>
+  </PropertyGroup>
+
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+    <DefineConstants>$(DefineConstants)TRACE;</DefineConstants>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <Folder Include="Core\Common\Units\ReadOnly\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Include="Core\Common\Data\Containers\Generated\DataChunk.Generated.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DataChunk.Generated.tt</DependentUpon>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <None Update="Core\Common\Data\Containers\Generated\DataChunk.Generated.tt">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>DataChunk.Generated.cs</LastGenOutput>
+    </None>
+    <None Update="Core\Common\Data\Containers\TemplateHelpers.ttinclude">
+      <Generator>TextTemplatingFileGenerator</Generator>
+      <LastGenOutput>TemplateHelpers.cs</LastGenOutput>
+    </None>
+  </ItemGroup>
+
+  <ItemGroup>
+    <Service Include="{508349b6-6b84-4df5-91f0-309beebad82d}" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Compile Update="Core\Common\Data\Containers\Generated\DataChunk.Generated.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>DataChunk.Generated.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Core\Common\Data\Containers\Generated\MemoryChunk.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MemoryChunk.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Core\Common\Data\Containers\Generated\MemoryChunk.Generated.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>MemoryChunk.Generated.tt</DependentUpon>
+    </Compile>
+    <Compile Update="Core\Common\Data\Containers\TemplateHelpers.cs">
+      <DesignTime>True</DesignTime>
+      <AutoGen>True</AutoGen>
+      <DependentUpon>TemplateHelpers.ttinclude</DependentUpon>
+    </Compile>
+  </ItemGroup>
+
+</Project>

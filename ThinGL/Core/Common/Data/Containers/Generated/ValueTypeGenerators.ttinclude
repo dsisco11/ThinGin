@@ -1,0 +1,232 @@
+﻿<#@ import namespace="System" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ include file="GenericGenerators.ttinclude" once="true" #>
+<#@ include file="ValueTypePerf.ttinclude" once="true" #>
+
+
+<#+
+	void Gen_Ctor__Value_Series_Data_Copy(vardef[] ParamsList)
+	{
+		var iParamCount = ParamsList.Length;
+		var TypeInfo = ParamsList[0].Type;
+		var TypeName = TypeInfo.TypeName;
+		var sValueEnum = TypeName.ToUpper();
+#>
+			Layout = DataChunkDescriptor.<#=sValueEnum#><#=iParamCount#>;
+			Type = EValueType.<#=sValueEnum#>;
+<#+
+		// Gen_Value_Type_Series_Buffer_Copy_Logic(ParamsList);
+		// Gen_Value_Type_Series_Data_Copy_Logic(ParamsList);
+		Gen_Value_Type_Series_Buffer_Blit_Logic(ParamsList);
+	}
+#>
+<#+
+	void Gen_Ctor__Value_Array_Data_Copy(vardef[] ParamsList)
+	{
+		var pParam = ParamsList[0];
+		var TypeInfo = pParam.Type;
+		var TypeName = TypeInfo.TypeName;
+		var sValueEnum = TypeName.ToUpper();
+		var sParamName = pParam.Name;
+		
+		Generate_Array_Layout_Switch_Block(sParamName, TypeName, 4);
+#>
+			Type = EValueType.<#=sValueEnum#>;
+<#+
+		Gen_Value_Type_Array_Buffer_Copy_Logic(ParamsList[0]);
+	}
+#>
+<#+
+	void Generate_Array_Layout_Switch_Block(string sParamName, string TypeName, int iMaxSwitchSize)
+	{
+		var sValueEnum = TypeName.ToUpper();
+#>
+
+			Layout = <#=sParamName#>.Length switch
+			{
+<#+
+				for(int i=1; i<=iMaxSwitchSize; i++)
+				{
+#>
+				<#=i#> => DataChunkDescriptor.<#=$"{sValueEnum}{i}"#>,
+<#+
+				}
+#>
+				_ => new DataChunkDescriptor(<#=sParamName#>.Length, EValueType.<#=sValueEnum#>)
+			};
+<#+
+	}
+#>
+<#+
+	void Generate_Value_Type_Converter_Series(string[] TargetTypesList)
+	{
+		for (int i=0; i<TargetTypesList.Length; i++)
+		{
+			Generate_Value_Type_Converter(TargetTypesList[i], TargetTypesList);
+		}
+	}
+#>
+<#+
+	void Generate_Value_Type_Converter(string TypeLeft, string[] TargetTypesList)
+	{
+		var TypeName = TypeLeft;
+		var sValueType = TypeLeft.ToLower();
+
+#>
+		public <#=sValueType#>[] To<#=TypeName#>()
+		{
+			var result = new <#=sValueType#>[Count];
+			unsafe
+			{
+				switch(Type)
+				{
+<#+
+					foreach (var TypeRight in TargetTypesList)
+					{
+						var TypeNameRight = TypeRight;
+						var sValueEnumRight = TypeNameRight.ToUpper();
+						var sCastFunc = Get_Value_Cast_Function_Name(TypeRight, TypeLeft);
+#>
+					case EValueType.<#=sValueEnumRight#>: { <#=sCastFunc#>(result, Count); } break;
+<#+
+					}
+#>
+				}
+			}
+			return result;
+		}
+
+<#+
+	}
+#>
+<#+
+	void Generate_Value_Type_Getter_Method_Series(string[] TargetTypesList)
+	{
+		foreach (var TypeName in TargetTypesList)
+		{
+			Generate_Value_Type_Getter_Method(TypeName);
+		}
+	}
+#>
+<#+
+	void Generate_Value_Type_Getter_Method(string TypeName)
+	{
+		var ValueType = TypeName.ToLower();
+		var ValueEnum = TypeName.ToUpper();
+#>
+		public <#=ValueType#> Get<#=TypeName#>(int index) { unsafe { fixed (byte* ptr = Data) { return ((<#=ValueType#>*)ptr)[index]; } } }
+		// public <#=ValueType#> Get<#=TypeName#>(int index) { unsafe { fixed (byte* ptr = &Data[index * SIZE_<#=ValueEnum#>]) { return *(<#=ValueType#>*)ptr; } } }
+<#+
+	}
+#>
+<#+
+	void Generate_Value_Type_IComparable_Method_Switch_Block(string[] TargetTypesList)
+	{
+#>
+			switch (TypeLeft, TypeRight)
+			{
+<#+
+			foreach (var TypeNameLeft in TargetTypesList)
+			{
+				foreach (var TypeNameRight in TargetTypesList)
+				{
+					var ValueTypeLeft = TypeNameLeft.ToLower();
+					var ValueTypeRight = TypeNameRight.ToLower();
+					var ValueEnumLeft = ValueTypeLeft.ToUpper();
+					var ValueEnumRight = ValueTypeRight.ToUpper();
+					var methodName = Get_Value_Type_High_Perf_Comparator_Method_Name(TypeNameLeft, TypeNameRight);
+#>
+				case (EValueType.<#=ValueEnumLeft#>, EValueType.<#=ValueEnumRight#>):
+					return <#=methodName#>(other);
+<#+
+				}
+			}
+#>
+			}
+<#+
+	}
+#>
+<#+
+	void Generate_Value_Type_High_Perf_Comparator_Method_Series(string[] TargetTypesList)
+	{
+		foreach (var TypeNameLeft in TargetTypesList)
+		{
+			foreach (var TypeNameRight in TargetTypesList)
+			{
+				int bitsLeft = Get_Value_Type_Bits(TypeNameLeft);
+				int bitsRight = Get_Value_Type_Bits(TypeNameRight);
+				if (bitsRight >= bitsLeft)
+				{
+					Generate_Value_Type_High_Perf_Comparator_Method(TypeNameLeft, TypeNameRight);
+				}
+			}
+		}
+	}
+#>
+<#+
+	string Get_Value_Type_High_Perf_Comparator_Method_Name(string TypeNameLeft, string TypeNameRight)
+	{
+		var ValueTypeLeft = TypeNameLeft.ToLower();
+		var ValueTypeRight = TypeNameRight.ToLower();
+		return $"_vt_high_perf_compare_{ValueTypeLeft}__{ValueTypeRight}";
+	}
+#>
+<#+
+	void Generate_Value_Type_High_Perf_Comparator_Method(string TypeNameLeft, string TypeNameRight)
+	{
+		var methodName = Get_Value_Type_High_Perf_Comparator_Method_Name(TypeNameLeft, TypeNameRight);
+#>
+		private int <#=methodName#>(DataChunk other) 
+		{
+			var spanLeft = this.AsSpan();
+			var spanRight = other.AsSpan();
+			int ItemCount = Math.Min(Count, other.Count);
+<#+
+			Generate_High_Perf_Comparator_Logic(TypeNameLeft, TypeNameRight, "spanLeft", "spanRight", "ItemCount");
+#>
+		}
+<#+
+	}
+#>
+<#+
+	string Get_Value_Cast_Function_Name(string TypeLeft, string TypeRight)
+	{
+		var ValueTypeLeft = TypeLeft.ToLower();
+		var ValueTypeRight = TypeRight.ToLower();
+		return $"_vt_quick_cast__{ValueTypeLeft}_to_{ValueTypeRight}";
+	}
+#>
+<#+
+	void Generate_Value_Cast_Method_Series(string[] aTypeList)
+	{
+		foreach(string TypeLeft in aTypeList)
+		{
+			foreach(string TypeRight in aTypeList)
+			{
+				Generate_Value_Cast_Deferred_Method(TypeLeft, TypeRight);
+			}
+		}
+	}
+#>
+<#+
+	void Generate_Value_Cast_Deferred_Method(string TypeLeft, string TypeRight)
+	{
+		//var ValueTypeLeft = TypeLeft.ToLower();
+		var ValueTypeRight = TypeRight.ToLower();
+		var sMethodName = Get_Value_Cast_Function_Name(TypeLeft, TypeRight);
+
+		// Generate_Aggressive_Inlining_Attribute();
+#>
+		private unsafe void <#=sMethodName#>(<#=ValueTypeRight#>[] Destination, int Count)
+		{
+<#+
+			Generate_Value_Cast_Loop_Logic(TypeLeft, TypeRight, "Destination");
+#>
+		}
+
+<#+
+	}
+#>
+

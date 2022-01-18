@@ -1,0 +1,243 @@
+﻿<#@ import namespace="System" #>
+<#@ import namespace="System.Linq" #>
+<#@ import namespace="System.Text" #>
+<#@ import namespace="System.Collections.Generic" #>
+<#@ include file="GenericGenerators.ttinclude" once="true" #>
+
+<#+
+	static int Get_Value_Type_Bits(string TypeName)
+	{
+		var ty = System.Type.GetType(TypeName);
+		var code = System.Type.GetTypeCode(ty);
+		return Get_Value_Type_Bits(code);
+	}
+#>
+<#+
+	static int Get_Value_Type_Bits(System.TypeCode ty)
+	{
+		return ty switch
+		{
+			TypeCode.Empty => 0,
+			TypeCode.Boolean => 1,
+			TypeCode.Char => 8,
+			TypeCode.Byte => 8,
+			TypeCode.SByte => 8,
+			TypeCode.UInt16 => 16,
+			TypeCode.Int16 => 16,
+			TypeCode.Int32 => 32,
+			TypeCode.UInt32 => 32,
+			TypeCode.Int64 => 64,
+			TypeCode.UInt64 => 64,
+			TypeCode.Single => 32,
+			TypeCode.Double => 64,
+			_ => throw new NotImplementedException()
+		};
+	}
+#>
+<#+
+	void Generate_Value_Type_Size_Constant_Declerations(string[] TypeList)
+	{
+		foreach (var TypeName in TypeList)
+		{
+			var sValueType = TypeName.ToLower();
+			var sValueEnum = TypeName.ToUpper();
+#>
+		public const int SIZE_<#=sValueEnum#> = sizeof(<#=sValueType#>);
+<#+
+		}
+	}
+#>
+<#+
+	void Gen_Value_Type_Series_Data_Copy_Logic(vardef[] ParamsList)
+	{
+		var iParamCount = ParamsList.Length;
+		var TypeInfo = ParamsList[0].Type;
+		var TypeName = TypeInfo.TypeName;
+		var ValueEnum = TypeName.ToUpper();
+#>
+			const int _size = SIZE_<#=ValueEnum#> * <#=iParamCount#>;
+			Data = new byte[_size];
+			var sBuf = new Span<byte>(Data);
+<#+
+			for(int i=0; i < ParamsList.Length; i++)
+			{
+				vardef param = ParamsList[i];
+				if (i < 1)
+				{
+#>
+			BitConverter.TryWriteBytes(sBuf, <#=param.Name#>);
+			min = max = (int)<#= param.Name #>;
+<#+
+				}
+				else
+				{
+#>
+			BitConverter.TryWriteBytes(sBuf.Slice(SIZE_<#=ValueEnum#> * <#=i#>), <#=param.Name#>);
+			_adjust_min_max(<#= param.Name #>);
+<#+
+				}
+			}
+	}
+#>
+<#+
+	void Gen_Value_Type_Array_Data_Copy_Logic(vardef arrayVar)
+	{
+		var pParam = arrayVar;
+		var TypeInfo = pParam.Type;
+		var TypeName = TypeInfo.TypeName;
+		var sValueEnum = TypeName.ToUpper();
+		var sParamName = pParam.Name;
+#>
+			Data = new byte[SIZE_<#=sValueEnum#> * <#=sParamName#>.Length];
+			var sBuf = new Span<byte>(Data);
+
+			for(int i=0; i<<#=sParamName#>.Length; i++)
+			{
+				BitConverter.TryWriteBytes(sBuf, <#=sParamName#>[i]);
+			}
+<#+
+	}
+#>
+<#+
+	void Gen_Value_Type_Series_Buffer_Blit_Logic(vardef[] ParamsList)
+	{
+		var iParamCount = ParamsList.Length;
+		var TypeInfo = ParamsList[0].Type;
+		var TypeName = TypeInfo.TypeName;
+		var ValueType = TypeName.ToLower();
+		var ValueEnum = TypeName.ToUpper();
+#>
+			const int _size = SIZE_<#=ValueEnum#> * <#=iParamCount#>;
+			Data = new byte[_size];
+
+			unsafe
+			{
+				fixed (byte* ptr = Data)
+				{
+					<#=ValueType#>* pDst = (<#=ValueType#>*)ptr;
+<#+
+				for(int i=0; i < ParamsList.Length; i++)
+				{
+					vardef param = ParamsList[i];
+					string bufName = $"b{i}";
+#>
+					pDst[<#=i#>] = <#=param.Name#>;
+<#+
+				}
+#>
+				}
+			}
+			min = max = (int)<#= ParamsList[0].Name #>;
+<#+
+			for(int i=1; i < ParamsList.Length; i++)
+			{
+#>
+				_adjust_min_max(<#=ParamsList[i].Name#>);
+<#+
+			}
+	}
+#>
+<#+
+	void Gen_Value_Type_Series_Buffer_Copy_Logic(vardef[] ParamsList)
+	{
+		var iParamCount = ParamsList.Length;
+		var TypeInfo = ParamsList[0].Type;
+		var TypeName = TypeInfo.TypeName;
+		var ValueType = TypeName.ToLower();
+		var ValueEnum = TypeName.ToUpper();
+#>
+			const int _size = SIZE_<#=ValueEnum#> * <#=iParamCount#>;
+			Data = new byte[_size];
+<#+
+		for(int i=0; i < ParamsList.Length; i++)
+		{
+			vardef param = ParamsList[i];
+			string bufName = $"b{i}";
+#>				
+			const int csz<#=i#> = SIZE_<#=ValueEnum#>*<#=i#>;
+			var <#=bufName#> = BitConverter.GetBytes(<#=param.Name#>);
+			Buffer.BlockCopy(<#=bufName#>, 0, Data, csz<#=i#>, SIZE_<#=ValueEnum#>);
+<#+
+		}
+	}
+#>
+<#+
+	void Gen_Value_Type_Array_Buffer_Copy_Logic(vardef arrayVar)
+	{
+		var pParam = arrayVar;
+		var TypeInfo = pParam.Type;
+		var TypeName = TypeInfo.TypeName;
+		var ValueEnum = TypeName.ToUpper();
+		var ValueType = TypeName.ToLower();
+		var ParamName = pParam.Name;
+#>
+			Data = new byte[SIZE_<#=ValueEnum#> * <#=ParamName#>.Length];
+
+			unsafe
+			{
+				fixed (byte *pDst = Data)
+				{
+					fixed (<#=ValueType#>* pSrc = <#=ParamName#>)
+					{
+						Buffer.MemoryCopy((void*)pSrc, (void*)pDst, Data.Length, Data.Length);
+					}
+				}
+			}
+
+			min = max = (int)<#=ParamName#>[0];
+			for (int i = 1; i < <#=ParamName#>.Length; i++)
+			{
+				_adjust_min_max(<#=ParamName#>[i]);
+			}
+<#+
+	}
+#>
+<#+
+	void Generate_High_Perf_Comparator_Logic(string TypeNameLeft, string TypeNameRight, string SpanLeft, string SpanRight, string CountVar)
+	{
+		var ValueTypeLeft = TypeNameLeft.ToLower();
+		var ValueEnumLeft = ValueTypeLeft.ToUpper();
+		
+		var ValueTypeRight = TypeNameRight.ToLower();
+		var ValueEnumRight = ValueTypeRight.ToUpper();
+#>
+			unsafe 
+			{
+				fixed (byte* raw_ptr_left = <#=SpanLeft#>, raw_ptr_right = <#=SpanRight#>)
+				{
+					<#=ValueTypeLeft#>* pLeft = (<#=ValueTypeLeft#>*)raw_ptr_left;
+					<#=ValueTypeRight#>* pRight = (<#=ValueTypeRight#>*)raw_ptr_right;
+
+					for (int i=0; i < <#=CountVar#>; i++)
+					{
+						var c = pRight[i] - pLeft[i];
+						if (c != 0) 
+						{
+							return (int)c;
+						}
+					}
+
+					return 0;
+				}
+			}
+<#+
+	}
+#>
+<#+
+	void Generate_Value_Cast_Loop_Logic(string TypeLeft, string TypeRight, string DestinationVarName)
+	{
+		var ValueTypeLeft = TypeLeft.ToLower();
+		var ValueTypeRight = TypeRight.ToLower();
+#>
+			fixed (byte* dPtr = Data)
+			{
+				var tPtr = (<#=ValueTypeLeft#>*)dPtr;
+				for (int i = 0; i < Count; i++)
+				{
+					<#=DestinationVarName#>[i] = (<#=ValueTypeRight#>)(tPtr[i]);
+				}
+			}
+<#+
+	}
+#>
+
