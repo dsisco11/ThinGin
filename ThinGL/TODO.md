@@ -6,3 +6,15 @@
 - Implement VarDataBuffer which is basically a UniformBuffer object for storing global shader var values, all of the graphics (dx, opengl, vulkan) apis have an equivalent for this concept.
 
 - Overhaul the ShaderVar/VariableBlock system
+
+
+
+====== [v2.0 REFACTOR] ======
+SEE: https://www.youtube.com/watch?v=qx1c190aGhs
+
+- Move render engine crap into RHI implementations
+	RHI = RenderHardwareImplementation
+
+- Frames collected into RHICommandList instances that essentially contain which shaders to bind and which verticies to draw for it
+	(But its more complex, review the video linked)
+
