@@ -13,7 +13,7 @@ namespace ThinGin.OpenGL.Common.Textures
         #endregion
 
         #region Constructors
-        public GLTextureMultisample(IRenderEngine Engine, PixelDescriptor GpuLayout, int samples) : base(Engine, GpuLayout)
+        public GLTextureMultisample(IEngine Engine, PixelDescriptor GpuLayout, int samples) : base(Engine, GpuLayout)
         {
             if (!Engine.IsSupported("arb_texture_multisample"))
             {

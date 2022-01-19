@@ -9,7 +9,7 @@
 
 
 
-====== [v2.0 REFACTOR] ======
+====== [v0.5 REFACTOR] ======
 SEE: https://www.youtube.com/watch?v=qx1c190aGhs
 
 - Move render engine crap into RHI implementations
@@ -18,3 +18,13 @@ SEE: https://www.youtube.com/watch?v=qx1c190aGhs
 - Frames collected into RHICommandList instances that essentially contain which shaders to bind and which verticies to draw for it
 	(But its more complex, review the video linked)
 
+- Move engine object life handling to seperate, dedicated object
+- MeshRenderer needs to be something else, maybe the RHI?
+- Meshes need to also know what shader they are using and what set of shader vars too.
+
+
+- Move EngineInstance GFX handling stuff into its render manager
+- Add defaults for Shader objects
+- Create RHI command system
+- need vertex factorys
+- need to move things like mesh and camera into component system

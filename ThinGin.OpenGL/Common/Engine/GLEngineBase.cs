@@ -19,9 +19,9 @@ using ThinGin.Core.Common.Engine.Delegates;
 namespace ThinGin.OpenGL.Common
 {
     /// <summary>
-    /// <inheritdoc cref="CoreEngine"/>
+    /// <inheritdoc cref="EngineInstance"/>
     /// </summary>
-    public abstract class GLEngineBase : CoreEngine
+    public abstract class GLEngineBase : EngineInstance
     {
         #region Properties
         protected StateMachine State;
@@ -113,7 +113,7 @@ namespace ThinGin.OpenGL.Common
         #endregion
 
         #region Error Handling
-        /// <summary><inheritdoc cref="IRenderEngine.ErrorCheck(out string)"/> </summary>
+        /// <summary><inheritdoc cref="IEngine.ErrorCheck(out string)"/> </summary>
         public override bool ErrorCheck(out string Message)
         {
 #if DEBUG
@@ -157,7 +157,7 @@ namespace ThinGin.OpenGL.Common
         #region Capabilities
 
         /// <summary>
-        /// <inheritdoc cref="IRenderEngine.Enable(EEngineCap)"/>
+        /// <inheritdoc cref="IEngine.Enable(EEngineCap)"/>
         /// </summary>
         public override void Enable(EEngineCap cap)
         {
@@ -169,7 +169,7 @@ namespace ThinGin.OpenGL.Common
         }
 
         /// <summary>
-        /// <inheritdoc cref="IRenderEngine.Disable(EEngineCap)"/>
+        /// <inheritdoc cref="IEngine.Disable(EEngineCap)"/>
         /// </summary>
         public override void Disable(EEngineCap cap)
         {
@@ -183,7 +183,7 @@ namespace ThinGin.OpenGL.Common
 
         #region Capability Providers
         /// <summary>
-        /// <inheritdoc cref="IRenderEngine.Enable(IEngineCapability)"/>
+        /// <inheritdoc cref="IEngine.Enable(IEngineCapability)"/>
         /// </summary>
         public override void Enable(IEngineCapability Capability)
         {
@@ -191,7 +191,7 @@ namespace ThinGin.OpenGL.Common
         }
 
         /// <summary>
-        /// <inheritdoc cref="IRenderEngine.Disable(IEngineCapability)"/>
+        /// <inheritdoc cref="IEngine.Disable(IEngineCapability)"/>
         /// </summary>
         public override void Disable(IEngineCapability Capability)
         {
@@ -201,7 +201,7 @@ namespace ThinGin.OpenGL.Common
 
         #region Texturing
         /// <summary>
-        /// <inheritdoc cref="IRenderEngine.Bind(ITexture)"/>
+        /// <inheritdoc cref="IEngine.Bind(ITexture)"/>
         /// </summary>
         public override void Bind(ITexture Texture)
         {
@@ -218,7 +218,7 @@ namespace ThinGin.OpenGL.Common
         }
 
         /// <summary>
-        /// <inheritdoc cref="IRenderEngine.Unbind(ITexture)"/>
+        /// <inheritdoc cref="IEngine.Unbind(ITexture)"/>
         /// </summary>
         public override void Unbind(ITexture Texture)
         {
@@ -236,7 +236,7 @@ namespace ThinGin.OpenGL.Common
         #endregion
 
         #region Framebuffers
-        public override void Bind_Framebuffer(FrameBuffer frameBuffer, EBufferAccess Mode)
+        public override void Bind_Framebuffer(GBuffer frameBuffer, EBufferAccess Mode)
         {
             switch (Mode)
             {
@@ -294,7 +294,7 @@ namespace ThinGin.OpenGL.Common
             }
         }
 
-        public override void Unbind_Framebuffer(FrameBuffer frameBuffer)
+        public override void Unbind_Framebuffer(GBuffer frameBuffer)
         {
             if (ReferenceEquals(frameBuffer, activeFramebuffer_Read) &&
                 ReferenceEquals(frameBuffer, activeFramebuffer_Write))

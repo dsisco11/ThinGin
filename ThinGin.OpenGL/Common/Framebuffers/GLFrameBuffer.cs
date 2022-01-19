@@ -35,7 +35,7 @@ namespace ThinGin.OpenGL.Common.Framebuffers
     /// http://www.songho.ca/opengl/gl_fbo.html
     /// http://www.songho.ca/opengl/gl_pbo.html
     /// 
-    public class GLFrameBuffer : FrameBuffer
+    public class GLFrameBuffer : GBuffer
     {
         #region STATIC
         /// <summary>
@@ -64,18 +64,18 @@ namespace ThinGin.OpenGL.Common.Framebuffers
         protected bool HasDepth => Slots.ContainsKey((int)EFramebufferAttachmentType.DepthBuffer);
         protected bool HasStencil => Slots.ContainsKey((int)EFramebufferAttachmentType.StencilBuffer);
 
-        protected WeakReference<IFrameAttachment> ColorSlotRef => Slots[(int)EFramebufferAttachmentType.ColorBuffer].Count > 0 ? Slots[(int)EFramebufferAttachmentType.ColorBuffer][0] : null;
-        protected WeakReference<IFrameAttachment> DepthSlotRef => Slots[(int)EFramebufferAttachmentType.DepthBuffer].Count > 0 ? Slots[(int)EFramebufferAttachmentType.DepthBuffer][0] : null;
-        protected WeakReference<IFrameAttachment> StencilSlotRef => Slots[(int)EFramebufferAttachmentType.StencilBuffer].Count > 0 ? Slots[(int)EFramebufferAttachmentType.StencilBuffer][0] : null;
+        protected WeakReference<IGBufferAttachment> ColorSlotRef => Slots[(int)EFramebufferAttachmentType.ColorBuffer].Count > 0 ? Slots[(int)EFramebufferAttachmentType.ColorBuffer][0] : null;
+        protected WeakReference<IGBufferAttachment> DepthSlotRef => Slots[(int)EFramebufferAttachmentType.DepthBuffer].Count > 0 ? Slots[(int)EFramebufferAttachmentType.DepthBuffer][0] : null;
+        protected WeakReference<IGBufferAttachment> StencilSlotRef => Slots[(int)EFramebufferAttachmentType.StencilBuffer].Count > 0 ? Slots[(int)EFramebufferAttachmentType.StencilBuffer][0] : null;
 
 
-        protected IFrameAttachment ColorSlot => ColorSlotRef?.TryGetTarget(out IFrameAttachment attachment) ?? false ? attachment : null;
-        protected IFrameAttachment DepthSlot => DepthSlotRef?.TryGetTarget(out IFrameAttachment attachment) ?? false ? attachment : null;
-        protected IFrameAttachment StencilSlot => StencilSlotRef?.TryGetTarget(out IFrameAttachment attachment) ?? false ? attachment : null;
+        protected IGBufferAttachment ColorSlot => ColorSlotRef?.TryGetTarget(out IGBufferAttachment attachment) ?? false ? attachment : null;
+        protected IGBufferAttachment DepthSlot => DepthSlotRef?.TryGetTarget(out IGBufferAttachment attachment) ?? false ? attachment : null;
+        protected IGBufferAttachment StencilSlot => StencilSlotRef?.TryGetTarget(out IGBufferAttachment attachment) ?? false ? attachment : null;
         #endregion
 
         #region Constructors
-        public GLFrameBuffer(IRenderEngine Engine, Size size) : base(Engine, size)
+        public GLFrameBuffer(IEngine Engine, Size size) : base(Engine, size)
         {
         }
 
@@ -83,7 +83,7 @@ namespace ThinGin.OpenGL.Common.Framebuffers
         /// Create the RenderBuffer
         /// </summary>
         /// <param name="size">Desired size</param>
-        public GLFrameBuffer(IRenderEngine Engine, Size size, FrameBufferOptions Options) : base(Engine, size)
+        public GLFrameBuffer(IEngine Engine, Size size, FrameBufferOptions Options) : base(Engine, size)
         {// XXX: TODO: Consider doing lazy creation of this to be more flexible surrounding OpenGL contexts
 
             if (!Engine.IsSupported("ext_framebuffer_object")) throw new Exception("Framebuffer objects are not supported by the graphics driver!");
@@ -97,12 +97,12 @@ namespace ThinGin.OpenGL.Common.Framebuffers
             {
                 if (Options.EnableMSAA)
                 {
-                    IFrameAttachment attach = new GLRenderBufferAttachment(Engine, this, RenderbufferStorage.Rgba8, new RenderBufferOptions(true, Options.MSAA_Samples));
+                    IGBufferAttachment attach = new GLRenderBufferAttachment(Engine, this, RenderbufferStorage.Rgba8, new RenderBufferOptions(true, Options.MSAA_Samples));
                     Attachments.Add(attach);
                 }
                 else
                 {
-                    IFrameAttachment attach = new GLTextureBufferAttachment(Engine, this);
+                    IGBufferAttachment attach = new GLTextureBufferAttachment(Engine, this);
                     Attachments.Add(attach);
                 }
             }
@@ -110,7 +110,7 @@ namespace ThinGin.OpenGL.Common.Framebuffers
 
             if (Options.DepthBuffer && Options.StencilBuffer && !Options.SeperateDepthStencil)
             {// We want both depth and stencil buffers and we dont want the seperated
-                IFrameAttachment attach = new GLRenderBufferAttachment(Engine, this, RenderbufferStorage.DepthStencil, new RenderBufferOptions());
+                IGBufferAttachment attach = new GLRenderBufferAttachment(Engine, this, RenderbufferStorage.DepthStencil, new RenderBufferOptions());
                 //attach.TypeId = EFramebufferAttachmentType.ColorBuffer;
                 Attachments.Add(attach);
             }
@@ -118,14 +118,14 @@ namespace ThinGin.OpenGL.Common.Framebuffers
             {
                 if (Options.StencilBuffer)
                 {
-                    IFrameAttachment attach = new GLRenderBufferAttachment(Engine, this, RenderbufferStorage.StencilIndex8, new RenderBufferOptions());
+                    IGBufferAttachment attach = new GLRenderBufferAttachment(Engine, this, RenderbufferStorage.StencilIndex8, new RenderBufferOptions());
                     //attach.TypeId = EFramebufferAttachmentType.StencilBuffer;
                     Attachments.Add(attach);
                 }
 
                 if (Options.DepthBuffer)
                 {
-                    IFrameAttachment attach = new GLRenderBufferAttachment(Engine, this, RenderbufferStorage.DepthComponent32, new RenderBufferOptions());
+                    IGBufferAttachment attach = new GLRenderBufferAttachment(Engine, this, RenderbufferStorage.DepthComponent32, new RenderBufferOptions());
                     //attach.TypeId = EFramebufferAttachmentType.DepthBuffer;
                     Attachments.Add(attach);
                 }
@@ -340,7 +340,7 @@ namespace ThinGin.OpenGL.Common.Framebuffers
 #endif
 
         /// <summary>
-        /// <inheritdoc cref="FrameBuffer.Download"/>
+        /// <inheritdoc cref="GBuffer.Download"/>
         /// </summary>
         public override byte[,,] Download()
         {

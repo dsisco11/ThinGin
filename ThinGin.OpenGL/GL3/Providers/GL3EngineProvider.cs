@@ -10,7 +10,7 @@ namespace ThinGin.OpenGL.GL3.Providers
         public static IEngineProvider Instance = new GL3EngineProvider();
         #endregion
 
-        public IRenderEngine Create()
+        public IEngine Create()
         {
             return new GL3Engine(System.Threading.Thread.CurrentThread);
         }

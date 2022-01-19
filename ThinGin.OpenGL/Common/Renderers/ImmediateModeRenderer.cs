@@ -27,7 +27,7 @@ namespace ThinGin.OpenGL.Common.Renderers
         #endregion
 
         #region Constructors
-        public ImmediateModeRenderer(IRenderEngine Engine, Mesh mesh) : base(Engine, mesh)
+        public ImmediateModeRenderer(IEngine Engine, Mesh mesh) : base(Engine, mesh)
         {
         }
         #endregion

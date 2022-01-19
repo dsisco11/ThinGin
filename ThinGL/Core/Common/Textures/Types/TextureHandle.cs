@@ -8,7 +8,7 @@ namespace ThinGin.Core.Common.Textures.Types
     /// <summary>
     /// This is essentially a low-level (device) texture handle, used to link up bits of the engine that don't otherwise connect properly.
     /// </summary>
-    public abstract class TextureHandle : EngineObject, ITexture
+    public abstract class TextureHandle : GObject, ITexture
     {
         #region Values
         protected int _handle = 0;
@@ -27,7 +27,7 @@ namespace ThinGin.Core.Common.Textures.Types
         #endregion
 
         #region Constructors
-        protected TextureHandle(IRenderEngine Engine) : base(Engine)
+        protected TextureHandle(IEngine Engine) : base(Engine)
         {
         }
         #endregion

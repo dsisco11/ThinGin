@@ -17,7 +17,7 @@ namespace ThinGin.Core.Common.Engine
     {
         #region Values
         private Task _task;
-        protected WeakReference<IRenderEngine> _engineRef;
+        protected WeakReference<IEngine> _engineRef;
         #endregion
 
         #region Properties
@@ -26,7 +26,7 @@ namespace ThinGin.Core.Common.Engine
         #endregion
 
         #region Accessors
-        public IRenderEngine Engine => _engineRef.TryGetTarget(out IRenderEngine outEngine) ? outEngine : null;
+        public IEngine Engine => _engineRef.TryGetTarget(out IEngine outEngine) ? outEngine : null;
         #endregion
 
         #region Events
@@ -34,10 +34,10 @@ namespace ThinGin.Core.Common.Engine
         #endregion
 
         #region Constructors
-        public EngineJob(IRenderEngine Engine)
+        public EngineJob(IEngine Engine)
         {
             TokenSource = new CancellationTokenSource();
-            _engineRef = new WeakReference<IRenderEngine>(Engine);
+            _engineRef = new WeakReference<IEngine>(Engine);
         }
         #endregion
 

@@ -13,7 +13,7 @@ namespace ThinGin.OpenGL.GL3.Providers
         public static IShaderProvider Instance = new GL3ShaderProvider();
         #endregion
 
-        public IShaderInstance Create(IRenderEngine Engine)
+        public IShaderInstance Create(IEngine Engine)
         {
             return new GLShaderInstance(Engine);
         }

@@ -12,7 +12,7 @@ namespace ThinGin.OpenGL.GL2.Providers
         public static IRendererProvider Instance = new GL2RendererProvider();
         #endregion
 
-        public IMeshRenderer Create(IRenderEngine Engine, Mesh mesh)
+        public IMeshRenderer Create(IEngine Engine, Mesh mesh)
         {
             return new VertexArrayRenderer(Engine, mesh);
         }

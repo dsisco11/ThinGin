@@ -6,7 +6,7 @@ namespace ThinGin.Core.Common.Providers
 {
     public interface ITextureProvider
     {
-        Texture Create(IRenderEngine Engine, PixelDescriptor GpuLayout);
-        TextureHandle Create_Handle(IRenderEngine Engine);
+        Texture Create(IEngine Engine, PixelDescriptor GpuLayout);
+        TextureHandle Create_Handle(IEngine Engine);
     }
 }

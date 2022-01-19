@@ -27,7 +27,7 @@ namespace ThinGin.OpenGL.Common
         /// </summary>
         /// <param name="Mode"></param>
         /// <param name="Length">byte length of buffer</param>
-        public GLPixelBuffer(IRenderEngine Engine, EPixelBufferMode Mode, int Length) : base(Engine)
+        public GLPixelBuffer(IEngine Engine, EPixelBufferMode Mode, int Length) : base(Engine)
         {
             if (!Engine.IsSupported("arb_pixel_buffer_object"))
             {

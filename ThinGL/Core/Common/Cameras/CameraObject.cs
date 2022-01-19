@@ -12,7 +12,7 @@ namespace ThinGin.Core.Common
     public abstract class CameraObject : ICamera
     {
         #region Values
-        private WeakReference<IRenderEngine> _engineRef = null;
+        private WeakReference<IEngine> _engineRef = null;
 
         protected float _farClip = 500f;// x meters is a good default yea?
         protected float _nearClip = 0.01f;
@@ -26,7 +26,7 @@ namespace ThinGin.Core.Common
 
         #region Accessors
         public Transform Transform => _transform;
-        public IRenderEngine Engine => _engineRef.TryGetTarget(out var outEngine) ? outEngine : null;
+        public IEngine Engine => _engineRef.TryGetTarget(out var outEngine) ? outEngine : null;
         public float AspectRatio => MathE.Max(float.Epsilon, Engine.Get_AspectRatio());
         #endregion
 
@@ -127,9 +127,9 @@ namespace ThinGin.Core.Common
         #endregion
 
         #region Constructors
-        protected CameraObject(IRenderEngine Engine)
+        protected CameraObject(IEngine Engine)
         {
-            _engineRef = new WeakReference<IRenderEngine>(Engine);
+            _engineRef = new WeakReference<IEngine>(Engine);
             _transform = new Transform(Engine);
         }
         #endregion

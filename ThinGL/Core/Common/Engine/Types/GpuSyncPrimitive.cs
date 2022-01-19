@@ -3,7 +3,7 @@ using ThinGin.Core.Common.Interfaces;
 
 namespace ThinGin.Core.Common.Engine.Types
 {
-    public abstract class GpuSyncPrimitive : EngineObject
+    public abstract class GpuSyncPrimitive : GObject
     {
         #region Values
         /// <summary>
@@ -16,7 +16,7 @@ namespace ThinGin.Core.Common.Engine.Types
         #endregion
 
         #region Constructors
-        public GpuSyncPrimitive(IRenderEngine Engine) : base(Engine)
+        public GpuSyncPrimitive(IEngine Engine) : base(Engine)
         {
         }
         #endregion

@@ -6,13 +6,14 @@ using ThinGin.Core.Common.Enums;
 using ThinGin.Core.Common.Interfaces;
 using ThinGin.Core.Common.Types;
 using ThinGin.Core.Common.Engine.Types;
+using ThinGin.Core.Engine.Common.Core;
 
 namespace ThinGin.Core.Rendering
 {
     /// <summary>
     /// Redirect the rendering output to a frame buffer
     /// </summary>
-    public abstract class FrameBuffer : EngineObject, IEngineBindable
+    public abstract class GBuffer : GObject, IEngineBindable
     {
         #region Values
         protected int _handle = 0;
@@ -26,7 +27,7 @@ namespace ThinGin.Core.Rendering
         protected bool BindState = false;
         private bool HasPendingAttachments = false;
 
-        protected readonly Dictionary<int, List<WeakReference<IFrameAttachment>>> Slots = new Dictionary<int, List<WeakReference<IFrameAttachment>>>();
+        protected readonly Dictionary<int, List<WeakReference<IGBufferAttachment>>> Slots = new Dictionary<int, List<WeakReference<IGBufferAttachment>>>();
         #endregion
 
         #region Properties
@@ -39,7 +40,7 @@ namespace ThinGin.Core.Rendering
         /// <summary> Size of the FrameBuffer </summary>
         public readonly Size Size;
 
-        public List<IFrameAttachment> Attachments = new List<IFrameAttachment>(2);
+        public List<IGBufferAttachment> Attachments = new List<IGBufferAttachment>(2);
         public Rgba ClearColorValue;
         #endregion
 
@@ -48,7 +49,7 @@ namespace ThinGin.Core.Rendering
         /// Create the RenderBuffer
         /// </summary>
         /// <param name="size">Desired size</param>
-        public FrameBuffer(IRenderEngine Engine, Size size) : base(Engine)
+        public GBuffer(EngineInstance engine, Size size) : base(engine)
         {
             Size = size;
         }
@@ -56,7 +57,7 @@ namespace ThinGin.Core.Rendering
         #endregion
 
         #region Attachments
-        public void Attach(IFrameAttachment item)
+        public void Attach(IGBufferAttachment item)
         {
             Attachments.Add(item);
             if (BindState)
@@ -69,7 +70,7 @@ namespace ThinGin.Core.Rendering
             }
         }
 
-        protected void Process_Attachment(IFrameAttachment item)
+        protected void Process_Attachment(IGBufferAttachment item)
         {
             // Framebuffer attachments come in different types, like colorbuffers, depthbuffers, or even stencilbuffers!
             // So IFrameAttachment object provide some sort of type identifier number for the base library to use,
@@ -80,12 +81,12 @@ namespace ThinGin.Core.Rendering
             // If we arent tracking attachments of this type yet then start doing so
             if (!Slots.ContainsKey(item.TypeId))
             {
-                Slots.Add(item.TypeId, new List<WeakReference<IFrameAttachment>>(1));
+                Slots.Add(item.TypeId, new List<WeakReference<IGBufferAttachment>>(1));
             }
 
             // Determine what slot to insert the attachment at
             int slotNo = Slots[item.TypeId].Count;
-            Slots[item.TypeId].Add(new WeakReference<IFrameAttachment>(item));
+            Slots[item.TypeId].Add(new WeakReference<IGBufferAttachment>(item));
             item.Attach(this, slotNo);
         }
         #endregion
@@ -119,7 +120,7 @@ namespace ThinGin.Core.Rendering
 
             if (HasPendingAttachments)
             {// Process and attach any registered but unattached objects
-                foreach (IFrameAttachment item in Attachments)
+                foreach (IGBufferAttachment item in Attachments)
                 {
                     Process_Attachment(item);
                 }
@@ -149,7 +150,7 @@ namespace ThinGin.Core.Rendering
 
             if (HasPendingAttachments)
             {// Process and attach any registered but unattached objects
-                foreach (IFrameAttachment item in Attachments)
+                foreach (IGBufferAttachment item in Attachments)
                 {
                     Process_Attachment(item);
                 }

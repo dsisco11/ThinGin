@@ -8,7 +8,7 @@ using ThinGin.Core.Common.Meshes;
 
 namespace ThinGin.Core.Rendering.Common
 {
-    public abstract class MeshRenderer : EngineObject, IMeshRenderer
+    public abstract class MeshRenderer : GObject, IMeshRenderer
     {
         #region Properties
         protected WeakReference<Mesh> _meshRef = null;
@@ -19,7 +19,7 @@ namespace ThinGin.Core.Rendering.Common
         #endregion
 
         #region Constructors
-        public MeshRenderer(IRenderEngine Engine, Mesh mesh) : base(Engine)
+        public MeshRenderer(IEngine Engine, Mesh mesh) : base(Engine)
         {
             _meshRef = new WeakReference<Mesh>(mesh);
         }

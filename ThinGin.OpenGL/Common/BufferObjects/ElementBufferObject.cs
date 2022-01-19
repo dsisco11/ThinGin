@@ -25,7 +25,7 @@ namespace ThinGin.OpenGL.Common.BufferObjects
         #endregion
 
         #region Constructors
-        public ElementBufferObject(IRenderEngine Engine) : base(Engine)
+        public ElementBufferObject(IEngine Engine) : base(Engine)
         {
             if (!Engine.IsSupported("arb_vertex_buffer_object"))
             {

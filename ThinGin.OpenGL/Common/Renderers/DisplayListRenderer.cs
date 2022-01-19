@@ -27,7 +27,7 @@ namespace ThinGin.OpenGL.Common.Renderers
         #endregion
 
         #region Constructors
-        public DisplayListRenderer(IRenderEngine Engine, Mesh mesh) : base(Engine, mesh)
+        public DisplayListRenderer(IEngine Engine, Mesh mesh) : base(Engine, mesh)
         {
             displayList = new GLDisplayList(Engine, Initiate_Trainwreck);
         }

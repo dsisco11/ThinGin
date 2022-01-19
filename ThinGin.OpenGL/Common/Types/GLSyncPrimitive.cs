@@ -18,7 +18,7 @@ namespace ThinGin.OpenGL.Common.Types
         #endregion
 
         #region Constructors
-        public GLSyncPrimitive(IRenderEngine Engine) : base(Engine)
+        public GLSyncPrimitive(IEngine Engine) : base(Engine)
         {
         }
         #endregion

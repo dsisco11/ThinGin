@@ -10,7 +10,7 @@ namespace ThinGin.OpenGL.GL2.Providers
         public static IEngineProvider Instance = new GL2EngineProvider();
         #endregion
 
-        public IRenderEngine Create()
+        public IEngine Create()
         {
             return new GL2Engine(System.Threading.Thread.CurrentThread);
         }

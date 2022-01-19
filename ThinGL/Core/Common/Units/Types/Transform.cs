@@ -3,6 +3,7 @@ using System;
 using System.Numerics;
 
 using ThinGin.Core.Common.Interfaces;
+using ThinGin.Core.Engine.Common.Core;
 
 namespace ThinGin.Core.Common.Units.Types
 {
@@ -34,7 +35,7 @@ namespace ThinGin.Core.Common.Units.Types
 
         #region Values
         WeakReference<Transform> _parentRef;
-        WeakReference<IRenderEngine> _engineRef;
+        WeakReference<EngineInstance> _engineRef;
         private Vector3 _pos;
         private Quaternion _orientation;
         private Matrix4x4 _matrix;
@@ -56,7 +57,7 @@ namespace ThinGin.Core.Common.Units.Types
         #endregion
 
         #region Accessors
-        public IRenderEngine Engine => _engineRef.TryGetTarget(out var outRef) ? outRef : null;
+        public EngineInstance Engine => _engineRef.TryGetTarget(out var outRef) ? outRef : null;
         public Transform Parent => _parentRef.TryGetTarget(out var outRef) ? outRef : null;
 
         public bool IsParented => this.flags.HasFlag(ETransformFlags.IsParented);
@@ -101,10 +102,10 @@ namespace ThinGin.Core.Common.Units.Types
         #endregion
 
         #region Constructors
-        public Transform(IRenderEngine Engine)
+        public Transform(EngineInstance Engine)
         {
             _parentRef = new WeakReference<Transform>(null);
-            _engineRef = new WeakReference<IRenderEngine>(Engine);
+            _engineRef = new WeakReference<EngineInstance>(Engine);
             _pos = Vector3.Zero;
             _orientation = Quaternion.Identity;
             _matrix = Matrix4x4.Identity;

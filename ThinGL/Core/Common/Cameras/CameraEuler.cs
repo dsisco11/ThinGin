@@ -129,7 +129,7 @@ namespace ThinGin.Core.Common.Cameras
         #endregion
 
         #region Constructors
-        public CameraEuler(IRenderEngine Engine) : base(Engine)
+        public CameraEuler(IEngine Engine) : base(Engine)
         {
         }
         #endregion

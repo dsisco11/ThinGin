@@ -22,7 +22,7 @@ namespace ThinGin.OpenGL.Common.Renderers
         #endregion
 
         #region Constructors
-        public VertexBufferRenderer(IRenderEngine Engine, Mesh mesh) : base(Engine, mesh)
+        public VertexBufferRenderer(IEngine Engine, Mesh mesh) : base(Engine, mesh)
         {
         }
         #endregion

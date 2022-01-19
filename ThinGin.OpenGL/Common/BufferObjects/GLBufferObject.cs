@@ -31,7 +31,7 @@ namespace ThinGin.OpenGL.Common
         #region Constructors
         /// <summary>
         /// </summary>
-        public GLBufferObject(IRenderEngine Engine) : base(Engine)
+        public GLBufferObject(IEngine Engine) : base(Engine)
         {
         }
         #endregion

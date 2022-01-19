@@ -1,60 +1,59 @@
 ﻿using System;
+using System.Collections.Generic;
 
 using ThinGin.Core.Common.Engine.Interfaces;
-using ThinGin.Core.Common.Interfaces;
+using ThinGin.Core.Engine;
+using ThinGin.Core.Engine.Common.Core;
 
-namespace ThinGin.Core.Common.Engine.Types
+namespace ThinGin.Core.Common.Objects
 {
     /// <summary>
-    /// Represents anything which (in an abstract sense) is related to rendering and must be properly released upon disposal such that its lifetime should be managed by the engine implementation it belongs to.
-    /// Such objects always belong to an engine instance at the time of their instantiation, and also provide delegates to both initialize and release their unmanaged handles for the specific graphics api to which they belong.
-    /// <para>
-    /// Engine managed objects may supply a null value for its initialization delegate under special conditions where it requires more complex initialization procedures.
-    /// However; because the engine does both lazy initialization and release of these objects, it is HIGHLY encouraged to work within a delegate that is provided to the engine via the normal overloaded provider functions.
-    /// </para>
+    /// low level engine related stuff for objects, contains the stuff that should not be messed with by end users
     /// </summary>
-    public abstract class EngineObject : IEngineObject, IDisposable
+    public abstract class EngineObjectBase : IDisposable
     {
-        #region Properties
+        #region Values
+        private int _disposedValue = 0;
         private int _initializedValue = 0;
         private int _releasedValue = 0;
-        private int _disposedValue = 0;
         private int _updatedValue = 0;
-        /// <summary>
-        /// Keep track of which engine we belong to
-        /// </summary>
-        private WeakReference<IRenderEngine> _engineRef = new WeakReference<IRenderEngine>(null);
+        private readonly WeakReference<EngineInstance> _engineRef;
+        private readonly WeakReference<EngineObjectBase> _parentRef = new WeakReference<EngineObjectBase>(null);
+        private readonly List<EngineObjectBase> _children = new List<EngineObjectBase>();
+        #endregion
 
-        private IEngineDelegate _releaser;
-        private IEngineDelegate _initializer;
+        #region Properties
         #endregion
 
         #region Accessors
-        /// <summary>
-        /// The <see cref="IRenderEngine"/> which has ownership of this resource.
-        /// </summary>
-        public IRenderEngine Engine => _engineRef.TryGetTarget(out IRenderEngine outEngine) ? outEngine : null;
+        public IReadOnlyList<EngineObjectBase> Children => _children;
+        public EngineInstance Engine => _engineRef.TryGetTarget(out var outRef) ? outRef : null;
+        public EngineObjectBase Parent => _parentRef.TryGetTarget(out var outRef) ? outRef : null;
+
+        public EngineObjectManager Manager => Engine.Objects;
 
         public bool IsInitialized => (_initializedValue != 0);
         #endregion
 
-        #region Constructors
-        public EngineObject(IRenderEngine Engine)
-        {
-            _engineRef.SetTarget(Engine);
-            _releaser = Get_Releaser();
-            _initializer = Get_Initializer();
+        #region Flags
+        private EObjectFlags flags = 0x0;
+        public void Set_Flags(EObjectFlags Flags) => flags |= Flags;
+        public void Clear_Flags(EObjectFlags Flags) => flags &= ~Flags;
+        public bool Has_Flag(EObjectFlags Flag) => flags.HasFlag(Flag);
 
-            if (_initializer is null)
-            {
-                _initializedValue = 1;// Provided no initializer, so we assume the resource self managed initialization via other means...
-            }
-            else
-            {
-                Engine.LazyInit(this);
-            }
+        /// <summary>
+        /// Tests for a set of flags, returning those which are set.
+        /// </summary>
+        public EObjectFlags Get_Flags(EObjectFlags Flags) => flags & Flags;
+        #endregion
+
+        #region Constructors
+        public EngineObjectBase(EngineInstance engine)
+        {
+            _engineRef = new WeakReference<EngineInstance>(engine);
         }
         #endregion
+
 
         #region Lifetime Management
         /// <summary>
@@ -81,9 +80,8 @@ namespace ThinGin.Core.Common.Engine.Types
         {
             if (System.Threading.Interlocked.Exchange(ref _initializedValue, 1) == 0)
             {
-                if (_initializer.TryInvoke())
+                if (Get_Initializer().TryInvoke())
                 {
-                    Engine.ErrorCheck(out _);
                     return true;
                 }
                 else// if the initializer fails then we auto release to avoid corruption by default
@@ -103,8 +101,7 @@ namespace ThinGin.Core.Common.Engine.Types
             if (System.Threading.Interlocked.Exchange(ref _releasedValue, 1) == 0)
             {
                 System.Threading.Interlocked.Increment(ref _updatedValue);// We increment this as a sort of sanity-check to prevent late-bound updates for previously released objects...
-                var res = _releaser?.TryInvoke() ?? false;
-                Engine.ErrorCheck(out _);
+                var res = Get_Releaser()?.TryInvoke() ?? false;
                 return res;
             }
             else// Return true because releasal has already been done...
@@ -122,7 +119,7 @@ namespace ThinGin.Core.Common.Engine.Types
 
             if (System.Threading.Interlocked.Exchange(ref _updatedValue, 0) == 1)
             {
-                Engine.LazyUpdate(this);
+                Manager.DeferUpdate(this as EngineObject);
             }
         }
 
@@ -139,7 +136,6 @@ namespace ThinGin.Core.Common.Engine.Types
             if (System.Threading.Interlocked.Exchange(ref _updatedValue, 1) == 0)
             {
                 var res = Get_Updater()?.TryInvoke() ?? true;
-                Engine.ErrorCheck(out _);
                 return res;
             }
             else
@@ -156,18 +152,17 @@ namespace ThinGin.Core.Common.Engine.Types
         #endregion
 
         #region IDisposable
+
         protected virtual void Dispose(bool disposing)
         {
             if (System.Threading.Interlocked.Exchange(ref _disposedValue, 1) == 0)
             {
-                Engine?.LazyRelease(this);
-
+                Manager.Unregister(this as EngineObject);
                 System.Threading.Interlocked.Increment(ref _updatedValue);
             }
         }
 
-        // // TODO: override finalizer only if 'Dispose(bool disposing)' has code to free unmanaged resources
-        ~EngineObject()
+        ~EngineObjectBase()
         {
             // Do not change this code. Put cleanup code in 'Dispose(bool disposing)' method
             Dispose(disposing: false);
@@ -179,7 +174,62 @@ namespace ThinGin.Core.Common.Engine.Types
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }
-
         #endregion
+
+        #region Parenting
+        public void Add_Child(EngineObjectBase child)
+        {
+            if (child is null)
+            {
+                throw new ArgumentNullException(nameof(child));
+            }
+
+            if (child.Has_Flag(EObjectFlags.Parented))
+            {
+                child.Parent.Remove_Child(child);
+            }
+
+            _children.Add(child);
+            child.Parented(this);
+        }
+
+        public bool Remove_Child(EngineObjectBase child)
+        {
+            if (child is null)
+            {
+                throw new ArgumentNullException(nameof(child));
+            }
+
+            if (_children.Remove(child))
+            {
+                child.Unparented(this);
+                return true;
+            }
+
+            return false;
+        }
+        #endregion
+
+        #region Childing
+        /// <summary>
+        /// Called on a child object by its parent object upon being orphaned
+        /// </summary>
+        /// <param name="Caller"></param>
+        internal void Unparented(EngineObjectBase Caller)
+        {
+            _parentRef.SetTarget(null);
+        }
+
+        /// <summary>
+        /// Called on a child object by its parent object upon adoption
+        /// </summary>
+        /// <param name="NewParent"></param>
+        internal void Parented(EngineObjectBase NewParent)
+        {
+            _parentRef.SetTarget(NewParent);
+        }
+        #endregion
+
+
     }
 }

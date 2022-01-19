@@ -15,7 +15,7 @@ namespace ThinGin.OpenGL.Common.Textures
         #endregion
 
         #region Constructors
-        public GLTexture3D(IRenderEngine Engine, PixelDescriptor GpuLayout) : base(Engine, GpuLayout)
+        public GLTexture3D(IEngine Engine, PixelDescriptor GpuLayout) : base(Engine, GpuLayout)
         {
         }
         #endregion

@@ -30,7 +30,7 @@ namespace ThinGin.Core.Common.Engine
         #endregion
 
         #region Constructors
-        public DataTransfer(IRenderEngine Engine, GpuSyncPrimitive SyncPrimitive, IBufferObject Buffer, ReadOnlyMemory<byte> Data) : base(Engine)
+        public DataTransfer(IEngine Engine, GpuSyncPrimitive SyncPrimitive, IBufferObject Buffer, ReadOnlyMemory<byte> Data) : base(Engine)
         {
             this.SyncPrimitive = SyncPrimitive ?? throw new ArgumentNullException(nameof(SyncPrimitive));
             this.Buffer = Buffer ?? throw new ArgumentNullException(nameof(Buffer));

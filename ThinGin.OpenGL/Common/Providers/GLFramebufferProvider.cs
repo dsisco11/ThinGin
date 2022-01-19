@@ -13,7 +13,7 @@ namespace ThinGin.OpenGL.Common.Providers
         public static IFramebufferProvider Instance = new GLFramebufferProvider();
         #endregion
 
-        public FrameBuffer Create_FrameBuffer(IRenderEngine Engine, Size Size)
+        public GBuffer Create_FrameBuffer(IEngine Engine, Size Size)
         {
             return new GLFrameBuffer(Engine, Size);
         }

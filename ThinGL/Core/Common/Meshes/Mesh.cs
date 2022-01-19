@@ -6,6 +6,8 @@ using ThinGin.Core.Common.Enums;
 using ThinGin.Core.Common.Interfaces;
 using ThinGin.Core.Common.Data;
 using ThinGin.Core.Common.Geometry.Filters;
+using ThinGin.Core.Engine.Common.Core;
+using ThinGin.Core.Shaders;
 
 namespace ThinGin.Core.Common.Meshes
 {
@@ -19,7 +21,7 @@ namespace ThinGin.Core.Common.Meshes
         /// <summary>
         /// Keep track of which engine we belong to
         /// </summary>
-        private WeakReference<IRenderEngine> _engineRef = new WeakReference<IRenderEngine>(null);
+        private WeakReference<EngineInstance> _engineRef = new WeakReference<EngineInstance>(null);
 
         // Mesh data
         private byte[] _dataBuffer = null;
@@ -27,9 +29,11 @@ namespace ThinGin.Core.Common.Meshes
         private VertexLayout _layout;
         // Renderer
         private IMeshRenderer _renderer = null;
+        private Shader _shader = null;
         #endregion
 
         #region Properties
+        public Shader Shader => _shader;
         public BoundingDimensions Bounds;
         public IMeshRenderer Renderer { get; protected set; } = null;
         public ETopology Topology = ETopology.Triangles;
@@ -42,9 +46,9 @@ namespace ThinGin.Core.Common.Meshes
 
         #region Accessors
         /// <summary>
-        /// The <see cref="IRenderEngine"/> which has ownership of this resource.
+        /// The <see cref="EngineInstance"/> which has ownership of this resource.
         /// </summary>
-        protected IRenderEngine Engine => _engineRef.TryGetTarget(out IRenderEngine outEngine) ? outEngine : null;
+        protected EngineInstance Engine => _engineRef.TryGetTarget(out var outRef) ? outRef : null;
         public byte[] Data => _dataBuffer;
         /// <summary>
         /// Whether or not the mesh has an indexing list for optimization.
@@ -56,17 +60,18 @@ namespace ThinGin.Core.Common.Meshes
         #endregion
 
         #region Constructors
-        private Mesh(IRenderEngine Engine)
+        private Mesh(EngineInstance engine, Shader shader)
         {
-            if (Engine is null)
+            if (engine is null)
             {
-                throw new ArgumentNullException(nameof(Engine));
+                throw new ArgumentNullException(nameof(engine));
             }
 
-            _engineRef.SetTarget(Engine);
+            _shader = shader;
+            _engineRef.SetTarget(engine);
         }
 
-        public Mesh(IRenderEngine Engine, byte[] Data, VertexLayout Layout, int Count, ETopology Topology, DataChunk Indicies = null) : this(Engine)
+        public Mesh(EngineInstance engine, Shader shader, byte[] Data, VertexLayout Layout, int Count, ETopology Topology, DataChunk Indicies = null) : this(engine, shader)
         {
             _dataBuffer = Data ?? throw new ArgumentNullException(nameof(Data));
 
@@ -75,7 +80,7 @@ namespace ThinGin.Core.Common.Meshes
             this.Count = Count;
             this.Topology = Topology;
         }
-        public Mesh(IRenderEngine Engine, MeshBuilder Builder) : this(Engine)
+        public Mesh(EngineInstance engine, Shader shader, MeshBuilder Builder) : this(engine, shader)
         {
             Update(Builder);
         }
@@ -138,7 +143,6 @@ namespace ThinGin.Core.Common.Meshes
         #endregion
 
         #region Rendering
-
         public void Render() => Render(Topology);
 
         public void Render(ETopology topology)
@@ -159,7 +163,7 @@ namespace ThinGin.Core.Common.Meshes
         #endregion
 
         #region Creation
-        public static Mesh Create_Textured_Quad(IRenderEngine Engine, Rectangle Bounds)
+        public static Mesh Create_Textured_Quad(EngineInstance Engine, Rectangle Bounds)
         {
             var layout = new VertexLayout(Position: new AttributeDescriptor(2, EValueType.INT),
                                               UV: new AttributeDescriptor(2, EValueType.SHORT));
@@ -188,7 +192,7 @@ namespace ThinGin.Core.Common.Meshes
 
             return new Mesh(Engine, mesh);
         }
-        public static Mesh Create_Textured_Quad(IRenderEngine Engine, RectangleF Bounds)
+        public static Mesh Create_Textured_Quad(EngineInstance Engine, RectangleF Bounds)
         {
             var layout = new VertexLayout(Position: new AttributeDescriptor(2, EValueType.INT),
                                               UV: new AttributeDescriptor(2, EValueType.SHORT));

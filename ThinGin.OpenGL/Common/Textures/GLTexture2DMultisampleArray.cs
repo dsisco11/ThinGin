@@ -16,7 +16,7 @@ namespace ThinGin.OpenGL.Common.Textures
         #endregion
 
         #region Constructors
-        public GLTexture2DMultisampleArray(IRenderEngine Engine, PixelDescriptor GpuLayout, int Samples) : base(Engine, GpuLayout, Samples)
+        public GLTexture2DMultisampleArray(IEngine Engine, PixelDescriptor GpuLayout, int Samples) : base(Engine, GpuLayout, Samples)
         {
         }
         #endregion

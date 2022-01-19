@@ -21,7 +21,7 @@ namespace ThinGin.OpenGL.Common.Textures
         #endregion
 
         #region Constructors
-        public GLTexture1DArray(IRenderEngine Engine, PixelDescriptor GpuLayout) : base(Engine, GpuLayout)
+        public GLTexture1DArray(IEngine Engine, PixelDescriptor GpuLayout) : base(Engine, GpuLayout)
         {
             if (!Engine.IsSupported("ext_texture_array"))
             {

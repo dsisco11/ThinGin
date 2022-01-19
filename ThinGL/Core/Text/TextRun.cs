@@ -12,7 +12,7 @@ using ThinGin.Core.Common.Types;
 
 namespace ThinGin.Core.Text
 {
-    public class TextRun : EngineObject
+    public class TextRun : GObject
     {
         #region Static
         /// <summary>
@@ -44,14 +44,14 @@ namespace ThinGin.Core.Text
         #endregion
 
         #region Constructors
-        public TextRun(IRenderEngine Engine) : base(Engine)
+        public TextRun(IEngine Engine) : base(Engine)
         {
         }
-        public TextRun(IRenderEngine Engine, IFontRasterizer Font) : base(Engine)
+        public TextRun(IEngine Engine, IFontRasterizer Font) : base(Engine)
         {
             this.Font = Font;
         }
-        public TextRun(IRenderEngine Engine, string Text) : base(Engine)
+        public TextRun(IEngine Engine, string Text) : base(Engine)
         {
             Set_Text(Text);
         }

@@ -24,7 +24,7 @@ namespace ThinGin.OpenGL.Common.BufferObjects
         #endregion
 
         #region Constructors
-        public VertexArrayObject(IRenderEngine Engine, VertexLayout Layout) : base(Engine)
+        public VertexArrayObject(IEngine Engine, VertexLayout Layout) : base(Engine)
         {
             if (!Engine.IsSupported("arb_vertex_array_object"))
             {

@@ -13,12 +13,12 @@ namespace ThinGin.OpenGL.Common.Providers
         #endregion
 
 
-        public Texture Create(IRenderEngine Engine, PixelDescriptor GpuLayout)
+        public Texture Create(IEngine Engine, PixelDescriptor GpuLayout)
         {
             return new GLTexture2D(Engine, GpuLayout);
         }
 
-        public TextureHandle Create_Handle(IRenderEngine Engine)
+        public TextureHandle Create_Handle(IEngine Engine)
         {
             return new GLTextureHandle(Engine);
         }

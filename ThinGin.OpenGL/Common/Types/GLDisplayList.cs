@@ -10,7 +10,7 @@ using ThinGin.Core.Common.Interfaces;
 
 namespace ThinGin.OpenGL.Common.Types
 {
-    public class GLDisplayList : EngineObject
+    public class GLDisplayList : GObject
     {
         #region Values
         protected int _handle = 0;
@@ -25,7 +25,7 @@ namespace ThinGin.OpenGL.Common.Types
         #endregion
 
         #region Constructors
-        public GLDisplayList(IRenderEngine Engine) : base(Engine)
+        public GLDisplayList(IEngine Engine) : base(Engine)
         {
         }
         /// <summary>
@@ -33,7 +33,7 @@ namespace ThinGin.OpenGL.Common.Types
         /// </summary>
         /// <param name="Engine"></param>
         /// <param name="CommandBuilder"></param>
-        public GLDisplayList(IRenderEngine Engine, Action CommandBuilder) : base(Engine)
+        public GLDisplayList(IEngine Engine, Action CommandBuilder) : base(Engine)
         {
             _command_list_delegate = CommandBuilder;
         }

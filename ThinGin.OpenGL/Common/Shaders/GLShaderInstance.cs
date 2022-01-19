@@ -14,7 +14,7 @@ namespace ThinGin.OpenGL.Common.Shaders
 {
     /// <summary>
     /// </summary>
-    public class GLShaderInstance : EngineObject, IShaderInstance, IEngineObservable
+    public class GLShaderInstance : GObject, IShaderInstance, IEngineObservable
     {
         #region Values
         public int Handle { get; protected set; } = 0;
@@ -43,7 +43,7 @@ namespace ThinGin.OpenGL.Common.Shaders
 
 
         #region Constructors
-        public GLShaderInstance(IRenderEngine Engine) : base(Engine)
+        public GLShaderInstance(IEngine Engine) : base(Engine)
         {
         }
         #endregion

@@ -9,7 +9,7 @@ namespace ThinGin.Core.Common.Textures.Types
     /// <summary>
     /// Creates or links to an existing <see cref="Texture"/> instance.
     /// </summary>
-    public class TextureProxy : EngineObject, ITexture, IDisposable
+    public class TextureProxy : GObject, ITexture, IDisposable
     {
         #region Properties
         /// <summary>
@@ -49,13 +49,13 @@ namespace ThinGin.Core.Common.Textures.Types
         /// Creates a new shared texture instance but does NOT increment its user count, which is why this constructor is internal...
         /// </summary>
         /// <param name="Root"></param>
-        internal TextureProxy(IRenderEngine Engine, string Identifier, Texture Root) : base(Engine)
+        internal TextureProxy(IEngine Engine, string Identifier, Texture Root) : base(Engine)
         {
             this.Identifier = Identifier;
             _rootRef = new WeakReference<Texture>(Root);
         }
 
-        public TextureProxy(IRenderEngine Engine, string Identifier) : base(Engine)
+        public TextureProxy(IEngine Engine, string Identifier) : base(Engine)
         {
             this.Identifier = Identifier;
             _rootRef = Engine.TextureCache.Lookup(Identifier);

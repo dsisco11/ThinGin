@@ -10,10 +10,10 @@ using ThinGin.Core.Common.Engine.Delegates;
 
 namespace ThinGin.OpenGL.Common.Framebuffers
 {
-    internal class GLTextureBufferAttachment : EngineObject, IFrameAttachment
+    internal class GLTextureBufferAttachment : GObject, IGBufferAttachment
     {
         #region Values
-        protected readonly WeakReference<FrameBuffer> _ownerRef;
+        protected readonly WeakReference<GBuffer> _ownerRef;
         protected int Slot;
         #endregion
 
@@ -24,19 +24,19 @@ namespace ThinGin.OpenGL.Common.Framebuffers
         #endregion
 
         #region Accessors
-        public FrameBuffer Owner => _ownerRef.TryGetTarget(out FrameBuffer outOwner) ? outOwner : null;
+        public GBuffer Owner => _ownerRef.TryGetTarget(out GBuffer outOwner) ? outOwner : null;
         #endregion
 
         #region Constructors
 
-        public GLTextureBufferAttachment(IRenderEngine Engine, FrameBuffer Owner) : base(Engine)
+        public GLTextureBufferAttachment(IEngine Engine, GBuffer Owner) : base(Engine)
         {
             if (Owner is null)
             {
                 throw new ArgumentNullException(nameof(Owner));
             }
 
-            _ownerRef = new WeakReference<FrameBuffer>(Owner);
+            _ownerRef = new WeakReference<GBuffer>(Owner);
             IsAttached = false;
             Handle = Engine.Provider.Textures.Create_Handle(Engine);
         }
@@ -44,7 +44,7 @@ namespace ThinGin.OpenGL.Common.Framebuffers
 
         #region Attaching
 
-        public void Attach(FrameBuffer frameBuffer, int slot)
+        public void Attach(GBuffer frameBuffer, int slot)
         {
             GL.Enable(EnableCap.Texture2D);
             GL.ActiveTexture(TextureUnit.Texture0);
@@ -61,7 +61,7 @@ namespace ThinGin.OpenGL.Common.Framebuffers
             GL.Disable(EnableCap.Texture2D);
         }
 
-        public void Detach(FrameBuffer frameBuffer)
+        public void Detach(GBuffer frameBuffer)
         {
             GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, (FramebufferAttachment)Slot, TextureTarget.Texture2D, 0, 0);
             Slot = 0;

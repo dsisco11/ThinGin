@@ -16,6 +16,7 @@
 
   <ItemGroup>
     <Folder Include="Core\Common\Units\ReadOnly\" />
+    <Folder Include="Core\World\Objects\" />
   </ItemGroup>
 
   <ItemGroup>

@@ -7,7 +7,7 @@ namespace ThinGin.Core.Common.Textures.Types
     /// <summary>
     ///  Stores the actual OpenGL texture instance and manages proper disposal once all users have released it.
     /// </summary>
-    public abstract class Texture : EngineObject, ITexture
+    public abstract class Texture : GObject, ITexture
     {
         #region Values
         protected int _id = 0;
@@ -33,7 +33,7 @@ namespace ThinGin.Core.Common.Textures.Types
         /// <summary>
         /// Creates a new GPU texture
         /// </summary>
-        protected Texture(IRenderEngine Engine, PixelDescriptor GpuLayout) : base(Engine)
+        protected Texture(IEngine Engine, PixelDescriptor GpuLayout) : base(Engine)
         {
             this.GpuLayout = GpuLayout;
         }

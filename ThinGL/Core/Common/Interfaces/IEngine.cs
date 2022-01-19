@@ -12,7 +12,7 @@ using ThinGin.Core.Common.Units;
 
 namespace ThinGin.Core.Common.Interfaces
 {
-    public interface IRenderEngine
+    public interface IEngine
     {
         #region Properties
         IGraphicsImplementation Provider { get; }
@@ -57,24 +57,6 @@ namespace ThinGin.Core.Common.Interfaces
 
         #region Object Management
         void Think();
-
-        /// <summary>
-        /// Queues the specified object for release on the engine side.
-        /// </summary>
-        /// <param name="obj"></param>
-        void LazyRelease(EngineObject obj);
-
-        /// <summary>
-        /// Queues the specified object for lazy initialization by the engine, meaning that its initialization logic will be triggered when the engine next enters its processing loop.
-        /// </summary>
-        /// <param name="obj"></param>
-        void LazyInit(EngineObject obj);
-
-        /// <summary>
-        /// Queues the specified resource object for a delayed update by the engine.
-        /// </summary>
-        /// <param name="obj"></param>
-        void LazyUpdate(EngineObject obj);
         #endregion
 
         #region Lazy Delegates
@@ -155,8 +137,8 @@ namespace ThinGin.Core.Common.Interfaces
 
         #region Framebuffers
 
-        void Bind_Framebuffer(FrameBuffer frameBuffer, EBufferAccess BufferMode);
-        void Unbind_Framebuffer(FrameBuffer frameBuffer);
+        void Bind_Framebuffer(GBuffer frameBuffer, EBufferAccess BufferMode);
+        void Unbind_Framebuffer(GBuffer frameBuffer);
         void Blit(Rectangle Source, Rectangle Dest);
         #endregion
     }

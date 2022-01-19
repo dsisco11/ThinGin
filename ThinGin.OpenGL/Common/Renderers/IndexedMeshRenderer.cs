@@ -23,7 +23,7 @@ namespace ThinGin.OpenGL.Common.Renderers
         #endregion
 
         #region Constructors
-        public IndexedMeshRenderer(IRenderEngine Engine, Mesh mesh) : base(Engine, mesh)
+        public IndexedMeshRenderer(IEngine Engine, Mesh mesh) : base(Engine, mesh)
         {
         }
         #endregion

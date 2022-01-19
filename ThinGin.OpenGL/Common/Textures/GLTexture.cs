@@ -50,7 +50,7 @@ namespace ThinGin.OpenGL.Common.Textures
         /// <summary>
         /// Creates a new GPU texture
         /// </summary>
-        public GLTexture(IRenderEngine Engine, PixelDescriptor GpuLayout) : base(Engine, GpuLayout)
+        public GLTexture(IEngine Engine, PixelDescriptor GpuLayout) : base(Engine, GpuLayout)
         {
             UseCompression = Engine.AutoCompressTextures;
             EnableMipMaps = Engine.AutoGenerateMipMaps;

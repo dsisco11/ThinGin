@@ -14,7 +14,7 @@ namespace ThinGin.OpenGL.Common.Textures
         #endregion
 
         #region Constructors
-        public GLTextureHandle(IRenderEngine Engine) : base(Engine)
+        public GLTextureHandle(IEngine Engine) : base(Engine)
         {
         }
         #endregion

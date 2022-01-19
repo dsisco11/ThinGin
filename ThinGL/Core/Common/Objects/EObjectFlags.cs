@@ -1,4 +1,4 @@
-﻿namespace ThinGin.Core.World.Objects
+﻿namespace ThinGin.Core.Common.Objects
 {
     [System.Flags]
     public enum EObjectFlags

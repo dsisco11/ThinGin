@@ -10,7 +10,7 @@ namespace ThinGin.Core.Common.Types
     /// <summary>
     /// Provides a generic buffer object
     /// </summary>
-    public abstract class BufferObject : EngineObject, IBufferObject, IEngineBindable
+    public abstract class BufferObject : GObject, IBufferObject, IEngineBindable
     {
         #region Values
         protected int _handle = 0;
@@ -31,7 +31,7 @@ namespace ThinGin.Core.Common.Types
         #endregion
 
         #region Constructors
-        public BufferObject(IRenderEngine Engine) : base(Engine)
+        public BufferObject(IEngine Engine) : base(Engine)
         {
         }
         #endregion

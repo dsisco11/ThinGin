@@ -15,7 +15,7 @@ namespace ThinGin.Core.Shaders
         #endregion
 
         #region Constructors
-        public Shader(IRenderEngine Engine)
+        public Shader(IEngine Engine)
         {
             _instance = Engine.Provider.Shaders.Create(Engine);
         }

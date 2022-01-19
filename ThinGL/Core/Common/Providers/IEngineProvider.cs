@@ -4,6 +4,6 @@ namespace ThinGin.Core.Common.Providers
 {
     public interface IEngineProvider
     {
-        IRenderEngine Create();
+        IEngine Create();
     }
 }

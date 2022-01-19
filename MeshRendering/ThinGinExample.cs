@@ -40,7 +40,7 @@ namespace MeshRendering
         #endregion
 
         #region Values
-        private IRenderEngine _engine = null;
+        private IEngine _engine = null;
         private IShader shader = null;
         private Mesh _cubeMesh = null;
         private Mesh _gizmoMesh = null;
@@ -52,7 +52,7 @@ namespace MeshRendering
         #endregion
 
         #region Properties
-        public IRenderEngine Engine { get => _engine; protected set => _engine = value; }
+        public IEngine Engine { get => _engine; protected set => _engine = value; }
 
         float modelRotation = 0f;
         Matrix4x4 modelMatrix = Matrix4x4.Identity;

@@ -5,6 +5,6 @@ namespace ThinGin.Core.Common.Providers
 {
     public interface IRendererProvider
     {
-        IMeshRenderer Create(IRenderEngine Engine, Mesh mesh);
+        IMeshRenderer Create(IEngine Engine, Mesh mesh);
     }
 }

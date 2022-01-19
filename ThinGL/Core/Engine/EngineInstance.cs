@@ -16,13 +16,14 @@ using ThinGin.Core.Common;
 using ThinGin.Core.Common.Cameras;
 using ThinGin.Core.Common.Units;
 using ThinGin.Core.World;
+using ThinGin.Core.Graphics;
 
 namespace ThinGin.Core.Engine.Common.Core
 {
     /// <summary>
     /// Provides abstracted access to generic rendering functionality, manages state to avoid redundant calls.
     /// </summary>
-    public abstract class CoreEngine : IRenderEngine
+    public abstract class EngineInstance : IEngine
     {
         #region Values
         private int _initialized = 0;
@@ -30,9 +31,6 @@ namespace ThinGin.Core.Engine.Common.Core
         protected HashSet<string> APIExtensions = null;
         private Rectangle _viewport = Rectangle.Empty;
 
-        protected ConcurrentQueue<EngineObject> _update_queue = new ConcurrentQueue<EngineObject>();
-        protected ConcurrentQueue<EngineObject> _release_queue = new ConcurrentQueue<EngineObject>();
-        protected ConcurrentQueue<EngineObject> _initialization_queue = new ConcurrentQueue<EngineObject>();
         protected ConcurrentQueue<EngineJob> _job_polling_queue = new ConcurrentQueue<EngineJob>();
         protected ConcurrentQueue<Action> _deferred_action_queue = new ConcurrentQueue<Action>();
 
@@ -45,6 +43,7 @@ namespace ThinGin.Core.Engine.Common.Core
         private readonly Camera camera;
         private SpatialOrientation coords = new SpatialOrientation();
         private WorldManager world;
+        internal readonly RenderManager Rendering = new RenderManager();
 
         public EngineCompatabilityList Compatability { get; protected set; } = null;
         #endregion
@@ -56,7 +55,7 @@ namespace ThinGin.Core.Engine.Common.Core
 
         #region Accessors
         /// <summary>
-        /// <inheritdoc cref="IRenderEngine.Camera"/>
+        /// <inheritdoc cref="IEngine.Camera"/>
         /// </summary>
         public Camera Camera => camera;
         public WorldManager World { get => world; set => world = value; }
@@ -92,7 +91,7 @@ namespace ThinGin.Core.Engine.Common.Core
         #endregion
 
         #region Constructors
-        public CoreEngine(object Context)
+        public EngineInstance(object Context)
         {
             this.Context = Context;
             TextureCache = new TextureCache();
@@ -154,24 +153,19 @@ namespace ThinGin.Core.Engine.Common.Core
         #endregion
 
         #region Event Loop
+
+        /// <summary>
+        /// Performs frustrum culling for all cameras
+        /// </summary>
+        protected void InitViews()
+        {
+
+        }
         public virtual void Think()
         {
             ErrorCheck(out _);
 
-            while (_initialization_queue.TryDequeue(out EngineObject obj))
-            {
-                obj.TryInitialize();
-            }
-
-            while (_update_queue.TryDequeue(out EngineObject obj))
-            {
-                obj.TryUpdate();
-            }
-
-            while (_release_queue.TryDequeue(out EngineObject obj))
-            {
-                obj.TryRelease();
-            }
+            Rendering.Process();
 
             while (_deferred_action_queue.TryDequeue(out Action action))
             {
@@ -179,48 +173,6 @@ namespace ThinGin.Core.Engine.Common.Core
             }
 
             _try_process_job_polling_queue();
-        }
-        #endregion
-
-        #region Object Management
-        public void LazyInit(EngineObject obj)
-        {
-            if (obj is null)
-            {
-                throw new ArgumentNullException(nameof(obj));
-            }
-
-            _initialization_queue.Enqueue(obj);
-        }
-
-        public void LazyRelease(EngineObject obj)
-        {
-            if (obj is null)
-            {
-                throw new ArgumentNullException(nameof(obj));
-            }
-
-            _release_queue.Enqueue(obj);
-        }
-
-        public void LazyUpdate(EngineObject obj)
-        {
-            if (obj is null)
-            {
-                throw new ArgumentNullException(nameof(obj));
-            }
-
-            _update_queue.Enqueue(obj);
-        }
-
-        private bool _try_process_object_queue(ref ConcurrentQueue<EngineObject> queue, Action<EngineObject> Callback)
-        {
-            while (queue.TryDequeue(out var obj))
-            {
-                Callback.Invoke(obj);
-            }
-
-            return true;
         }
         #endregion
 
@@ -285,7 +237,7 @@ namespace ThinGin.Core.Engine.Common.Core
 
         #region Binding
         /// <summary>
-        /// <inheritdoc cref="IRenderEngine.Bind(IEngineBindable)"/>
+        /// <inheritdoc cref="IEngine.Bind(IEngineBindable)"/>
         /// </summary>
         public virtual void Bind(IEngineBindable Bindable)
         {
@@ -298,7 +250,7 @@ namespace ThinGin.Core.Engine.Common.Core
         }
 
         /// <summary>
-        /// <inheritdoc cref="IRenderEngine.Unbind(IEngineBindable)"/>
+        /// <inheritdoc cref="IEngine.Unbind(IEngineBindable)"/>
         /// </summary>
         public virtual void Unbind(IEngineBindable Bindable)
         {
@@ -314,23 +266,23 @@ namespace ThinGin.Core.Engine.Common.Core
         #region Capabilies
 
         /// <summary>
-        /// <inheritdoc cref="IRenderEngine.Enable(EEngineCap)"/>
+        /// <inheritdoc cref="IEngine.Enable(EEngineCap)"/>
         /// </summary>
         public abstract void Enable(EEngineCap Capability);
 
         /// <summary>
-        /// <inheritdoc cref="IRenderEngine.Disable(EEngineCap)"/>
+        /// <inheritdoc cref="IEngine.Disable(EEngineCap)"/>
         /// </summary>
         public abstract void Disable(EEngineCap Capability);
 
 
         /// <summary>
-        /// <inheritdoc cref="IRenderEngine.Enable(IEngineCapability)"/>
+        /// <inheritdoc cref="IEngine.Enable(IEngineCapability)"/>
         /// </summary>
         public abstract void Enable(IEngineCapability Capability);
 
         /// <summary>
-        /// <inheritdoc cref="IRenderEngine.Disable(IEngineCapability)"/>
+        /// <inheritdoc cref="IEngine.Disable(IEngineCapability)"/>
         /// </summary>
         public abstract void Disable(IEngineCapability Capability);
         #endregion
@@ -343,9 +295,9 @@ namespace ThinGin.Core.Engine.Common.Core
 
         #region Framebuffers
 
-        public abstract void Bind_Framebuffer(FrameBuffer frameBuffer, EBufferAccess Mode);
+        public abstract void Bind_Framebuffer(GBuffer frameBuffer, EBufferAccess Mode);
 
-        public abstract void Unbind_Framebuffer(FrameBuffer frameBuffer);
+        public abstract void Unbind_Framebuffer(GBuffer frameBuffer);
 
         /// <summary>
         /// Performs a blitting operation between the current read framebuffer into the current write framebuffer

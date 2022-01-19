@@ -18,7 +18,7 @@ namespace ThinGin.Core.Console
         #endregion
 
         #region Values
-        WeakReference<IRenderEngine> _engineRef;
+        WeakReference<IEngine> _engineRef;
         /// <summary>
         /// Dictionary of registered commands
         /// </summary>
@@ -33,7 +33,7 @@ namespace ThinGin.Core.Console
         #endregion
 
         #region Accessors
-        public IRenderEngine Engine => _engineRef.TryGetTarget(out var outRef) ? outRef : null;
+        public IEngine Engine => _engineRef.TryGetTarget(out var outRef) ? outRef : null;
         public IReadOnlyDictionary<string, VCommandDef> Commands => this.commands;
         public IEnumerator<VConsoleLine> Log => _log.GetEnumerator();
         public ConsoleContext Context => new ConsoleContext(this);

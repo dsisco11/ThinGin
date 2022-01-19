@@ -6,7 +6,7 @@ using ThinGin.Core.Common.Interfaces;
 
 namespace ThinGin.Core.Shaders
 {
-    public interface IShaderInstance : IEngineObject, IEngineBindable, IEngineObservable
+    public interface IShaderInstance : IGraphicsObject, IEngineBindable, IEngineObservable
     {
         #region Accessors
         int Handle { get; }

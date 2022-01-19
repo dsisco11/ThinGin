@@ -5,11 +5,11 @@ using System.Diagnostics.Contracts;
 using System.Numerics;
 using System.Runtime.CompilerServices;
 
+using ThinGin.Core.Common.Objects;
 using ThinGin.Core.Common.Types;
 using ThinGin.Core.Console.Commands.Selectors;
 using ThinGin.Core.Console.Commands.Selectors.Expressions;
 using ThinGin.Core.Console.Parsing;
-using ThinGin.Core.World.Objects;
 
 namespace ThinGin.Core.Console
 {

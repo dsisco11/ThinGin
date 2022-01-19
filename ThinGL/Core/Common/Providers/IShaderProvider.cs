@@ -6,7 +6,7 @@ namespace ThinGin.Core.Common.Providers
 {
     public interface IShaderProvider
     {
-        IShaderInstance Create(IRenderEngine Engine);
+        IShaderInstance Create(IEngine Engine);
 
         ShaderVariable Create_Variable(ShaderVariable Variable);
         ShaderVariable Create_Variable(ShaderVariable Variable, ReferencedDataDescriptor Descriptor);

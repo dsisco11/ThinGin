@@ -56,7 +56,7 @@ namespace ThinGin.Core.Common.Meshes
         #endregion
 
         #region Compiling
-        public byte[] Compile(IRenderEngine Engine, out DataChunk outIndices, out int VertexCount)
+        public byte[] Compile(IEngine Engine, out DataChunk outIndices, out int VertexCount)
         {
             // Sanity check to ensure all of our data lines up in size, all stacks need to be the same length as the vertex stack because they are vertex attributes (like normals or color)
             int indexLen = _data.Indices[0].Count;

@@ -1,13 +1,13 @@
 ﻿using System;
 
-using ThinGin.Core.Common.Interfaces;
+using ThinGin.Core.Engine.Common.Core;
 
 namespace ThinGin.Core.Common.Engine.Interfaces
 {
-    public interface IEngineObject : IDisposable
+    public interface IGraphicsObject : IDisposable
     {
         #region Accessors
-        IRenderEngine Engine { get; }
+        EngineInstance Engine { get; }
         bool IsInitialized { get; }
         #endregion
 

@@ -5,6 +5,6 @@ namespace ThinGin.Core.Common.Providers
 {
     public interface IFramebufferProvider
     {
-        FrameBuffer Create_FrameBuffer(IRenderEngine Engine, System.Drawing.Size Size);
+        GBuffer Create_FrameBuffer(IEngine Engine, System.Drawing.Size Size);
     }
 }

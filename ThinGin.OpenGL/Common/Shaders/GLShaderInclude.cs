@@ -11,7 +11,7 @@ using ThinGin.Core.Common.Interfaces;
 
 namespace ThinGin.OpenGL.Common.Shaders
 {
-    public class GLShaderInclude : EngineObject, IEngineObservable
+    public class GLShaderInclude : GObject, IEngineObservable
     {
         #region Values
         private string _code;
@@ -41,7 +41,7 @@ namespace ThinGin.OpenGL.Common.Shaders
         #endregion
 
         #region Constructors
-        public GLShaderInclude(IRenderEngine Engine, string Name, EShaderType Type, string Code) : base(Engine)
+        public GLShaderInclude(IEngine Engine, string Name, EShaderType Type, string Code) : base(Engine)
         {
             this.Code = Code;
             this.Name = Name;

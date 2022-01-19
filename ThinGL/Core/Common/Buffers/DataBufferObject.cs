@@ -28,7 +28,7 @@ namespace ThinGin.Core.Common
 
         #region Constructors
 
-        public DataBufferObject(IRenderEngine Engine) : base(Engine)
+        public DataBufferObject(IEngine Engine) : base(Engine)
         {
         }
         #endregion

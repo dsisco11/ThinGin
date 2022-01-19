@@ -99,7 +99,7 @@ namespace ThinGin.Core.Common.Cameras
         #endregion
 
         #region Constructors
-        public Camera(IRenderEngine Engine) : base(Engine)
+        public Camera(IEngine Engine) : base(Engine)
         {
         }
         #endregion

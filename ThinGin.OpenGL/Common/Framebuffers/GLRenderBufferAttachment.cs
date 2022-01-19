@@ -9,11 +9,11 @@ using ThinGin.Core.Common.Engine.Delegates;
 
 namespace ThinGin.OpenGL.Common.Framebuffers
 {
-    public class GLRenderBufferAttachment : EngineObject, IFrameAttachment
+    public class GLRenderBufferAttachment : GObject, IGBufferAttachment
     {
         #region Values
         private int Handle = 0;
-        protected WeakReference<FrameBuffer> _ownerRef;
+        protected WeakReference<GBuffer> _ownerRef;
         protected int Slot;
         #endregion
 
@@ -26,13 +26,13 @@ namespace ThinGin.OpenGL.Common.Framebuffers
         #endregion
 
         #region Accessors
-        public FrameBuffer Owner => _ownerRef.TryGetTarget(out FrameBuffer outOwner) ? outOwner : null;
+        public GBuffer Owner => _ownerRef.TryGetTarget(out GBuffer outOwner) ? outOwner : null;
         #endregion
 
         #region Constructors
-        public GLRenderBufferAttachment(IRenderEngine Engine, FrameBuffer Owner, RenderbufferStorage Storage, RenderBufferOptions Options) : base(Engine)
+        public GLRenderBufferAttachment(IEngine Engine, GBuffer Owner, RenderbufferStorage Storage, RenderBufferOptions Options) : base(Engine)
         {
-            _ownerRef = new WeakReference<FrameBuffer>(Owner);
+            _ownerRef = new WeakReference<GBuffer>(Owner);
             this.Storage = Storage;
             this.Options = Options;
         }
@@ -40,7 +40,7 @@ namespace ThinGin.OpenGL.Common.Framebuffers
 
         #region Attaching
 
-        public void Attach(FrameBuffer frameBuffer, int Slot)
+        public void Attach(GBuffer frameBuffer, int Slot)
         {
             this.Slot = Slot;
             if (Handle == 0)
@@ -65,7 +65,7 @@ namespace ThinGin.OpenGL.Common.Framebuffers
             IsAttached = true;
         }
 
-        public void Detach(FrameBuffer frameBuffer)
+        public void Detach(GBuffer frameBuffer)
         {
             GL.FramebufferTexture2D(FramebufferTarget.Framebuffer, (FramebufferAttachment)Slot, TextureTarget.Texture2D, 0, 0);
             Slot = 0;
