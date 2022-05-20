@@ -5,7 +5,6 @@ using ThinGin.Core.Common.Engine.Interfaces;
 using ThinGin.Core.Common.Enums;
 using ThinGin.Core.Common.Interfaces;
 using ThinGin.Core.Common.Meshes;
-using ThinGin.Core.Exceptions;
 using ThinGin.Core.Rendering.Common;
 
 namespace ThinGin.OpenGL.Common.Renderers
@@ -44,8 +43,8 @@ namespace ThinGin.OpenGL.Common.Renderers
             var attrib = mesh.Layout.Get(EVertexAttribute.Position);
             switch (attrib.ValueType)
             {
-                case EValueType.SHORT:
-                case EValueType.USHORT:
+                case EValueType.Int16:
+                case EValueType.UInt16:
                     {
                         var ptr = ((short*)vPtr);
                         switch (attrib.Count)
@@ -62,7 +61,7 @@ namespace ThinGin.OpenGL.Common.Renderers
                         }
                     }
                     break;
-                case EValueType.FLOAT:
+                case EValueType.Float32:
                     {
                         var ptr = ((float*)vPtr);
                         switch (attrib.Count)
@@ -113,8 +112,8 @@ namespace ThinGin.OpenGL.Common.Renderers
                         }
                     }
                     break;
-                case EValueType.INT:
-                case EValueType.UINT:
+                case EValueType.Int32:
+                case EValueType.UInt32:
                     {
                         var ptr = ((int*)vPtr);
                         switch (attrib.Count)
@@ -139,8 +138,8 @@ namespace ThinGin.OpenGL.Common.Renderers
             var attrib = mesh.Layout.Get(EVertexAttribute.Normal);
             switch (attrib.ValueType)
             {
-                case EValueType.BYTE:
-                case EValueType.SBYTE:
+                case EValueType.UInt8:
+                case EValueType.Int8:
                     {
                         var ptr = ((byte*)vPtr);
                         if (attrib.Count > 2)
@@ -149,8 +148,8 @@ namespace ThinGin.OpenGL.Common.Renderers
                         }
                     }
                     break;
-                case EValueType.SHORT:
-                case EValueType.USHORT:
+                case EValueType.Int16:
+                case EValueType.UInt16:
                     {
                         var ptr = ((short*)vPtr);
                         if (attrib.Count > 2)
@@ -159,7 +158,7 @@ namespace ThinGin.OpenGL.Common.Renderers
                         }
                     }
                     break;
-                case EValueType.FLOAT:
+                case EValueType.Float32:
                     {
                         var ptr = ((float*)vPtr);
                         if (attrib.Count > 2)
@@ -186,8 +185,8 @@ namespace ThinGin.OpenGL.Common.Renderers
                         }
                     }
                     break;
-                case EValueType.INT:
-                case EValueType.UINT:
+                case EValueType.Int32:
+                case EValueType.UInt32:
                     {
                         var ptr = ((int*)vPtr);
                         if (attrib.Count > 2)
@@ -204,7 +203,7 @@ namespace ThinGin.OpenGL.Common.Renderers
             var attrib = mesh.Layout.Get(EVertexAttribute.Color);
             switch (attrib.ValueType)
             {
-                case EValueType.BYTE:
+                case EValueType.UInt8:
                     {
                         var ptr = ((byte*)vPtr);
                         switch (attrib.Count)
@@ -218,7 +217,7 @@ namespace ThinGin.OpenGL.Common.Renderers
                         }
                     }
                     break;
-                case EValueType.SBYTE:
+                case EValueType.Int8:
                     {
                         var ptr = ((sbyte*)vPtr);
                         switch (attrib.Count)
@@ -232,7 +231,7 @@ namespace ThinGin.OpenGL.Common.Renderers
                         }
                     }
                     break;
-                case EValueType.SHORT:
+                case EValueType.Int16:
                     {
                         var ptr = ((short*)vPtr);
                         switch (attrib.Count)
@@ -246,7 +245,7 @@ namespace ThinGin.OpenGL.Common.Renderers
                         }
                     }
                     break;
-                case EValueType.USHORT:
+                case EValueType.UInt16:
                     {
                         var ptr = ((ushort*)vPtr);
                         switch (attrib.Count)
@@ -260,7 +259,7 @@ namespace ThinGin.OpenGL.Common.Renderers
                         }
                     }
                     break;
-                case EValueType.FLOAT:
+                case EValueType.Float32:
                     {
                         var ptr = ((float*)vPtr);
                         switch (attrib.Count)
@@ -302,7 +301,7 @@ namespace ThinGin.OpenGL.Common.Renderers
                         }
                     }
                     break;
-                case EValueType.INT:
+                case EValueType.Int32:
                     {
                         var ptr = ((int*)vPtr);
                         switch (attrib.Count)
@@ -316,7 +315,7 @@ namespace ThinGin.OpenGL.Common.Renderers
                         }
                     }
                     break;
-                case EValueType.UINT:
+                case EValueType.UInt32:
                     {
                         var ptr = ((uint*)vPtr);
                         switch (attrib.Count)
@@ -338,8 +337,8 @@ namespace ThinGin.OpenGL.Common.Renderers
             var attrib = mesh.Layout.Get(EVertexAttribute.UVMap);
             switch (attrib.ValueType)
             {
-                case EValueType.SHORT:
-                case EValueType.USHORT:
+                case EValueType.Int16:
+                case EValueType.UInt16:
                     {
                         var ptr = ((short*)vPtr);
                         switch (attrib.Count)
@@ -356,7 +355,7 @@ namespace ThinGin.OpenGL.Common.Renderers
                         }
                     }
                     break;
-                case EValueType.FLOAT:
+                case EValueType.Float32:
                     {
                         var ptr = ((float*)vPtr);
                         switch (attrib.Count)
@@ -407,8 +406,8 @@ namespace ThinGin.OpenGL.Common.Renderers
                         }
                     }
                     break;
-                case EValueType.INT:
-                case EValueType.UINT:
+                case EValueType.Int32:
+                case EValueType.UInt32:
                     {
                         var ptr = ((int*)vPtr);
                         switch (attrib.Count)

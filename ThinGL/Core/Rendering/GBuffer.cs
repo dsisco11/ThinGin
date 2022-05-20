@@ -2,18 +2,19 @@
 using System;
 using System.Collections.Generic;
 using System.Drawing;
+
 using ThinGin.Core.Common.Enums;
 using ThinGin.Core.Common.Interfaces;
 using ThinGin.Core.Common.Types;
-using ThinGin.Core.Common.Engine.Types;
 using ThinGin.Core.Engine.Common.Core;
+using ThinGin.Core.RenderHardware.Resources;
 
 namespace ThinGin.Core.Rendering
 {
     /// <summary>
     /// Redirect the rendering output to a frame buffer
     /// </summary>
-    public abstract class GBuffer : GObject, IEngineBindable
+    public abstract class GBuffer : RHIResource, IEngineBindable
     {
         #region Values
         protected int _handle = 0;
@@ -36,7 +37,7 @@ namespace ThinGin.Core.Rendering
         /// Handle to the buffer object on the GPU
         /// </summary>
         public int Handle { get => _handle; protected set => _handle = value; }
-        public EBufferAccess AccessMode { get; protected set; } = EBufferAccess.ReadWrite;
+        public ERHIAccess AccessMode { get; protected set; } = ERHIAccess.ReadWrite;
         /// <summary> Size of the FrameBuffer </summary>
         public readonly Size Size;
 
@@ -116,7 +117,7 @@ namespace ThinGin.Core.Rendering
                 return;
             }
 
-            Engine.Bind_Framebuffer(this, AccessMode);
+            RHI.Bind_Framebuffer(this, AccessMode);
 
             if (HasPendingAttachments)
             {// Process and attach any registered but unattached objects
@@ -132,7 +133,7 @@ namespace ThinGin.Core.Rendering
         /// <summary>
         /// Make the Render buffer current 
         /// </summary>
-        public void Bind(EBufferAccess Access)
+        public void Bind(ERHIAccess Access)
         {
             if (BindState)
             {
@@ -146,7 +147,7 @@ namespace ThinGin.Core.Rendering
                 return;
             }
 
-            Engine.Bind_Framebuffer(this, Access);
+            RHI.Bind_Framebuffer(this, Access);
 
             if (HasPendingAttachments)
             {// Process and attach any registered but unattached objects
@@ -167,7 +168,7 @@ namespace ThinGin.Core.Rendering
                 return;
             }
 
-            Engine.Unbind_Framebuffer(this);
+            RHI.Unbind_Framebuffer(this);
         }
 
         public void Bound() => BindState = true;

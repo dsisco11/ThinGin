@@ -77,8 +77,8 @@ namespace ThinGin.Core.Common.Geometry.Filters
         {
             return primitiveType switch
             {
-                ETopology.Points => indiceCount,// n
-                ETopology.Lines => indiceCount / 2,// n/2
+                ETopology.PointList => indiceCount,// n
+                ETopology.LineList => indiceCount / 2,// n/2
                 ETopology.LineLoop => indiceCount+1,// we add 1 more here to cause the system to add room for an additional triangle for the return line
                 ETopology.LineStrip => Math.Max(0, indiceCount - 1),//  n-1
                 ETopology.Triangles => indiceCount / 3,// n/3
@@ -95,8 +95,8 @@ namespace ThinGin.Core.Common.Geometry.Filters
         {
             return primitiveType switch
             {
-                ETopology.Points => 1,
-                ETopology.Lines => 1,
+                ETopology.PointList => 1,
+                ETopology.LineList => 1,
                 ETopology.LineLoop => 1,
                 ETopology.LineStrip => 1,
                 ETopology.Triangles => 1,
@@ -115,8 +115,8 @@ namespace ThinGin.Core.Common.Geometry.Filters
         {
             return primitiveType switch
             {
-                ETopology.Points => (int n, int c) => (n / 3),
-                ETopology.Lines => (int n, int c) => (n / 2),
+                ETopology.PointList => (int n, int c) => (n / 3),
+                ETopology.LineList => (int n, int c) => (n / 2),
                 ETopology.LineLoop => (int n, int c) => (n / 2) * (1 - (n < c ? 1 : 0)),
                 ETopology.LineStrip => (int n, int c) => (n),
                 ETopology.Triangles => (int n, int c) => n,
@@ -133,8 +133,8 @@ namespace ThinGin.Core.Common.Geometry.Filters
         {
             return primitiveType switch
             {
-                ETopology.Points => (n / 3),
-                ETopology.Lines => (n / 2),
+                ETopology.PointList => (n / 3),
+                ETopology.LineList => (n / 2),
                 ETopology.LineLoop => (n / 2) * (1 - (n < c ? 1 : 0)),
                 ETopology.LineStrip => (n),
                 ETopology.Triangles => n,

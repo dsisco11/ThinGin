@@ -6,7 +6,6 @@ using ThinGin.Core.Common.Engine.Interfaces;
 using ThinGin.Core.Common.Enums;
 using ThinGin.Core.Common.Interfaces;
 using ThinGin.Core.Common.Meshes;
-using ThinGin.Core.Exceptions;
 using ThinGin.Core.Rendering.Common;
 using ThinGin.OpenGL.Common.BufferObjects;
 
@@ -46,7 +45,7 @@ namespace ThinGin.OpenGL.Common.Renderers
         {
             return new EngineDelegate(() =>
             {
-                VBO = new VertexBufferObject(Engine);
+                VBO = new VertexBufferObject(RHI);
                 VBO.Upload(mesh.Data, null);
             });
         }
@@ -58,7 +57,7 @@ namespace ThinGin.OpenGL.Common.Renderers
             {
                 VBO.Upload(mesh.Data, null);
 #if DEBUG
-                Engine.ErrorCheck(out _);
+                RHI.ErrorCheck(out _);
 #endif
             });
         }

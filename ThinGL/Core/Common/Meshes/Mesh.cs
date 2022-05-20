@@ -165,8 +165,8 @@ namespace ThinGin.Core.Common.Meshes
         #region Creation
         public static Mesh Create_Textured_Quad(EngineInstance Engine, Rectangle Bounds)
         {
-            var layout = new VertexLayout(Position: new AttributeDescriptor(2, EValueType.INT),
-                                              UV: new AttributeDescriptor(2, EValueType.SHORT));
+            var layout = new VertexLayout(Position: new AttributeDescriptor(2, EValueType.Int32),
+                                              UV: new AttributeDescriptor(2, EValueType.Int16));
             var mesh = new MeshBuilder(layout, ETopology.Triangles);
             mesh.Filters.Add(ReindexingFilter.Instance);
 
@@ -194,8 +194,8 @@ namespace ThinGin.Core.Common.Meshes
         }
         public static Mesh Create_Textured_Quad(EngineInstance Engine, RectangleF Bounds)
         {
-            var layout = new VertexLayout(Position: new AttributeDescriptor(2, EValueType.INT),
-                                              UV: new AttributeDescriptor(2, EValueType.SHORT));
+            var layout = new VertexLayout(Position: new AttributeDescriptor(2, EValueType.Int32),
+                                              UV: new AttributeDescriptor(2, EValueType.Int16));
             var mesh = new MeshBuilder(layout, ETopology.Triangles);
             mesh.Push_Data(0, new[] {
                     new DataChunk(Bounds.Left, Bounds.Top),

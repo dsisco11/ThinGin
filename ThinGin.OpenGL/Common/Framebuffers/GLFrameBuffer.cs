@@ -9,6 +9,7 @@ using ThinGin.Core.Rendering;
 using ThinGin.Core.Common.Engine.Interfaces;
 using ThinGin.Core.Common.Engine.Delegates;
 using ThinGin.Core.Common.Meshes;
+using ThinGin.Core.Engine.Common.Core;
 
 namespace ThinGin.OpenGL.Common.Framebuffers
 {
@@ -75,7 +76,7 @@ namespace ThinGin.OpenGL.Common.Framebuffers
         #endregion
 
         #region Constructors
-        public GLFrameBuffer(IEngine Engine, Size size) : base(Engine, size)
+        public GLFrameBuffer(EngineInstance engine, Size size) : base(engine, size)
         {
         }
 
@@ -83,26 +84,26 @@ namespace ThinGin.OpenGL.Common.Framebuffers
         /// Create the RenderBuffer
         /// </summary>
         /// <param name="size">Desired size</param>
-        public GLFrameBuffer(IEngine Engine, Size size, FrameBufferOptions Options) : base(Engine, size)
+        public GLFrameBuffer(EngineInstance engine, Size size, FrameBufferOptions Options) : base(engine, size)
         {// XXX: TODO: Consider doing lazy creation of this to be more flexible surrounding OpenGL contexts
 
-            if (!Engine.IsSupported("ext_framebuffer_object")) throw new Exception("Framebuffer objects are not supported by the graphics driver!");
+            if (!engine.Renderer.IsSupported("ext_framebuffer_object")) throw new Exception("Framebuffer objects are not supported by the graphics driver!");
 
-            if (Options.EnableRead && Options.EnableWrite) AccessMode = EBufferAccess.ReadWrite;
-            else if (Options.EnableWrite) AccessMode = EBufferAccess.Write;
-            else if (Options.EnableRead) AccessMode = EBufferAccess.Read;
+            if (Options.EnableRead && Options.EnableWrite) AccessMode = ERHIAccess.ReadWrite;
+            else if (Options.EnableWrite) AccessMode = ERHIAccess.WriteOnlyMask;
+            else if (Options.EnableRead) AccessMode = ERHIAccess.ReadOnlyMask;
 
 
             if (Options.ColorBuffer)
             {
                 if (Options.EnableMSAA)
                 {
-                    IGBufferAttachment attach = new GLRenderBufferAttachment(Engine, this, RenderbufferStorage.Rgba8, new RenderBufferOptions(true, Options.MSAA_Samples));
+                    IGBufferAttachment attach = new GLRenderBufferAttachment(engine, this, RenderbufferStorage.Rgba8, new RenderBufferOptions(true, Options.MSAA_Samples));
                     Attachments.Add(attach);
                 }
                 else
                 {
-                    IGBufferAttachment attach = new GLTextureBufferAttachment(Engine, this);
+                    IGBufferAttachment attach = new GLTextureBufferAttachment(engine, this);
                     Attachments.Add(attach);
                 }
             }
@@ -110,7 +111,7 @@ namespace ThinGin.OpenGL.Common.Framebuffers
 
             if (Options.DepthBuffer && Options.StencilBuffer && !Options.SeperateDepthStencil)
             {// We want both depth and stencil buffers and we dont want the seperated
-                IGBufferAttachment attach = new GLRenderBufferAttachment(Engine, this, RenderbufferStorage.DepthStencil, new RenderBufferOptions());
+                IGBufferAttachment attach = new GLRenderBufferAttachment(engine, this, RenderbufferStorage.DepthStencil, new RenderBufferOptions());
                 //attach.TypeId = EFramebufferAttachmentType.ColorBuffer;
                 Attachments.Add(attach);
             }
@@ -118,14 +119,14 @@ namespace ThinGin.OpenGL.Common.Framebuffers
             {
                 if (Options.StencilBuffer)
                 {
-                    IGBufferAttachment attach = new GLRenderBufferAttachment(Engine, this, RenderbufferStorage.StencilIndex8, new RenderBufferOptions());
+                    IGBufferAttachment attach = new GLRenderBufferAttachment(engine, this, RenderbufferStorage.StencilIndex8, new RenderBufferOptions());
                     //attach.TypeId = EFramebufferAttachmentType.StencilBuffer;
                     Attachments.Add(attach);
                 }
 
                 if (Options.DepthBuffer)
                 {
-                    IGBufferAttachment attach = new GLRenderBufferAttachment(Engine, this, RenderbufferStorage.DepthComponent32, new RenderBufferOptions());
+                    IGBufferAttachment attach = new GLRenderBufferAttachment(engine, this, RenderbufferStorage.DepthComponent32, new RenderBufferOptions());
                     //attach.TypeId = EFramebufferAttachmentType.DepthBuffer;
                     Attachments.Add(attach);
                 }
@@ -157,7 +158,7 @@ namespace ThinGin.OpenGL.Common.Framebuffers
                 GL.ClearBuffer(ClearBufferCombined.DepthStencil, 0, 0f, 0);
             }
 
-            if (Engine.ErrorCheck(out string errMsg))
+            if (RHI.ErrorCheck(out string errMsg))
             {
                 System.Diagnostics.Trace.TraceError(errMsg);
             }
@@ -240,14 +241,14 @@ namespace ThinGin.OpenGL.Common.Framebuffers
 
                 if (_cached_blit_quad is null || !_cached_blit_quad.Bounds.Equals(area))
                 {
-                    _cached_blit_quad = Mesh.Create_Textured_Quad(Engine, area);
+                    _cached_blit_quad = Mesh.Create_Textured_Quad(RHI, area);
                 }
 
                 // Get the texture that the framebuffer draws to
                 ITexture drawTexture = textureBuffer.Handle;
 
                 // Bind it
-                Engine.Bind(drawTexture);
+                RHI.Bind(drawTexture);
 
                 _cached_blit_quad.Render();
                 return;
@@ -256,11 +257,11 @@ namespace ThinGin.OpenGL.Common.Framebuffers
             //{
 
             // bind the framebuffer in read mode
-            Bind(EBufferAccess.Read);
+            Bind(ERHIAccess.ReadOnlyMask);
             //E.Bind_Framebuffer(this.Framebuffer, FramebufferTarget.ReadFramebuffer);
 
             // blit the framebuffer to the screen!
-            Engine.Blit(area, new Rectangle(0, 0, area.Width, area.Height));
+            RHI.Blit(area, new Rectangle(0, 0, area.Width, area.Height));
 
             // unbind the framebuffer
             Unbind();
@@ -352,7 +353,7 @@ namespace ThinGin.OpenGL.Common.Framebuffers
 
             if (!BindState)
             {
-                Engine.Bind_Framebuffer(this, EBufferAccess.Read);
+                RHI.Bind_Framebuffer(this, ERHIAccess.ReadOnlyMask);
                 //GL.ReadBuffer(ReadBufferMode.ColorAttachment0);
             }
 
@@ -382,7 +383,7 @@ namespace ThinGin.OpenGL.Common.Framebuffers
             if (doUnbind)
             {
                 GL.ReadBuffer(ReadBufferMode.Front);
-                Engine.Unbind_Framebuffer(this);
+                RHI.Unbind_Framebuffer(this);
             }
 
             return pixelBuffer;

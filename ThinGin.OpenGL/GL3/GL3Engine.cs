@@ -205,49 +205,49 @@ namespace ThinGin.OpenGL.GL3
             {
                 case 1:
                     {
-                        if (Layout.Equals(EPixelComponent.Red))
+                        if (Layout.Equals(ECixel.Red))
                             return Layout.PreserveValues ? PixelFormat.RedInteger : PixelFormat.Red;
 
-                        if (Layout.Equals(EPixelComponent.Green))
+                        if (Layout.Equals(ECixel.Green))
                             return Layout.PreserveValues ? PixelFormat.GreenInteger : PixelFormat.Green;
 
-                        if (Layout.Equals(EPixelComponent.Blue))
+                        if (Layout.Equals(ECixel.Blue))
                             return Layout.PreserveValues ? PixelFormat.BlueInteger : PixelFormat.Blue;
 
-                        if (Layout.Equals(EPixelComponent.Alpha))
+                        if (Layout.Equals(ECixel.Alpha))
                             return Layout.PreserveValues ? PixelFormat.AlphaInteger : PixelFormat.Alpha;
 
-                        if (Layout.Equals(EPixelComponent.Raw))
+                        if (Layout.Equals(ECixel.Raw))
                             return Layout.PreserveValues ? PixelFormat.RedInteger : PixelFormat.Red;
                     }
                     break;
                 case 2:
                     {
-                        if (Layout.Equals(EPixelComponent.Red, EPixelComponent.Green))
+                        if (Layout.Equals(ECixel.Red, ECixel.Green))
                             return Layout.PreserveValues ? PixelFormat.RgInteger : PixelFormat.Rg;
 
-                        if (Layout.Equals(EPixelComponent.Raw, EPixelComponent.Raw))
+                        if (Layout.Equals(ECixel.Raw, ECixel.Raw))
                             return Layout.PreserveValues ? PixelFormat.RgInteger : PixelFormat.Rg;
                     }
                     break;
                 case 3:
                     {
-                        if (Layout.Equals(EPixelComponent.Red, EPixelComponent.Green, EPixelComponent.Blue))
+                        if (Layout.Equals(ECixel.Red, ECixel.Green, ECixel.Blue))
                             return Layout.PreserveValues ? PixelFormat.RgbInteger : PixelFormat.Rgb;
 
-                        if (Layout.Equals(EPixelComponent.Blue, EPixelComponent.Green, EPixelComponent.Red))
+                        if (Layout.Equals(ECixel.Blue, ECixel.Green, ECixel.Red))
                             return Layout.PreserveValues ? PixelFormat.BgrInteger : PixelFormat.Bgr;
                     }
                     break;
                 case 4:
                     {
-                        if (Layout.Equals(EPixelComponent.Alpha, EPixelComponent.Blue, EPixelComponent.Green, EPixelComponent.Red))
+                        if (Layout.Equals(ECixel.Alpha, ECixel.Blue, ECixel.Green, ECixel.Red))
                             return PixelFormat.AbgrExt;
 
-                        if (Layout.Equals(EPixelComponent.Blue, EPixelComponent.Green, EPixelComponent.Red, EPixelComponent.Alpha))
+                        if (Layout.Equals(ECixel.Blue, ECixel.Green, ECixel.Red, ECixel.Alpha))
                             return Layout.PreserveValues ? PixelFormat.BgraInteger : PixelFormat.Bgra;
 
-                        if (Layout.Equals(EPixelComponent.Red, EPixelComponent.Green, EPixelComponent.Blue, EPixelComponent.Alpha))
+                        if (Layout.Equals(ECixel.Red, ECixel.Green, ECixel.Blue, ECixel.Alpha))
                             return Layout.PreserveValues ? PixelFormat.RgbaInteger : PixelFormat.Rgba;
                     }
                     break;
@@ -310,7 +310,7 @@ namespace ThinGin.OpenGL.GL3
                 else
                 {
                     bool Unsigned = Layout.Flags.HasFlag(EPixelDefFlags.Unsigned);
-                    bool IsRaw = Layout.Components[0].Type == EPixelComponent.Raw;
+                    bool IsRaw = Layout.Components[0].Type == ECixel.Raw;
                     int componentCount = Layout.Components.Length;
                     int Bits = Layout.Components[0].BitDepth;
 
@@ -418,7 +418,7 @@ namespace ThinGin.OpenGL.GL3
                 else
                 {
                     bool Unsigned = Layout.Flags.HasFlag(EPixelDefFlags.Unsigned);
-                    bool IsRaw = Layout.Components[0].Type == EPixelComponent.Raw;
+                    bool IsRaw = Layout.Components[0].Type == ECixel.Raw;
                     int componentCount = Layout.Components.Length;
                     int Bits = Layout.Components[0].BitDepth;
 

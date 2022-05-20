@@ -17,7 +17,7 @@ namespace ThinGin.Core.Common.Data
 
         #region Constructors
         /// <summary> <inheritdoc cref="NamedDataDescriptor(string, int, EValueType, int, int)"/> </summary>
-        public ReferencedDataDescriptor(object Handle, object Context = null, string Name = null, int Count = 1, EValueType ValueType = EValueType.NULL, int ByteOffset = 0, int Stride = 0) : base(Name, Count, ValueType, ByteOffset, Stride)
+        public ReferencedDataDescriptor(object Handle, object Context = null, string Name = null, int Count = 1, EValueType ValueType = EValueType.Null, int ByteOffset = 0, int Stride = 0) : base(Name, Count, ValueType, ByteOffset, Stride)
         {
             this.Handle = Handle;
             this.Context = Context;

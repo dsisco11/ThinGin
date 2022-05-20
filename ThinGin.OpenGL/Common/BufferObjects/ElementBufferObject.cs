@@ -1,9 +1,9 @@
-﻿using ThinGin.Core.Common.Interfaces;
-
+﻿
 using OpenTK.Graphics.OpenGL;
 using ThinGin.Core.Common.Enums;
 using ThinGin.Core.Exceptions;
 using ThinGin.Core.Common.Data.Interfaces;
+using ThinGin.Core.Engine.Common.Core;
 
 namespace ThinGin.OpenGL.Common.BufferObjects
 {
@@ -25,9 +25,9 @@ namespace ThinGin.OpenGL.Common.BufferObjects
         #endregion
 
         #region Constructors
-        public ElementBufferObject(IEngine Engine) : base(Engine)
+        public ElementBufferObject(EngineInstance Engine) : base(Engine)
         {
-            if (!Engine.IsSupported("arb_vertex_buffer_object"))
+            if (!Engine.Renderer.IsSupported("arb_vertex_buffer_object"))
             {
                 throw new Exceptions.OpenGLUnsupportedException(nameof(ElementBufferObject), "The element buffer object extension is not supported by the graphics driver!");
             }
@@ -47,9 +47,9 @@ namespace ThinGin.OpenGL.Common.BufferObjects
         {
             return DataType switch
             {
-                EValueType.BYTE => DrawElementsType.UnsignedByte,
-                EValueType.USHORT => DrawElementsType.UnsignedShort,
-                EValueType.UINT => DrawElementsType.UnsignedInt,
+                EValueType.UInt8 => DrawElementsType.UnsignedByte,
+                EValueType.UInt16 => DrawElementsType.UnsignedShort,
+                EValueType.UInt32 => DrawElementsType.UnsignedInt,
                 _ => throw new ThinGinException($"Invalid data type for element buffer object! (Type: {DataType})"),
             };
         }

@@ -7,14 +7,14 @@ using ThinGin.Core.Common.Engine.Interfaces;
 using ThinGin.Core.Common.Engine.Delegates;
 using ThinGin.Core.Shaders;
 using System.Linq;
-using ThinGin.Core.Common.Engine.Types;
 using System.Collections.Generic;
+using ThinGin.Core.RenderHardware.Resources;
 
 namespace ThinGin.OpenGL.Common.Shaders
 {
     /// <summary>
     /// </summary>
-    public class GLShaderInstance : GObject, IShaderInstance, IEngineObservable
+    public class GLShaderInstance : RHIResource, IShaderInstance, IEngineObservable
     {
         #region Values
         public int Handle { get; protected set; } = 0;
@@ -53,7 +53,7 @@ namespace ThinGin.OpenGL.Common.Shaders
         {
             if (!Includes.ContainsKey(Name))
             {
-                var inc = new GLShaderInclude(Engine, Name, ShaderType, Code);
+                var inc = new GLShaderInclude(RHI, Name, ShaderType, Code);
                 Includes.Add(Name, inc);
                 inc.OnChanged += include_updated;
                 return true;

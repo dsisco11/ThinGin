@@ -7,6 +7,7 @@ using ThinGin.Core.Common.Enums;
 using ThinGin.Core.Common;
 using ThinGin.Core.Common.Engine.Interfaces;
 using ThinGin.Core.Common.Engine.Delegates;
+using ThinGin.Core.Engine.Common.Core;
 
 namespace ThinGin.OpenGL.Common
 {
@@ -31,7 +32,7 @@ namespace ThinGin.OpenGL.Common
         #region Constructors
         /// <summary>
         /// </summary>
-        public GLBufferObject(IEngine Engine) : base(Engine)
+        public GLBufferObject(EngineInstance engine) : base(engine)
         {
         }
         #endregion
@@ -57,7 +58,7 @@ namespace ThinGin.OpenGL.Common
         #endregion
 
         #region Direct Memory Access
-        public override bool TryMap(EBufferAccess Access, out IntPtr dmaAddress)
+        public override bool TryMap(ERHIAccess Access, out IntPtr dmaAddress)
         {
             if (_address != IntPtr.Zero)
             {
@@ -67,9 +68,9 @@ namespace ThinGin.OpenGL.Common
 
             BufferAccess accessMode = Access switch
             {
-                EBufferAccess.Read => BufferAccess.ReadOnly,
-                EBufferAccess.Write => BufferAccess.WriteOnly,
-                EBufferAccess.ReadWrite => BufferAccess.ReadWrite,
+                ERHIAccess.ReadOnlyMask => BufferAccess.ReadOnly,
+                ERHIAccess.WriteOnlyMask => BufferAccess.WriteOnly,
+                ERHIAccess.ReadWrite => BufferAccess.ReadWrite,
                 _ => throw new NotImplementedException(Access.ToString())
             };
 
@@ -108,7 +109,7 @@ namespace ThinGin.OpenGL.Common
 
                 if (!_bind_state) GL.BindBuffer(Target, 0);// If the buffer is not supposed to be bound right now then unbind it!
 
-                Engine.ErrorCheck(out _);
+                RHI.ErrorCheck(out _);
             });
         }
 
@@ -129,7 +130,7 @@ namespace ThinGin.OpenGL.Common
                     GL.BufferData(Target, _length, ref Data[0], _usage);
                     
                     if (!_bind_state) GL.BindBuffer(Target, 0);// If the buffer is not supposed to be bound right now then unbind it!
-                    Engine.ErrorCheck(out _);
+                    RHI.ErrorCheck(out _);
                 }
             }
         });

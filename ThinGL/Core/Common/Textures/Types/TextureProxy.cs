@@ -1,15 +1,17 @@
 ﻿using System;
 using ThinGin.Core.Common.Interfaces;
-using ThinGin.Core.Common.Engine.Types;
 using ThinGin.Core.Common.Engine.Interfaces;
 using ThinGin.Core.Common.Engine.Delegates;
+using ThinGin.Core.Engine.Common.Core;
+using ThinGin.Core.RenderHardware.Resources;
+using ThinGin.Core.RenderHardware;
 
 namespace ThinGin.Core.Common.Textures.Types
 {
     /// <summary>
     /// Creates or links to an existing <see cref="Texture"/> instance.
     /// </summary>
-    public class TextureProxy : GObject, ITexture, IDisposable
+    public class TextureProxy : RHIResource, ITexture, IDisposable
     {
         #region Properties
         /// <summary>
@@ -38,10 +40,10 @@ namespace ThinGin.Core.Common.Textures.Types
         public int Handle => Root?.Handle ?? 0;
 
         /// <summary> <inheritdoc cref="ITexture.Priority"/> </summary>
-        public int Priority { get => Root?.Priority ?? 0; set => Root.Priority = value; }
+        public int Priority { get => Root?.ResourcePriority ?? 0; set => Root.ResourcePriority = value; }
 
         /// <summary> <inheritdoc cref="ITexture.Metadata"/> </summary>
-        public TextureMetadata Metadata => Root.Metadata;
+        public TextureDescriptor Metadata => Root.Descriptor;
         #endregion
 
         #region Constructors
@@ -49,23 +51,23 @@ namespace ThinGin.Core.Common.Textures.Types
         /// Creates a new shared texture instance but does NOT increment its user count, which is why this constructor is internal...
         /// </summary>
         /// <param name="Root"></param>
-        internal TextureProxy(IEngine Engine, string Identifier, Texture Root) : base(Engine)
+        internal TextureProxy(EngineInstance engine, string Identifier, Texture Root) : base(engine)
         {
             this.Identifier = Identifier;
             _rootRef = new WeakReference<Texture>(Root);
         }
 
-        public TextureProxy(IEngine Engine, string Identifier) : base(Engine)
+        public TextureProxy(EngineInstance engine, string Identifier) : base(engine)
         {
             this.Identifier = Identifier;
-            _rootRef = Engine.TextureCache.Lookup(Identifier);
+            _rootRef = engine.TextureCache.Lookup(Identifier);
         }
 
         #endregion
 
         #region IEngineResource
-        public override IEngineDelegate Get_Initializer() => null;
-        public override IEngineDelegate Get_Releaser() => new EngineReleaser<string>(Identifier, Engine.TextureCache.Dereference);
+        public override RHIDelegate Get_Initializer() => null;
+        public override RHIDelegate Get_Releaser() => new EngineReleaser<string>(Identifier, RHI.TextureCache.Dereference);
         #endregion
 
     }

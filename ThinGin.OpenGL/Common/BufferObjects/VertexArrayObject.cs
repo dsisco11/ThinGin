@@ -8,6 +8,7 @@ using System;
 using ThinGin.Core.Common.Meshes;
 using ThinGin.Core.Common.Engine.Interfaces;
 using ThinGin.Core.Common.Engine.Delegates;
+using ThinGin.Core.Engine.Common.Core;
 
 namespace ThinGin.OpenGL.Common.BufferObjects
 {
@@ -24,9 +25,9 @@ namespace ThinGin.OpenGL.Common.BufferObjects
         #endregion
 
         #region Constructors
-        public VertexArrayObject(IEngine Engine, VertexLayout Layout) : base(Engine)
+        public VertexArrayObject(EngineInstance engine, VertexLayout Layout) : base(engine)
         {
-            if (!Engine.IsSupported("arb_vertex_array_object"))
+            if (!engine.Renderer.IsSupported("arb_vertex_array_object"))
             {
                 throw new OpenGLException("The Vertex array object extension is not supported by the graphics driver!");
             }
@@ -47,7 +48,7 @@ namespace ThinGin.OpenGL.Common.BufferObjects
                     var attribute = Layout[attrIndex];
                     GL.VertexAttribPointer(attrIndex, attribute.Count, Common.Bridge.Translate(attribute.ValueType), attribute.Normalize, attribute.Stride, attribute.Offset);
 
-                    if (Engine.Compatability.AttributeDivisors && attribute.IndexDivisor > 0)
+                    if (RHI.Compatability.AttributeDivisors && attribute.IndexDivisor > 0)
                     {
                         GL.VertexAttribDivisor(attrIndex, attribute.IndexDivisor);
                     }
@@ -81,7 +82,7 @@ namespace ThinGin.OpenGL.Common.BufferObjects
         #endregion
 
         #region Direct Memory Access
-        public override bool TryMap(EBufferAccess Access, out IntPtr dmaAddress)
+        public override bool TryMap(ERHIAccess Access, out IntPtr dmaAddress)
         {
             throw new NotImplementedException();
         }

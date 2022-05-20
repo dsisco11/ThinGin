@@ -4,13 +4,13 @@ using ThinGin.Core.Rendering;
 
 using OpenTK.Graphics.OpenGL;
 using ThinGin.Core.Common.Textures.Types;
-using ThinGin.Core.Common.Engine.Types;
 using ThinGin.Core.Common.Engine.Interfaces;
 using ThinGin.Core.Common.Engine.Delegates;
+using ThinGin.Core.RenderHardware.Resources;
 
 namespace ThinGin.OpenGL.Common.Framebuffers
 {
-    internal class GLTextureBufferAttachment : GObject, IGBufferAttachment
+    internal class GLTextureBufferAttachment : RHIResource, IGBufferAttachment
     {
         #region Values
         protected readonly WeakReference<GBuffer> _ownerRef;

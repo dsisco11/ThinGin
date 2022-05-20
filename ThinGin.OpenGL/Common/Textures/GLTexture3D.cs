@@ -23,34 +23,34 @@ namespace ThinGin.OpenGL.Common.Textures
         #region Uploading
         protected override void Upload(byte[] RawPixels, int miplevel)
         {
-            var engine = Engine as GLEngineBase;
-            var pxlFmt = engine.Get_PixelFormat(GpuLayout);
-            var pxlTyp = engine.Get_PixelType(GpuLayout);
+            var engine = RHI as GLEngineBase;
+            var pxlFmt = engine.Get_PixelFormat(HardwareLayout);
+            var pxlTyp = engine.Get_PixelType(HardwareLayout);
             var datFmt = engine.Get_Internal_PixelFormat(Metadata.Layout, UseCompression);
 
             if (RawPixels is object)
             {
-                GL.TexImage3D(Target, miplevel, datFmt, Metadata.Width, Metadata.Height, Metadata.Depth, 0, pxlFmt, pxlTyp, RawPixels);
+                GL.TexImage3D(Target, miplevel, datFmt, Metadata.SizeX, Metadata.SizeY, Metadata.SizeZ, 0, pxlFmt, pxlTyp, RawPixels);
             }
             else
             {
-                GL.TexImage3D(Target, miplevel, datFmt, Metadata.Width, Metadata.Height, Metadata.Depth, 0, pxlFmt, pxlTyp, IntPtr.Zero);
+                GL.TexImage3D(Target, miplevel, datFmt, Metadata.SizeX, Metadata.SizeY, Metadata.SizeZ, 0, pxlFmt, pxlTyp, IntPtr.Zero);
             }
         }
 
         protected override void UploadSub(byte[] RawPixels, int xoffset, int yoffset, int zoffset, int miplevel)
         {
-            var engine = Engine as GLEngineBase;
-            var pxlFmt = engine.Get_PixelFormat(GpuLayout);
-            var pxlTyp = engine.Get_PixelType(GpuLayout);
+            var engine = RHI as GLEngineBase;
+            var pxlFmt = engine.Get_PixelFormat(HardwareLayout);
+            var pxlTyp = engine.Get_PixelType(HardwareLayout);
 
             if (RawPixels is object)
             {
-                GL.TexSubImage3D(Target, miplevel, xoffset, yoffset, zoffset, Metadata.Width, Metadata.Height, Metadata.Depth, pxlFmt, pxlTyp, RawPixels);
+                GL.TexSubImage3D(Target, miplevel, xoffset, yoffset, zoffset, Metadata.SizeX, Metadata.SizeY, Metadata.SizeZ, pxlFmt, pxlTyp, RawPixels);
             }
             else
             {
-                GL.TexSubImage3D(Target, miplevel, xoffset, yoffset, zoffset, Metadata.Width, Metadata.Height, Metadata.Depth, pxlFmt, pxlTyp, IntPtr.Zero);
+                GL.TexSubImage3D(Target, miplevel, xoffset, yoffset, zoffset, Metadata.SizeX, Metadata.SizeY, Metadata.SizeZ, pxlFmt, pxlTyp, IntPtr.Zero);
             }
         }
         #endregion

@@ -29,49 +29,38 @@ namespace ThinGin.Core.Common
         public static double ToDegrees(double value) => value * rtodd;
         #endregion
 
-        #region Min
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static int Min(int A, int B) => (A < B ? A : B);
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static long Min(long A, long B) => (A < B ? A : B);
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float Min(float A, float B) => (A < B ? A : B);
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double Min(double A, double B) => (A < B ? A : B);
-        #endregion
-
-        #region Max
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static int Max(int A, int B) => (A > B ? A : B);
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static long Max(long A, long B) => (A > B ? A : B);
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float Max(float A, float B) => (A > B ? A : B);
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double Max(double A, double B) => (A > B ? A : B);
-        #endregion
-
-        #region Clamp
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static int Clamp(int value, int min, int max) => Max(min, Min(max, value));
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static long Clamp(long value, long min, long max) => Max(min, Min(max, value));
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float Clamp(float value, float min, float max) => Max(min, Min(max, value));
-        [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double Clamp(double value, double min, double max) => Max(min, Min(max, value));
-        #endregion
-
 
         #region Range Clamp
+        // 8-Bit
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static int RangeClamp(int value, int a, int b) { var min = (a < b ? a : b); var max = (a < b ? b : a); return Max(min, Min(max, value)); }
+        public static byte ClampRange(byte value, byte A, byte B) => Math.Max(Math.Min(A, B), Math.Min(Math.Max(A, B), value));
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static long RangeClamp(long value, long a, long b) { var min = (a < b ? a : b); var max = (a < b ? b : a); return Max(min, Min(max, value)); }
+        public static sbyte ClampRange(sbyte value, sbyte A, sbyte B) => Math.Max(Math.Min(A, B), Math.Min(Math.Max(A, B), value));
+        
+        // 16-Bit
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static float RangeClamp(float value, float a, float b) { var min = (a < b ? a : b); var max = (a < b ? b : a); return Max(min, Min(max, value)); }
+        public static ushort ClampRange(ushort value, ushort A, ushort B) => Math.Max(Math.Min(A, B), Math.Min(Math.Max(A, B), value));
         [MethodImpl(MethodImplOptions.AggressiveInlining)]
-        public static double RangeClamp(double value, double a, double b) { var min = (a < b ? a : b); var max = (a < b ? b : a); return Max(min, Min(max, value)); }
+        public static short ClampRange(short value, short A, short B) => Math.Max(Math.Min(A, B), Math.Min(Math.Max(A, B), value));
+
+        // 32-Bit
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static uint ClampRange(uint value, uint A, uint B) => Math.Max(Math.Min(A, B), Math.Min(Math.Max(A, B), value));
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static int ClampRange(int value, int A, int B) => Math.Max(Math.Min(A, B), Math.Min(Math.Max(A, B), value));
+
+        // 64-Bit
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static ulong ClampRange(ulong value, ulong A, ulong B) => Math.Max(Math.Min(A, B), Math.Min(Math.Max(A, B), value));
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static long ClampRange(long value, long A, long B) => Math.Max(Math.Min(A, B), Math.Min(Math.Max(A, B), value));
+
+        // Floating-Point
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static float ClampRange(float value, float A, float B) => Math.Max(Math.Min(A, B), Math.Min(Math.Max(A, B), value));
+
+        [MethodImpl(MethodImplOptions.AggressiveInlining)]
+        public static double ClampRange(double value, double A, double B) => Math.Max(Math.Min(A, B), Math.Min(Math.Max(A, B), value));
         #endregion
 
         #region Floating point equality

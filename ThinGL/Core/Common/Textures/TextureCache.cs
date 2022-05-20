@@ -77,7 +77,7 @@ namespace ThinGin.Core.Common.Textures
                     {
                         // Any texture of priority zero or below shall be instantly unloaded once it is no longer referenced.
                         // Thus, only textures which the user gives a higher priority will persist.
-                        if (texture.Priority <= 0)
+                        if (texture.ResourcePriority <= 0)
                         {
                             Unregister(Identifier);
                         }

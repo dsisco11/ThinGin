@@ -59,7 +59,7 @@ namespace ThinGin.Core.Common.Geometry.Filters
             var upper = Math.Max(absMin, absMax);
 
 
-            if (Layout.ValueType.HasFlag(EValueType.IsFloatingPoint))
+            if (Layout.ValueType.HasFlag(EValueType.IsFloatingPointMask))
             {
                 // XXX: TODO: Implement floating point value bit-depth resolution logic to minify float values into fixed-point types that the GPU can normalize
                 // For floats we want to reduce to a value type that is smaller but which still has enough resolution such that, once normalized, all used values can be recreated.
@@ -71,10 +71,10 @@ namespace ThinGin.Core.Common.Geometry.Filters
                 if (min >= 0)// Aiming for an unsigned type
                 {
                     int BitsRequired = 0;
-                    EValueType bitFlag = 0;
-                    if (upper <= Byte.MaxValue) { BitsRequired = 8; bitFlag = EValueType.Is8BitType; }
-                    else if (upper <= UInt16.MaxValue) { BitsRequired = 16; bitFlag = EValueType.Is16BitType; }
-                    else if (upper <= UInt32.MaxValue) { BitsRequired = 32; bitFlag = EValueType.Is32BitType; }
+                    EBitFlag bitFlag = 0;
+                    if (upper <= Byte.MaxValue) { BitsRequired = 8; bitFlag = EBitFlag.BitDepth8; }
+                    else if (upper <= UInt16.MaxValue) { BitsRequired = 16; bitFlag = EBitFlag.BitDepth16; }
+                    else if (upper <= UInt32.MaxValue) { BitsRequired = 32; bitFlag = EBitFlag.BitDepth32; }
 
                     // Note: we avoid wasting time with pointless conversions by returning null if the data is already using the same number of bits
                     if (Layout.ValueType.HasFlag(bitFlag)) 
@@ -112,10 +112,10 @@ namespace ThinGin.Core.Common.Geometry.Filters
                 else// We require a signed data type
                 {
                     int BitsRequired = 0;
-                    EValueType bitFlag = 0;
-                    if (upper <= SByte.MaxValue) { BitsRequired = 8; bitFlag = EValueType.Is8BitType; }
-                    else if (upper <= Int16.MaxValue) { BitsRequired = 16; bitFlag = EValueType.Is16BitType; }
-                    else if (upper <= Int32.MaxValue) { BitsRequired = 32; bitFlag = EValueType.Is32BitType; }
+                    EBitFlag bitFlag = 0;
+                    if (upper <= SByte.MaxValue) { BitsRequired = 8; bitFlag = EBitFlag.BitDepth8; }
+                    else if (upper <= Int16.MaxValue) { BitsRequired = 16; bitFlag = EBitFlag.BitDepth16; }
+                    else if (upper <= Int32.MaxValue) { BitsRequired = 32; bitFlag = EBitFlag.BitDepth32; }
 
                     // Note: we avoid wasting time with pointless conversions by returning null if the data is already using the same number of bits
                     if (Layout.ValueType.HasFlag(bitFlag))

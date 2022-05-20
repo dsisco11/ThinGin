@@ -1,5 +1,4 @@
-﻿using OpenTK.Graphics.OpenGL;
-using OpenTK.Windowing.Common;
+﻿using OpenTK.Windowing.Common;
 using OpenTK.Windowing.Desktop;
 using OpenTK.Windowing.GraphicsLibraryFramework;
 
@@ -7,7 +6,6 @@ using System;
 using System.Collections.Generic;
 using System.Drawing;
 using System.Numerics;
-using System.Text;
 
 using ThinGin.Core.Common;
 using ThinGin.Core.Common.Data;
@@ -374,7 +372,7 @@ namespace MeshRendering
                 Color: AttributeDescriptor.FLOAT3
                 );
 
-            var builder = new MeshBuilder(vertexLayout, ETopology.Lines, AutoOptimize: false);
+            var builder = new MeshBuilder(vertexLayout, ETopology.LineList, AutoOptimize: false);
 
             builder.Push_Data(vertexLayout.IndexOf(EVertexAttribute.Position), points);
             builder.Push_Indices(vertexLayout.IndexOf(EVertexAttribute.Position), new[] { 0, 1, 0, 2, 0, 3 });
@@ -556,7 +554,7 @@ namespace MeshRendering
             Color: AttributeDescriptor.FLOAT3
             );
 
-            var builder = new MeshBuilder(vertexLayout, ETopology.Lines, AutoOptimize: false);
+            var builder = new MeshBuilder(vertexLayout, ETopology.LineList, AutoOptimize: false);
 
             builder.Push_Data(vertexLayout.IndexOf(EVertexAttribute.Position), points);
             builder.Push_Indices(vertexLayout.IndexOf(EVertexAttribute.Position), vIdx);

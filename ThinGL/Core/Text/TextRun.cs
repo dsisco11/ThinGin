@@ -3,16 +3,17 @@ using System;
 
 using ThinGin.Core.Common.Engine.Delegates;
 using ThinGin.Core.Common.Engine.Interfaces;
-using ThinGin.Core.Common.Engine.Types;
 using ThinGin.Core.Common.Font;
 using ThinGin.Core.Common.Interfaces;
 using ThinGin.Core.Common.Meshes;
 using ThinGin.Core.Common.Textures;
 using ThinGin.Core.Common.Types;
+using ThinGin.Core.RenderHardware;
+using ThinGin.Core.RenderHardware.Resources;
 
 namespace ThinGin.Core.Text
 {
-    public class TextRun : GObject
+    public class TextRun : RHIResource
     {
         #region Static
         /// <summary>
@@ -115,20 +116,20 @@ namespace ThinGin.Core.Text
             if (_font.TryRasterize(_text.AsSpan(), _sizePt, out byte[] outBitmap, out System.Drawing.Size outSize, out PixelDescriptor outLayout))
             {
                 var meta = new TextureMetadata(outLayout, outSize.Width, outSize.Height);
-                PixelDescriptor gpulayout = Engine.IsSupported(outLayout) ? outLayout : PixelDescriptor.Rgba;
+                PixelDescriptor gpulayout = RHI.IsSupported(outLayout) ? outLayout : PixelDescriptor.Rgba;
 
-                var texture = Engine.Provider.Textures.Create(Engine, gpulayout);
+                var texture = RHI.Provider.Textures.Create(RHI, gpulayout);
                 texture.TryLoad(meta, outBitmap);
                 _texture = texture;
 
                 if (_font.TryMeasure(_text.AsSpan(), _sizePt, out var outTextBounds))
                 {
-                    _mesh = Mesh.Create_Textured_Quad(Engine, outTextBounds);
+                    _mesh = Mesh.Create_Textured_Quad(RHI, outTextBounds);
                 }
                 else
                 {
                     var rect = new System.Drawing.Rectangle(System.Drawing.Point.Empty, outSize);
-                    _mesh = Mesh.Create_Textured_Quad(Engine, rect);
+                    _mesh = Mesh.Create_Textured_Quad(RHI, rect);
                 }
 
                 return true;
@@ -158,9 +159,9 @@ namespace ThinGin.Core.Text
         #endregion
 
         #region IEngineResource
-        public override IEngineDelegate Get_Initializer() => new EngineDelegate(() => TryRasterize());
-        public override IEngineDelegate Get_Updater() => new EngineDelegate(() => TryRasterize());
-        public override IEngineDelegate Get_Releaser() => null;
+        public override RHIDelegate Get_Initializer() => () => TryRasterize();
+        public override RHIDelegate Get_Updater() => () => TryRasterize();
+        public override RHIDelegate Get_Releaser() => null;
         #endregion
     }
 }

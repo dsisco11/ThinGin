@@ -12,11 +12,16 @@ namespace ThinGin.Core.Common.Objects
     /// </summary>
     public abstract class EngineObjectBase : IDisposable
     {
-        #region Values
+        #region Data
         private int _disposedValue = 0;
         private int _initializedValue = 0;
         private int _releasedValue = 0;
         private int _updatedValue = 0;
+
+        private IEngineDelegate _updateDelegate = null;
+        #endregion
+
+        #region Values
         private readonly WeakReference<EngineInstance> _engineRef;
         private readonly WeakReference<EngineObjectBase> _parentRef = new WeakReference<EngineObjectBase>(null);
         private readonly List<EngineObjectBase> _children = new List<EngineObjectBase>();
@@ -30,7 +35,7 @@ namespace ThinGin.Core.Common.Objects
         public EngineInstance Engine => _engineRef.TryGetTarget(out var outRef) ? outRef : null;
         public EngineObjectBase Parent => _parentRef.TryGetTarget(out var outRef) ? outRef : null;
 
-        public EngineObjectManager Manager => Engine.Objects;
+        public EngineObjectManager Manager => Engine.World.Objects;
 
         public bool IsInitialized => (_initializedValue != 0);
         #endregion
@@ -51,9 +56,19 @@ namespace ThinGin.Core.Common.Objects
         public EngineObjectBase(EngineInstance engine)
         {
             _engineRef = new WeakReference<EngineInstance>(engine);
+
+            _updateDelegate = Get_Updater();
+            if (_updateDelegate is object)
+            {
+                Set_Flags(EObjectFlags.HasUpdater);
+            }
         }
         #endregion
 
+        #region Registration
+        internal void Registered() => OnRegistered();
+        internal void Unregistered() => OnUnregistered();
+        #endregion
 
         #region Lifetime Management
         /// <summary>
@@ -67,6 +82,7 @@ namespace ThinGin.Core.Common.Objects
 
             return true;
         }
+
         /// <summary>
         /// Performs early initialization of the resource if required.
         /// Use this in circumstances where the resource is created and immediately used within the same engine cycle (before the engine can perform lazy initialization).
@@ -80,16 +96,23 @@ namespace ThinGin.Core.Common.Objects
         {
             if (System.Threading.Interlocked.Exchange(ref _initializedValue, 1) == 0)
             {
-                if (Get_Initializer().TryInvoke())
+                var initializerDelegate = Get_Initializer();
+                if (initializerDelegate is null)
                 {
                     return true;
                 }
-                else// if the initializer fails then we auto release to avoid corruption by default
-                {
+
+                PreInitialize();
+                var success = initializerDelegate.TryInvoke();
+                if (!success)
+                {// if the initializer fails then we auto destroy to avoid corruption by default
                     TryRelease();
                     _disposedValue = 1;
                     return false;// failed to initialize
                 }
+
+                PostInitialize();
+                return success;
             }
             else// Return true because initialization has already been done...
             {
@@ -100,8 +123,10 @@ namespace ThinGin.Core.Common.Objects
         {
             if (System.Threading.Interlocked.Exchange(ref _releasedValue, 1) == 0)
             {
+                PreRelease();
                 System.Threading.Interlocked.Increment(ref _updatedValue);// We increment this as a sort of sanity-check to prevent late-bound updates for previously released objects...
                 var res = Get_Releaser()?.TryInvoke() ?? false;
+                PostRelease();
                 return res;
             }
             else// Return true because releasal has already been done...
@@ -121,6 +146,8 @@ namespace ThinGin.Core.Common.Objects
             {
                 Manager.DeferUpdate(this as EngineObject);
             }
+
+            OnInvalidated();
         }
 
         public bool EnsureUpdated()
@@ -133,9 +160,14 @@ namespace ThinGin.Core.Common.Objects
 
         internal bool TryUpdate()
         {
+            if (!Has_Flag(EObjectFlags.HasUpdater))
+                return true;
+
             if (System.Threading.Interlocked.Exchange(ref _updatedValue, 1) == 0)
             {
-                var res = Get_Updater()?.TryInvoke() ?? true;
+                PreUpdate();
+                var res = _updateDelegate?.TryInvoke() ?? true;
+                PostUpdate();
                 return res;
             }
             else
@@ -146,8 +178,8 @@ namespace ThinGin.Core.Common.Objects
         #endregion
 
         #region Delegates
-        public abstract IEngineDelegate Get_Initializer();
-        public abstract IEngineDelegate Get_Releaser();
+        public virtual IEngineDelegate Get_Initializer() => null;
+        public virtual IEngineDelegate Get_Releaser() => null;
         public virtual IEngineDelegate Get_Updater() => null;
         #endregion
 
@@ -174,6 +206,25 @@ namespace ThinGin.Core.Common.Objects
             Dispose(disposing: true);
             GC.SuppressFinalize(this);
         }
+        #endregion
+
+        #region Lifespan Events
+        // Pre events
+        protected virtual void PreInitialize() { }
+        protected virtual void PreRelease() { }
+        protected virtual void PreUpdate() { }
+        // Post events
+        protected virtual void PostInitialize() { }
+        protected virtual void PostRelease() { }
+        protected virtual void PostUpdate() { }
+
+        // Immediate events
+        /// <summary> Fired immediately after the object is invalidated with a call to <see cref="Invalidate"/> </summary>
+        protected virtual void OnInvalidated() { }
+        /// <summary> Fired right after the object has been registered into the worlds object system and receives an ID. </summary>
+        protected virtual void OnRegistered() { }
+        /// <summary> Fired immediately after the object is removed from the worlds object system. </summary>
+        protected virtual void OnUnregistered() { }
         #endregion
 
         #region Parenting

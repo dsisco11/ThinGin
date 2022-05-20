@@ -1,22 +1,18 @@
 ﻿
 using System;
 using System.Collections.Concurrent;
-using System.Collections.Generic;
 using ThinGin.Core.Common.Enums;
 using ThinGin.Core.Common.Interfaces;
 using System.Drawing;
 using ThinGin.Core.Common.Textures;
-using System.Linq;
-using ThinGin.Core.Common.Textures.Types;
 using ThinGin.Core.Common.Engine.Interfaces;
 using ThinGin.Core.Common.Engine;
-using ThinGin.Core.Common.Engine.Types;
 using ThinGin.Core.Rendering;
 using ThinGin.Core.Common;
 using ThinGin.Core.Common.Cameras;
 using ThinGin.Core.Common.Units;
 using ThinGin.Core.World;
-using ThinGin.Core.Graphics;
+using ThinGin.Core.RenderHardware;
 
 namespace ThinGin.Core.Engine.Common.Core
 {
@@ -27,25 +23,23 @@ namespace ThinGin.Core.Engine.Common.Core
     {
         #region Values
         private int _initialized = 0;
-        public readonly object Context;
-        protected HashSet<string> APIExtensions = null;
+        public readonly object Context;  // move to render manager
         private Rectangle _viewport = Rectangle.Empty;
 
         protected ConcurrentQueue<EngineJob> _job_polling_queue = new ConcurrentQueue<EngineJob>();
         protected ConcurrentQueue<Action> _deferred_action_queue = new ConcurrentQueue<Action>();
 
-        protected IEngineBindable activeFramebuffer_Read = null;
-        protected IEngineBindable activeFramebuffer_Write = null;
-
-        public Texture _default_texture = null;
+        protected IEngineBindable activeFramebuffer_Read = null;  // move to rhi_state object
+        protected IEngineBindable activeFramebuffer_Write = null;  // move to rhi_state object
 
 
+        // get rid of this, the camer ashould be a component thats registered with the world. Just add a Get_Camera(int num) method to the WorldManager
         private readonly Camera camera;
-        private SpatialOrientation coords = new SpatialOrientation();
-        private WorldManager world;
-        internal readonly RenderManager Rendering = new RenderManager();
 
-        public EngineCompatabilityList Compatability { get; protected set; } = null;
+        private WorldManager world;
+        public readonly RenderManager Renderer;
+
+        private SpatialOrientation coords = new SpatialOrientation();// move into WorldManager
         #endregion
 
         #region Settings
@@ -62,28 +56,8 @@ namespace ThinGin.Core.Engine.Common.Core
         public SpatialOrientation Space { get => coords; set => coords = value; }
 
         /// <summary> Graphics platform implementation for the engine </summary>
+        [Obsolete]
         public abstract IGraphicsImplementation Provider { get; }
-        public TextureCache TextureCache { get; private set; }
-
-
-        /// <summary>
-        /// The default texture is used in scenarios wherein a missing or otherwise invalid texture is referenced.
-        /// <para>By default this texture is a Source-esq magenta checkerboard pattern, however this can be overriden by simply setting this Default value reference to some other texture.</para>
-        /// </summary>
-        public Texture Default_Texture
-        {
-            get
-            {
-                if (_default_texture is null)
-                {
-                    _default_texture = Provider.Textures.Create(this, PixelDescriptor.Rgb);
-                    _default_texture.TryLoad(new TextureMetadata(PixelDescriptor.Rgb, width: 1, height: 1), new byte[] { 255, 105, 180 });
-                }
-
-                return _default_texture;
-            }
-            set => _default_texture = value;
-        }
         #endregion
 
         #region Events
@@ -94,6 +68,8 @@ namespace ThinGin.Core.Engine.Common.Core
         public EngineInstance(object Context)
         {
             this.Context = Context;
+            Renderer = new RenderManager(this);
+
             TextureCache = new TextureCache();
             camera = new Camera(this);
         }
@@ -102,16 +78,11 @@ namespace ThinGin.Core.Engine.Common.Core
         #region Initialization
         public virtual void Initialize()
         {
-            if (System.Threading.Interlocked.Exchange(ref _initialized, 1) == 0)
-            {
-                var extList = from str in Populate_Extensions() select str.ToLowerInvariant();
-                APIExtensions = new HashSet<string>(extList);
-            }
         }
         #endregion
 
         #region Viewport
-        public float Get_AspectRatio() => MathE.Max(1, (float)_viewport.Width) / MathE.Max(1, (float)_viewport.Height);
+        public float Get_AspectRatio() => Math.Max(1f, (float)_viewport.Width) / Math.Max(1f, (float)_viewport.Height);
         public Rectangle Get_Viewport() => _viewport;
         public virtual void Set_Viewport(Rectangle area)
         {
@@ -120,40 +91,12 @@ namespace ThinGin.Core.Engine.Common.Core
         }
         #endregion
 
-        #region Extensions
-        protected abstract ICollection<string> Populate_Extensions();
-
-        /// <summary>
-        /// Checks for OpenGL extension support
-        /// </summary>
-        /// <param name="extension"></param>
-        /// <returns><see langword="true"/> if extension supported</returns>
-        public virtual bool IsSupported(string extension)
-        {
-            if (APIExtensions is null)
-            {// Fetch the extensions
-                var extList = from str in Populate_Extensions() select str.ToLowerInvariant();
-                APIExtensions = new HashSet<string>(extList);
-            }
-
-            return APIExtensions.Contains(extension.ToLowerInvariant());
-        }
-
-        public abstract bool IsSupported(PixelDescriptor pixelDescriptor);
-        #endregion
-
-        #region State Machine
-        #endregion
-
         #region Error Handling
-        /// <summary>
-        /// Checks for errors reported by the graphics driver.
-        /// </summary>
-        public abstract bool ErrorCheck(out string Message);
+        /// <summary> <inheritdoc cref="IRHIDriver.ErrorCheck(out string)"/> </summary>
+        public bool ErrorCheck(out string Message) => Renderer.RHI.ErrorCheck(out Message);
         #endregion
 
         #region Event Loop
-
         /// <summary>
         /// Performs frustrum culling for all cameras
         /// </summary>
@@ -165,7 +108,7 @@ namespace ThinGin.Core.Engine.Common.Core
         {
             ErrorCheck(out _);
 
-            Rendering.Process();
+            Renderer.Process();
 
             while (_deferred_action_queue.TryDequeue(out Action action))
             {
@@ -225,11 +168,6 @@ namespace ThinGin.Core.Engine.Common.Core
         }
         #endregion
 
-        #region Texture Uploading
-        public virtual PixelDescriptor Get_Default_Texture_Internal_Pixel_Layout() => PixelDescriptor.Rgba;
-        //public abstract IGpuTask Upload_Texture(TextureMetadata Metadata, ReadOnlyMemory<byte> pixelData, PixelDescriptor GpuLayout, ITexture Target, out int ID);
-        #endregion
-
         #region Frame Management
         public abstract void BeginFrame();
         public abstract void EndFrame();
@@ -263,8 +201,7 @@ namespace ThinGin.Core.Engine.Common.Core
         }
         #endregion
 
-        #region Capabilies
-
+        #region Capabilities
         /// <summary>
         /// <inheritdoc cref="IEngine.Enable(EEngineCap)"/>
         /// </summary>
@@ -295,7 +232,7 @@ namespace ThinGin.Core.Engine.Common.Core
 
         #region Framebuffers
 
-        public abstract void Bind_Framebuffer(GBuffer frameBuffer, EBufferAccess Mode);
+        public abstract void Bind_Framebuffer(GBuffer frameBuffer, ERHIAccess Mode);
 
         public abstract void Unbind_Framebuffer(GBuffer frameBuffer);
 
@@ -306,7 +243,7 @@ namespace ThinGin.Core.Engine.Common.Core
         /// <param name="Dest"></param>
         /// <param name="Mask"></param>
         /// <param name="Filter"></param>
-        public abstract void Blit(Rectangle Source, Rectangle Dest);
+        public abstract void Blit(Rectangle Source, Rectangle Dest);// RHI -> CopyBufferRegion
         #endregion
 
     }

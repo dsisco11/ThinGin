@@ -1,6 +1,4 @@
 ﻿
-using System;
-
 using ThinGin.Core.Common.Data;
 using ThinGin.Core.Common.Enums;
 using ThinGin.Core.Shaders;

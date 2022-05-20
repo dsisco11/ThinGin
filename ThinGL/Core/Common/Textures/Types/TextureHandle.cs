@@ -1,14 +1,15 @@
 ﻿using System;
 
-using ThinGin.Core.Common.Engine.Types;
 using ThinGin.Core.Common.Interfaces;
+using ThinGin.Core.Engine.Common.Core;
+using ThinGin.Core.RenderHardware.Resources;
 
 namespace ThinGin.Core.Common.Textures.Types
 {
     /// <summary>
     /// This is essentially a low-level (device) texture handle, used to link up bits of the engine that don't otherwise connect properly.
     /// </summary>
-    public abstract class TextureHandle : GObject, ITexture
+    public abstract class TextureHandle : RHIResource, ITexture
     {
         #region Values
         protected int _handle = 0;
@@ -21,13 +22,13 @@ namespace ThinGin.Core.Common.Textures.Types
 
         #region Accessors
         /// <summary> <inheritdoc cref="ITexture.Metadata"/> </summary>
-        public TextureMetadata Metadata { get; } = new TextureMetadata();
+        public TextureDescriptor Metadata { get; } = new TextureDescriptor();
 
         public int Kind { get => throw new NotImplementedException(); set => throw new NotImplementedException(); }
         #endregion
 
         #region Constructors
-        protected TextureHandle(IEngine Engine) : base(Engine)
+        protected TextureHandle(EngineInstance engine) : base(engine)
         {
         }
         #endregion

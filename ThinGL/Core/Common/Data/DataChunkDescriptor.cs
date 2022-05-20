@@ -23,7 +23,7 @@ namespace ThinGin.Core.Common.Data
         /// <summary>
         /// The type of each component
         /// </summary>
-        public readonly EValueType _value_type = EValueType.NULL;
+        public readonly EValueType _value_type = EValueType.Null;
         #endregion
 
         #region Accessors
@@ -40,16 +40,16 @@ namespace ThinGin.Core.Common.Data
             {// This value is meant for the gpu really, so even though an "int" for .net can technically be larger than 32-bits, for the GPU hardware its always 32-bit.
                 return _value_type switch
                 {
-                    EValueType.NULL => 0,
-                    EValueType.BYTE => 1,
-                    EValueType.SBYTE => 1,
-                    EValueType.FLOAT_HALF => 2,
-                    EValueType.FLOAT => 4,
+                    EValueType.Null => 0,
+                    EValueType.UInt8 => 1,
+                    EValueType.Int8 => 1,
+                    EValueType.Float16 => 2,
+                    EValueType.Float32 => 4,
                     EValueType.DOUBLE => 8,
-                    EValueType.SHORT => 2,
-                    EValueType.USHORT => 2,
-                    EValueType.INT => 4,
-                    EValueType.UINT => 4,
+                    EValueType.Int16 => 2,
+                    EValueType.UInt16 => 2,
+                    EValueType.Int32 => 4,
+                    EValueType.UInt32 => 4,
                     _ => throw new System.NotImplementedException($"Logical handling not implemented for {nameof(EValueType)}.{System.Enum.GetName(typeof(EValueType), _value_type)}"),
                 };
             }
@@ -93,86 +93,86 @@ namespace ThinGin.Core.Common.Data
 
         #region Unsigned Byte
         /// <summary> 1x signed 8-bit integer </summary>
-        public static DataChunkDescriptor BYTE1 = new DataChunkDescriptor(1, EValueType.BYTE);
+        public static DataChunkDescriptor BYTE1 = new DataChunkDescriptor(1, EValueType.UInt8);
         /// <summary> 2x signed 8-bit integer </summary>
-        public static DataChunkDescriptor BYTE2 = new DataChunkDescriptor(2, EValueType.BYTE);
+        public static DataChunkDescriptor BYTE2 = new DataChunkDescriptor(2, EValueType.UInt8);
         /// <summary> 3x signed 8-bit integer </summary>
-        public static DataChunkDescriptor BYTE3 = new DataChunkDescriptor(3, EValueType.BYTE);
+        public static DataChunkDescriptor BYTE3 = new DataChunkDescriptor(3, EValueType.UInt8);
         /// <summary> 4x signed 8-bit integer </summary>
-        public static DataChunkDescriptor BYTE4 = new DataChunkDescriptor(4, EValueType.BYTE);
+        public static DataChunkDescriptor BYTE4 = new DataChunkDescriptor(4, EValueType.UInt8);
         #endregion
 
         #region Signed Byte
         /// <summary> 1x unsigned 8-bit integer </summary>
-        public static DataChunkDescriptor SBYTE1 = new DataChunkDescriptor(1, EValueType.SBYTE);
+        public static DataChunkDescriptor SBYTE1 = new DataChunkDescriptor(1, EValueType.Int8);
         /// <summary> 2x unsigned 8-bit integer </summary>
-        public static DataChunkDescriptor SBYTE2 = new DataChunkDescriptor(2, EValueType.SBYTE);
+        public static DataChunkDescriptor SBYTE2 = new DataChunkDescriptor(2, EValueType.Int8);
         /// <summary> 3x unsigned 8-bit integer </summary>
-        public static DataChunkDescriptor SBYTE3 = new DataChunkDescriptor(3, EValueType.SBYTE);
+        public static DataChunkDescriptor SBYTE3 = new DataChunkDescriptor(3, EValueType.Int8);
         /// <summary> 4x unsigned 8-bit integer </summary>
-        public static DataChunkDescriptor SBYTE4 = new DataChunkDescriptor(4, EValueType.SBYTE);
+        public static DataChunkDescriptor SBYTE4 = new DataChunkDescriptor(4, EValueType.Int8);
         #endregion
 
         #region Unsigned Short
         /// <summary> 1x signed 16-bit integer </summary>
-        public static DataChunkDescriptor USHORT1 = new DataChunkDescriptor(1, EValueType.USHORT);
+        public static DataChunkDescriptor USHORT1 = new DataChunkDescriptor(1, EValueType.UInt16);
         /// <summary> 2x signed 16-bit integer </summary>
-        public static DataChunkDescriptor USHORT2 = new DataChunkDescriptor(2, EValueType.USHORT);
+        public static DataChunkDescriptor USHORT2 = new DataChunkDescriptor(2, EValueType.UInt16);
         /// <summary> 3x signed 16-bit integer </summary>
-        public static DataChunkDescriptor USHORT3 = new DataChunkDescriptor(3, EValueType.USHORT);
+        public static DataChunkDescriptor USHORT3 = new DataChunkDescriptor(3, EValueType.UInt16);
         /// <summary> 4x signed 16-bit integer </summary>
-        public static DataChunkDescriptor USHORT4 = new DataChunkDescriptor(4, EValueType.USHORT);
+        public static DataChunkDescriptor USHORT4 = new DataChunkDescriptor(4, EValueType.UInt16);
         #endregion
 
         #region Signed Short
         /// <summary> 1x unsigned 16-bit integer </summary>
-        public static DataChunkDescriptor SHORT1 = new DataChunkDescriptor(1, EValueType.SHORT);
+        public static DataChunkDescriptor SHORT1 = new DataChunkDescriptor(1, EValueType.Int16);
         /// <summary> 2x unsigned 16-bit integer </summary>
-        public static DataChunkDescriptor SHORT2 = new DataChunkDescriptor(2, EValueType.SHORT);
+        public static DataChunkDescriptor SHORT2 = new DataChunkDescriptor(2, EValueType.Int16);
         /// <summary> 3x unsigned 16-bit integer </summary>
-        public static DataChunkDescriptor SHORT3 = new DataChunkDescriptor(3, EValueType.SHORT);
+        public static DataChunkDescriptor SHORT3 = new DataChunkDescriptor(3, EValueType.Int16);
         /// <summary> 4x unsigned 16-bit integer </summary>
-        public static DataChunkDescriptor SHORT4 = new DataChunkDescriptor(4, EValueType.SHORT);
+        public static DataChunkDescriptor SHORT4 = new DataChunkDescriptor(4, EValueType.Int16);
         #endregion
 
         #region Signed Integer
         /// <summary> 1x signed 32-bit integer </summary>
-        public static DataChunkDescriptor INT1 = new DataChunkDescriptor(1, EValueType.INT);
+        public static DataChunkDescriptor INT1 = new DataChunkDescriptor(1, EValueType.Int32);
         /// <summary> 2x signed 32-bit integer </summary>
-        public static DataChunkDescriptor INT2 = new DataChunkDescriptor(2, EValueType.INT);
+        public static DataChunkDescriptor INT2 = new DataChunkDescriptor(2, EValueType.Int32);
         /// <summary> 3x signed 32-bit integer </summary>
-        public static DataChunkDescriptor INT3 = new DataChunkDescriptor(3, EValueType.INT);
+        public static DataChunkDescriptor INT3 = new DataChunkDescriptor(3, EValueType.Int32);
         /// <summary> 4x signed 32-bit integer </summary>
-        public static DataChunkDescriptor INT4 = new DataChunkDescriptor(4, EValueType.INT);
+        public static DataChunkDescriptor INT4 = new DataChunkDescriptor(4, EValueType.Int32);
         #endregion
 
         #region Unsigned Integer
         /// <summary> 1x unsigned 32-bit integer </summary>
-        public static DataChunkDescriptor UINT1 = new DataChunkDescriptor(1, EValueType.UINT);
+        public static DataChunkDescriptor UINT1 = new DataChunkDescriptor(1, EValueType.UInt32);
         /// <summary> 2x unsigned 32-bit integer </summary>
-        public static DataChunkDescriptor UINT2 = new DataChunkDescriptor(2, EValueType.UINT);
+        public static DataChunkDescriptor UINT2 = new DataChunkDescriptor(2, EValueType.UInt32);
         /// <summary> 3x unsigned 32-bit integer </summary>
-        public static DataChunkDescriptor UINT3 = new DataChunkDescriptor(3, EValueType.UINT);
+        public static DataChunkDescriptor UINT3 = new DataChunkDescriptor(3, EValueType.UInt32);
         /// <summary> 4x unsigned 32-bit integer </summary>
-        public static DataChunkDescriptor UINT4 = new DataChunkDescriptor(4, EValueType.UINT);
+        public static DataChunkDescriptor UINT4 = new DataChunkDescriptor(4, EValueType.UInt32);
         #endregion
 
 
         #region Float
         /// <summary> 1x floating point number </summary>
-        public static DataChunkDescriptor FLOAT1 = new DataChunkDescriptor(1, EValueType.FLOAT);
+        public static DataChunkDescriptor FLOAT1 = new DataChunkDescriptor(1, EValueType.Float32);
         /// <summary> 2x floating point number </summary>
-        public static DataChunkDescriptor FLOAT2 = new DataChunkDescriptor(2, EValueType.FLOAT);
+        public static DataChunkDescriptor FLOAT2 = new DataChunkDescriptor(2, EValueType.Float32);
         /// <summary> 3x floating point number </summary>
-        public static DataChunkDescriptor FLOAT3 = new DataChunkDescriptor(3, EValueType.FLOAT);
+        public static DataChunkDescriptor FLOAT3 = new DataChunkDescriptor(3, EValueType.Float32);
         /// <summary> 4x floating point number </summary>
-        public static DataChunkDescriptor FLOAT4 = new DataChunkDescriptor(4, EValueType.FLOAT);
+        public static DataChunkDescriptor FLOAT4 = new DataChunkDescriptor(4, EValueType.Float32);
         /// <summary> 6x floating point number </summary>
-        public static DataChunkDescriptor FLOAT6 = new DataChunkDescriptor(6, EValueType.FLOAT);
+        public static DataChunkDescriptor FLOAT6 = new DataChunkDescriptor(6, EValueType.Float32);
         /// <summary> 9x floating point number </summary>
-        public static DataChunkDescriptor FLOAT9 = new DataChunkDescriptor(9, EValueType.FLOAT);
+        public static DataChunkDescriptor FLOAT9 = new DataChunkDescriptor(9, EValueType.Float32);
         /// <summary> 16x floating point number </summary>
-        public static DataChunkDescriptor FLOAT16 = new DataChunkDescriptor(16, EValueType.FLOAT);
+        public static DataChunkDescriptor FLOAT16 = new DataChunkDescriptor(16, EValueType.Float32);
         #endregion
 
         #region Double

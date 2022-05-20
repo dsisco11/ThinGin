@@ -10,11 +10,8 @@ using ThinGin.Core.Rendering;
 using ThinGin.Core.Exceptions;
 using ThinGin.OpenGL.Common.Textures;
 using ThinGin.OpenGL.Common.Engine;
-using ThinGin.Core.Common.Types;
-using System.Numerics;
 using System.Diagnostics;
 using ThinGin.Core.Engine.Common.Core;
-using ThinGin.Core.Common.Engine.Delegates;
 
 namespace ThinGin.OpenGL.Common
 {
@@ -236,11 +233,11 @@ namespace ThinGin.OpenGL.Common
         #endregion
 
         #region Framebuffers
-        public override void Bind_Framebuffer(GBuffer frameBuffer, EBufferAccess Mode)
+        public override void Bind_Framebuffer(GBuffer frameBuffer, ERHIAccess Mode)
         {
             switch (Mode)
             {
-                case EBufferAccess.Read:
+                case ERHIAccess.ReadOnlyMask:
                     {
                         if (activeFramebuffer_Read is object && !ReferenceEquals(frameBuffer, activeFramebuffer_Read))
                         {// if the calling buffer is not the one currently bound, then unbind and notify the currently bound buffer
@@ -252,7 +249,7 @@ namespace ThinGin.OpenGL.Common
                         (frameBuffer as IEngineBindable).Bound();
                     }
                     break;
-                case EBufferAccess.Write:
+                case ERHIAccess.WriteOnlyMask:
                     {
                         if (activeFramebuffer_Write is object && !ReferenceEquals(frameBuffer, activeFramebuffer_Write))
                         {// if the calling buffer is not the one currently bound, then unbind and notify the currently bound buffer
@@ -266,7 +263,7 @@ namespace ThinGin.OpenGL.Common
                         (frameBuffer as IEngineBindable).Bound();
                     }
                     break;
-                case EBufferAccess.ReadWrite:
+                case ERHIAccess.ReadWrite:
                     {
                         if (activeFramebuffer_Read is object && !ReferenceEquals(frameBuffer, activeFramebuffer_Read))
                         {// if the calling buffer is not the one currently bound, then unbind and notify the currently bound buffer

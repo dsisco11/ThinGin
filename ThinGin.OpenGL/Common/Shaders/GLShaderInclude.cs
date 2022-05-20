@@ -5,13 +5,13 @@ using System;
 
 using ThinGin.Core.Common.Engine.Delegates;
 using ThinGin.Core.Common.Engine.Interfaces;
-using ThinGin.Core.Common.Engine.Types;
 using ThinGin.Core.Common.Enums;
 using ThinGin.Core.Common.Interfaces;
+using ThinGin.Core.RenderHardware.Resources;
 
 namespace ThinGin.OpenGL.Common.Shaders
 {
-    public class GLShaderInclude : GObject, IEngineObservable
+    public class GLShaderInclude : RHIResource, IEngineObservable
     {
         #region Values
         private string _code;

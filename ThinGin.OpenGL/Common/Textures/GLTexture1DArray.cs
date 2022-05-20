@@ -2,8 +2,8 @@
 
 using System;
 
-using ThinGin.Core.Common.Interfaces;
 using ThinGin.Core.Common.Textures;
+using ThinGin.Core.Engine.Common.Core;
 using ThinGin.OpenGL.Common.Exceptions;
 
 namespace ThinGin.OpenGL.Common.Textures
@@ -21,9 +21,9 @@ namespace ThinGin.OpenGL.Common.Textures
         #endregion
 
         #region Constructors
-        public GLTexture1DArray(IEngine Engine, PixelDescriptor GpuLayout) : base(Engine, GpuLayout)
+        public GLTexture1DArray(EngineInstance engine, PixelDescriptor GpuLayout) : base(engine, GpuLayout)
         {
-            if (!Engine.IsSupported("ext_texture_array"))
+            if (!engine.Renderer.IsSupported("ext_texture_array"))
             {
                 throw new OpenGLUnsupportedException(nameof(GLTexture1DArray));
             }
@@ -33,34 +33,34 @@ namespace ThinGin.OpenGL.Common.Textures
         #region Uploading
         protected override void Upload(byte[] RawPixels, int miplevel)
         {
-            var engine = Engine as GLEngineBase;
-            var pxlFmt = engine.Get_PixelFormat(GpuLayout);
-            var pxlTyp = engine.Get_PixelType(GpuLayout);
+            var engine = RHI as GLEngineBase;
+            var pxlFmt = engine.Get_PixelFormat(HardwareLayout);
+            var pxlTyp = engine.Get_PixelType(HardwareLayout);
             var datFmt = engine.Get_Internal_PixelFormat(Metadata.Layout, UseCompression);
 
             if (RawPixels is object)
             {
-                GL.TexImage2D(Target, miplevel, datFmt, Metadata.Width, Metadata.Height, 0, pxlFmt, pxlTyp, RawPixels);
+                GL.TexImage2D(Target, miplevel, datFmt, Metadata.SizeX, Metadata.SizeY, 0, pxlFmt, pxlTyp, RawPixels);
             }
             else
             {
-                GL.TexImage2D(Target, miplevel, datFmt, Metadata.Width, Metadata.Height, 0, pxlFmt, pxlTyp, IntPtr.Zero);
+                GL.TexImage2D(Target, miplevel, datFmt, Metadata.SizeX, Metadata.SizeY, 0, pxlFmt, pxlTyp, IntPtr.Zero);
             }
         }
 
         protected override void UploadSub(byte[] RawPixels, int xoffset, int yoffset, int zoffset, int miplevel)
         {
-            var engine = Engine as GLEngineBase;
-            var pxlFmt = engine.Get_PixelFormat(GpuLayout);
-            var pxlTyp = engine.Get_PixelType(GpuLayout);
+            var engine = RHI as GLEngineBase;
+            var pxlFmt = engine.Get_PixelFormat(HardwareLayout);
+            var pxlTyp = engine.Get_PixelType(HardwareLayout);
 
             if (RawPixels is object)
             {
-                GL.TexSubImage2D(Target, miplevel, xoffset, yoffset, Metadata.Width, Metadata.Height, pxlFmt, pxlTyp, RawPixels);
+                GL.TexSubImage2D(Target, miplevel, xoffset, yoffset, Metadata.SizeX, Metadata.SizeY, pxlFmt, pxlTyp, RawPixels);
             }
             else
             {
-                GL.TexSubImage2D(Target, miplevel, xoffset, yoffset, Metadata.Width, Metadata.Height, pxlFmt, pxlTyp, IntPtr.Zero);
+                GL.TexSubImage2D(Target, miplevel, xoffset, yoffset, Metadata.SizeX, Metadata.SizeY, pxlFmt, pxlTyp, IntPtr.Zero);
             }
         }
         #endregion

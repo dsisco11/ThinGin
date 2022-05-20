@@ -51,11 +51,11 @@ namespace ThinGin.OpenGL.Common.Renderers
         {
             return new EngineDelegate(() =>
             {
-                VBO = new VertexBufferObject(Engine);
+                VBO = new VertexBufferObject(RHI);
                 VBO.Upload(mesh.Data, null);
                 VBO.Bind();
 
-                VAO = new VertexArrayObject(Engine, mesh.Layout);
+                VAO = new VertexArrayObject(RHI, mesh.Layout);
                 VAO.Bind();
 
                 VAO.Unbind();
@@ -70,7 +70,7 @@ namespace ThinGin.OpenGL.Common.Renderers
             {
                 VBO.Upload(mesh.Data, null);
 #if DEBUG
-                Engine.ErrorCheck(out _);
+                RHI.ErrorCheck(out _);
 #endif
             });
         }

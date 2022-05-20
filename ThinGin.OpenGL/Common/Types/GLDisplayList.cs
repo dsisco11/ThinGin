@@ -5,12 +5,12 @@ using System;
 
 using ThinGin.Core.Common.Engine.Delegates;
 using ThinGin.Core.Common.Engine.Interfaces;
-using ThinGin.Core.Common.Engine.Types;
 using ThinGin.Core.Common.Interfaces;
+using ThinGin.Core.RenderHardware.Resources;
 
 namespace ThinGin.OpenGL.Common.Types
 {
-    public class GLDisplayList : GObject
+    public class GLDisplayList : RHIResource
     {
         #region Values
         protected int _handle = 0;

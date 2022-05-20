@@ -24,12 +24,12 @@ namespace ThinGin.OpenGL.Common.Textures
         #region Uploading
         protected override void Upload(byte[] RawPixels, int miplevel)
         {
-            var engine = Engine as GLEngineBase;
-            var pxlFmt = engine.Get_PixelFormat(GpuLayout);
-            var pxlTyp = engine.Get_PixelType(GpuLayout);
+            var engine = RHI as GLEngineBase;
+            var pxlFmt = engine.Get_PixelFormat(HardwareLayout);
+            var pxlTyp = engine.Get_PixelType(HardwareLayout);
             var datFmt = engine.Get_Internal_PixelFormat(Metadata.Layout, UseCompression);
 
-            GL.TexImage3DMultisample(TextureTargetMultisample.Texture2DMultisample, Samples, datFmt, Metadata.Width, Metadata.Height, Metadata.Depth, false);
+            GL.TexImage3DMultisample(TextureTargetMultisample.Texture2DMultisample, Samples, datFmt, Metadata.SizeX, Metadata.SizeY, Metadata.SizeZ, false);
         }
         #endregion
     }

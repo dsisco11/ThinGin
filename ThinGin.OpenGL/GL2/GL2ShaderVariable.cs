@@ -2,8 +2,6 @@
 
 using OpenTK.Graphics.OpenGL;
 
-using System;
-
 using ThinGin.Core.Common.Data;
 using ThinGin.Core.Common.Enums;
 using ThinGin.Core.Shaders;
@@ -36,13 +34,13 @@ namespace ThinGin.OpenGL.GL2
             // OpenGL 2.0 only supports int/float uniform values so we convert all other types into one of those
             switch (dataChunk.Type)
             {
-                case EValueType.BYTE:
-                case EValueType.SBYTE:
-                case EValueType.SHORT:
-                case EValueType.USHORT:
-                case EValueType.UINT:
+                case EValueType.UInt8:
+                case EValueType.Int8:
+                case EValueType.Int16:
+                case EValueType.UInt16:
+                case EValueType.UInt32:
                     return new DataChunk(dataChunk.ToInt());
-                case EValueType.FLOAT_HALF:
+                case EValueType.Float16:
                 case EValueType.DOUBLE:
                     return new DataChunk(dataChunk.ToFloat());
             }
@@ -54,7 +52,7 @@ namespace ThinGin.OpenGL.GL2
         {
             switch (Descriptor.ValueType)
             {// The ComponentCount of our descriptor tells us how many components are in the variable data type (eg: 2 for vec2)
-                case EValueType.INT:
+                case EValueType.Int32:
                     {
 #if USE_SPANS
                         return Descriptor.Count switch
@@ -76,7 +74,7 @@ namespace ThinGin.OpenGL.GL2
                         };
 #endif
                     }
-                case EValueType.FLOAT:
+                case EValueType.Float32:
                     {
 #if USE_SPANS
                         return UniformType switch

@@ -1,7 +1,7 @@
-﻿using ThinGin.Core.Common.Interfaces;
-using ThinGin.Core.Common.Textures.Types;
+﻿using ThinGin.Core.Common.Textures.Types;
 using ThinGin.Core.Common.Engine.Interfaces;
 using ThinGin.Core.Common.Engine.Delegates;
+using ThinGin.Core.Engine.Common.Core;
 
 namespace ThinGin.OpenGL.Common.Textures
 {
@@ -14,7 +14,7 @@ namespace ThinGin.OpenGL.Common.Textures
         #endregion
 
         #region Constructors
-        public GLTextureHandle(IEngine Engine) : base(Engine)
+        public GLTextureHandle(EngineInstance engine) : base(engine)
         {
         }
         #endregion

@@ -8,6 +8,7 @@ using ThinGin.Core.Common.Engine;
 using ThinGin.Core.Common.Engine.Interfaces;
 using ThinGin.Core.Common.Engine.Delegates;
 using ThinGin.OpenGL.Common.Types;
+using ThinGin.Core.Engine.Common.Core;
 
 namespace ThinGin.OpenGL.Common.Textures
 {
@@ -17,7 +18,7 @@ namespace ThinGin.OpenGL.Common.Textures
     public abstract class GLTexture : Texture
     {
         #region Values
-        private DataTransfer _transferTask = null;
+        private RHIDataTransfer _transferTask = null;
         private byte[] _transient_pixel_data = null;
         #endregion
 
@@ -42,7 +43,6 @@ namespace ThinGin.OpenGL.Common.Textures
         #region Accessors
         public abstract EnableCap Encap { get; }
         public abstract TextureTarget Target { get; }
-        //public abstract TextureTarget Target { get; }
         #endregion
 
         #region Constructors
@@ -50,15 +50,15 @@ namespace ThinGin.OpenGL.Common.Textures
         /// <summary>
         /// Creates a new GPU texture
         /// </summary>
-        public GLTexture(IEngine Engine, PixelDescriptor GpuLayout) : base(Engine, GpuLayout)
+        public GLTexture(EngineInstance engine, PixelDescriptor GpuLayout) : base(engine, GpuLayout)
         {
-            UseCompression = Engine.AutoCompressTextures;
-            EnableMipMaps = Engine.AutoGenerateMipMaps;
+            UseCompression = engine.AutoCompressTextures;
+            EnableMipMaps = engine.AutoGenerateMipMaps;
         }
         #endregion
 
         #region Initialization
-        public override bool TryLoad(TextureMetadata Metadata, byte[] RawPixels)
+        public override bool TryLoad(TextureDescriptor Metadata, byte[] RawPixels)
         {
             try
             {
@@ -79,9 +79,9 @@ namespace ThinGin.OpenGL.Common.Textures
             GL.BindTexture(Target, _id);
 
             GL.TexParameter(Target, TextureParameterName.GenerateMipmap, EnableMipMaps ? 1 : 0);
-            if (Priority > 0)
+            if (ResourcePriority > 0)
             {
-                GL.TexParameter(Target, TextureParameterName.TexturePriority, Priority);
+                GL.TexParameter(Target, TextureParameterName.TexturePriority, ResourcePriority);
             }
 
             GL.TexEnv(TextureEnvTarget.TextureEnv, TextureEnvParameter.TextureEnvMode, (int)EnvMode);
@@ -102,25 +102,25 @@ namespace ThinGin.OpenGL.Common.Textures
         #endregion
 
         #region GpuTask
-        private DataTransfer _begin_upload_task(ReadOnlyMemory<byte> pixelData)
+        private RHIDataTransfer _begin_upload_task(ReadOnlyMemory<byte> pixelData)
         {
             int Bpp = Metadata.Layout.BitDepth;
-            int Width = Math.Max(Metadata.Width, 1);
-            int Height = Math.Max(Metadata.Height, 1);
-            int Depth = Math.Max(Metadata.Depth, 1);
+            int Width = Math.Max(Metadata.SizeX, 1);
+            int Height = Math.Max(Metadata.SizeY, 1);
+            int Depth = Math.Max(Metadata.SizeZ, 1);
             int dataLength = Bpp * Width * Height * Depth;
 
             // Initiate PBO upload process
-            var PBO = new GLPixelBuffer(Engine, EPixelBufferMode.Unpack, dataLength);
-            PBO.TryMap(Core.Common.Enums.EBufferAccess.Write, out IntPtr pboAddress);
+            var PBO = new GLPixelBuffer(RHI, EPixelBufferMode.Unpack, dataLength);
+            PBO.TryMap(Core.Common.Enums.ERHIAccess.WriteOnlyMask, out IntPtr pboAddress);
             long pboLength = PBO.Length;
 
             // Create a synchronizer so we know when the DMA transfer is done
-            var fence = new GLSyncPrimitive(Engine);
-            var job = new DataTransfer(Engine, fence, PBO, pixelData);
+            var fence = new GLSyncPrimitive(RHI);
+            var job = new RHIDataTransfer(RHI, fence, PBO, pixelData);
             job.Start();
 
-            Engine.ErrorCheck(out _);
+            RHI.ErrorCheck(out _);
             return job;
         }
 

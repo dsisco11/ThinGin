@@ -1,7 +1,6 @@
 ﻿using System;
 using System.Runtime.CompilerServices;
 
-using ThinGin.Core.Engine.Common.Core;
 using ThinGin.Core.World;
 
 namespace ThinGin.Core.Common.Objects
@@ -13,7 +12,6 @@ namespace ThinGin.Core.Common.Objects
     {
         #region Values
         WeakReference<EngineObjectBase> _objRef = null;
-        WeakReference<EngineInstance> _engineRef = null;
         #endregion
 
         #region Properties
@@ -22,17 +20,13 @@ namespace ThinGin.Core.Common.Objects
 
         #region Accessors
         public EngineObjectBase Object => _objRef.TryGetTarget(out var outRef) ? outRef : null;
-        public EngineInstance Engine => _engineRef.TryGetTarget(out var outRef) ? outRef : null;
-        public WorldManager World => Engine.World;
+        public WorldManager World => Object.Engine.World;
         #endregion
 
         #region Constructors
-        internal ObjectID(EngineInstance engine, EngineObjectBase obj)
+        internal ObjectID(int value, EngineObjectBase obj)
         {
-            if (engine is null)
-            {
-                throw new ArgumentNullException(nameof(engine));
-            }
+            Value = value;
 
             if (obj is null)
             {
@@ -40,7 +34,6 @@ namespace ThinGin.Core.Common.Objects
             }
 
             _objRef = new WeakReference<EngineObjectBase>(obj);
-            _engineRef = new WeakReference<EngineInstance>(engine);
         }
         #endregion
 

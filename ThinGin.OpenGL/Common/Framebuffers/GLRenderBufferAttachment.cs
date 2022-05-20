@@ -3,13 +3,13 @@ using ThinGin.Core.Rendering;
 
 using OpenTK.Graphics.OpenGL;
 using System;
-using ThinGin.Core.Common.Engine.Types;
 using ThinGin.Core.Common.Engine.Interfaces;
 using ThinGin.Core.Common.Engine.Delegates;
+using ThinGin.Core.RenderHardware.Resources;
 
 namespace ThinGin.OpenGL.Common.Framebuffers
 {
-    public class GLRenderBufferAttachment : GObject, IGBufferAttachment
+    public class GLRenderBufferAttachment : RHIResource, IGBufferAttachment
     {
         #region Values
         private int Handle = 0;

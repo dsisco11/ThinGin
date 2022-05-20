@@ -41,9 +41,10 @@ namespace ThinGin.Core.Engine
             }
 
             initialization_queue.Enqueue(obj);
-            var id = items.Register(obj);
+            var idNum = items.Register(obj);
 
-            return new ObjectID(Engine, obj);
+            obj.Registered();
+            return new ObjectID(idNum, obj);
         }
         #endregion
 
@@ -62,6 +63,8 @@ namespace ThinGin.Core.Engine
 
             items.Unregister(id.Value);
             release_queue.Enqueue(id.Object);
+
+            id.Object.Unregistered();
             return true;
         }
 
@@ -79,6 +82,7 @@ namespace ThinGin.Core.Engine
 
             items.Unregister(obj.Id.Value);
             release_queue.Enqueue(obj);
+            obj.Unregistered();
             return true;
         }
         #endregion

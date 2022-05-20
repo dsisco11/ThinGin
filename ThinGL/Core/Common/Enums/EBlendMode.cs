@@ -1,6 +1,5 @@
 ﻿namespace ThinGin.Core.Common.Enums
 {
-
     public enum EBlendMode
     {
         Zero = 0,

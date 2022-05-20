@@ -8,7 +8,7 @@ namespace ThinGin.Core.Common.Interfaces
     /// Implements a generic attachment object for an OpenGL framebuffer
     /// <para>This enables seamless support for renderbuffers vs textures</para>
     /// </summary>
-    public interface IGBufferAttachment : IGraphicsObject
+    public interface IGBufferAttachment : ITrackedResource
     {
         GBuffer Owner { get; }
         bool IsAttached { get; }

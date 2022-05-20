@@ -9,19 +9,20 @@ namespace ThinGin.Core.Common.Textures
     public struct PixelDescriptor
     {
         #region Static Definitions
-        public static PixelDescriptor Rgba = new PixelDescriptor(new PixelComponent(EPixelComponent.Red, 8), new PixelComponent(EPixelComponent.Green, 8), new PixelComponent(EPixelComponent.Blue, 8), new PixelComponent(EPixelComponent.Alpha, 8));
-        public static PixelDescriptor Rgb = new PixelDescriptor(new PixelComponent(EPixelComponent.Red, 8), new PixelComponent(EPixelComponent.Green, 8), new PixelComponent(EPixelComponent.Blue, 8));
+        public static PixelDescriptor Rgba = new PixelDescriptor(new Cixel(ECixel.Red, 8), new Cixel(ECixel.Green, 8), new Cixel(ECixel.Blue, 8), new Cixel(ECixel.Alpha, 8));
+        public static PixelDescriptor Rgb = new PixelDescriptor(new Cixel(ECixel.Red, 8), new Cixel(ECixel.Green, 8), new Cixel(ECixel.Blue, 8));
 
-        public static PixelDescriptor Bgra = new PixelDescriptor(new PixelComponent(EPixelComponent.Blue, 8), new PixelComponent(EPixelComponent.Green, 8), new PixelComponent(EPixelComponent.Red, 8), new PixelComponent(EPixelComponent.Alpha, 8));
-        public static PixelDescriptor Bgr = new PixelDescriptor(new PixelComponent(EPixelComponent.Blue, 8), new PixelComponent(EPixelComponent.Green, 8), new PixelComponent(EPixelComponent.Red, 8));
+        public static PixelDescriptor Bgra = new PixelDescriptor(new Cixel(ECixel.Blue, 8), new Cixel(ECixel.Green, 8), new Cixel(ECixel.Red, 8), new Cixel(ECixel.Alpha, 8));
+        public static PixelDescriptor Bgr = new PixelDescriptor(new Cixel(ECixel.Blue, 8), new Cixel(ECixel.Green, 8), new Cixel(ECixel.Red, 8));
 
-        public static PixelDescriptor Float32 = new PixelDescriptor(new PixelComponent(EPixelComponent.Raw, 32));
-        public static PixelDescriptor Float1616 = new PixelDescriptor(new PixelComponent(EPixelComponent.Raw, 16), new PixelComponent(EPixelComponent.Raw, 16));
+        public static PixelDescriptor Float32 = new PixelDescriptor(new Cixel(ECixel.Raw, 32));
+        public static PixelDescriptor Float16 = new PixelDescriptor(new Cixel(ECixel.Raw, 16));
+        public static PixelDescriptor Float1616 = new PixelDescriptor(new Cixel(ECixel.Raw, 16), new Cixel(ECixel.Raw, 16));
         #endregion
 
         #region Properties
         /// <summary> All of the components that comprise this pixel format </summary>
-        public readonly PixelComponent[] Components;
+        public readonly Cixel[] Components;
 
         /// <summary> Important flags which help describe the pixel format </summary>
         public readonly EPixelDefFlags Flags;
@@ -37,7 +38,7 @@ namespace ThinGin.Core.Common.Textures
         #endregion
 
         #region Constructors
-        public PixelDescriptor(params PixelComponent[] pixelComponents) : this(false, false, pixelComponents)
+        public PixelDescriptor(params Cixel[] pixelComponents) : this(false, false, pixelComponents)
         {
         }
 
@@ -47,7 +48,7 @@ namespace ThinGin.Core.Common.Textures
         /// <param name="preserveValues">Hints to the GPU that the pixels component values are not to be reinterpreted into the floating point [0.0 - 1.0] range.</param>
         /// <param name="pixelComponents"></param>
         /// <exception cref="ArgumentException"></exception>
-        public PixelDescriptor(bool hasReversedBits, bool preserveValues, params PixelComponent[] pixelComponents)
+        public PixelDescriptor(bool hasReversedBits, bool preserveValues, params Cixel[] pixelComponents)
         {
             Components = pixelComponents;
             PreserveValues = preserveValues;
@@ -101,10 +102,10 @@ namespace ThinGin.Core.Common.Textures
 
                 lastBits = component.BitDepth;
 
-                if (component.Type != EPixelComponent.Raw)
+                if (component.Type != ECixel.Raw)
                 {
                     // Okay so this component isnt a raw value, so we need to validate the all-or-none rule
-                    if (Present[(int)EPixelComponent.Raw])
+                    if (Present[(int)ECixel.Raw])
                     {
                         throw new ArgumentException($"This {nameof(PixelDescriptor)} has conflicting components, A pixel must have either all raw components or no raw components!");
                     }
@@ -157,7 +158,7 @@ namespace ThinGin.Core.Common.Textures
         #endregion
 
         #region Equality
-        public bool Equals(EPixelComponent c1)
+        public bool Equals(ECixel c1)
         {
             if (Components.Length != 1)
                 return false;
@@ -165,7 +166,7 @@ namespace ThinGin.Core.Common.Textures
             return (Components[0].Type == c1);
         }
 
-        public bool Equals(EPixelComponent c1, EPixelComponent c2)
+        public bool Equals(ECixel c1, ECixel c2)
         {
             if (Components.Length != 2)
                 return false;
@@ -174,7 +175,7 @@ namespace ThinGin.Core.Common.Textures
                     && Components[1].Type == c2);
         }
 
-        public bool Equals(EPixelComponent c1, EPixelComponent c2, EPixelComponent c3)
+        public bool Equals(ECixel c1, ECixel c2, ECixel c3)
         {
             if (Components.Length != 3)
                 return false;
@@ -184,7 +185,7 @@ namespace ThinGin.Core.Common.Textures
                     && Components[2].Type == c3);
         }
 
-        public bool Equals(EPixelComponent c1, EPixelComponent c2, EPixelComponent c3, EPixelComponent c4)
+        public bool Equals(ECixel c1, ECixel c2, ECixel c3, ECixel c4)
         {
             if (Components.Length != 4)
                 return false;
@@ -197,13 +198,13 @@ namespace ThinGin.Core.Common.Textures
         #endregion
     }
 
-    public struct PixelComponent
+    public struct Cixel
     {
         #region Properties
         /// <summary>
         /// Indicates what the component represents colorwise
         /// </summary>
-        public readonly EPixelComponent Type;
+        public readonly ECixel Type;
         /// <summary>
         /// Number of bits that make up the component
         /// </summary>
@@ -217,14 +218,14 @@ namespace ThinGin.Core.Common.Textures
         #endregion
 
         #region Constructors
-        public PixelComponent(EPixelComponent type, int bitDepth)
+        public Cixel(ECixel type, int bitDepth)
         {
             Type = type;
             BitDepth = bitDepth;
             IsSigned = false;
             IsFloatingPoint = false;
         }
-        public PixelComponent(EPixelComponent type, int bitDepth, bool isSigned, bool isFloatingPoint)
+        public Cixel(ECixel type, int bitDepth, bool isSigned, bool isFloatingPoint)
         {
             Type = type;
             BitDepth = bitDepth;
@@ -244,7 +245,7 @@ namespace ThinGin.Core.Common.Textures
     }
 
 
-    public enum EPixelComponent 
+    public enum ECixel 
     {
         /// <summary> 
         /// This value would be used when describing some type of non-standard or uncommon format. 

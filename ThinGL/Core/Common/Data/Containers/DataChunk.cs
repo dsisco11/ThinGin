@@ -185,7 +185,7 @@ namespace ThinGin.Core.Common.Data
             {
                 switch (Type)
                 {
-                    case EValueType.BYTE:
+                    case EValueType.UInt8:
                         {
                             byte* dptr = this.AsByte();
                             for (int i = 0; i < this.Count; i++)
@@ -195,7 +195,7 @@ namespace ThinGin.Core.Common.Data
                             }
                         }
                         break;
-                    case EValueType.SBYTE:
+                    case EValueType.Int8:
                         {
                             sbyte* dptr = this.AsSByte();
                             for (int i = 0; i < this.Count; i++)
@@ -205,7 +205,7 @@ namespace ThinGin.Core.Common.Data
                             }
                         }
                         break;
-                    case EValueType.SHORT:
+                    case EValueType.Int16:
                         {
                             short* dptr = this.AsShort();
                             for (int i = 0; i < this.Count; i++)
@@ -215,7 +215,7 @@ namespace ThinGin.Core.Common.Data
                             }
                         }
                         break;
-                    case EValueType.USHORT:
+                    case EValueType.UInt16:
                         {
                             ushort* dptr = this.AsUShort();
                             for (int i = 0; i < this.Count; i++)
@@ -225,7 +225,7 @@ namespace ThinGin.Core.Common.Data
                             }
                         }
                         break;
-                    case EValueType.INT:
+                    case EValueType.Int32:
                         {
                             int* dptr = this.AsInt();
                             for (int i = 0; i < this.Count; i++)
@@ -235,7 +235,7 @@ namespace ThinGin.Core.Common.Data
                             }
                         }
                         break;
-                    case EValueType.UINT:
+                    case EValueType.UInt32:
                         {
                             uint* dptr = this.AsUInt();
                             for (int i = 0; i < this.Count; i++)
@@ -246,7 +246,7 @@ namespace ThinGin.Core.Common.Data
                         }
                         break;
                     //case EValueType.FLOAT_HALF:
-                    case EValueType.FLOAT:
+                    case EValueType.Float32:
                         {
                             float* dptr = this.AsFloat();
                             for (int i = 0; i < this.Count; i++)
@@ -279,7 +279,7 @@ namespace ThinGin.Core.Common.Data
             switch (Type)
             {
                 //case EValueType.FLOAT_HALF:
-                case EValueType.FLOAT:
+                case EValueType.Float32:
                 case EValueType.DOUBLE:
                     {
                         return $"{Type}<{string.Join(", ", ToDouble())}>";

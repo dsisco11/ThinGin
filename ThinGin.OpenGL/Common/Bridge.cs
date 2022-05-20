@@ -215,19 +215,19 @@ namespace ThinGin.OpenGL.Common
                 case EVariableType.INT_VEC2:
                 case EVariableType.INT_VEC3:
                 case EVariableType.INT_VEC4:
-                    return EValueType.INT;
+                    return EValueType.Int32;
 
                 case EVariableType.UINT:
                 case EVariableType.UINT_VEC2:
                 case EVariableType.UINT_VEC3:
                 case EVariableType.UINT_VEC4:
-                    return EValueType.UINT;
+                    return EValueType.UInt32;
 
                 case EVariableType.FLOAT:
                 case EVariableType.FLOAT_VEC2:
                 case EVariableType.FLOAT_VEC3:
                 case EVariableType.FLOAT_VEC4:
-                    return EValueType.FLOAT;
+                    return EValueType.Float32;
 
                 case EVariableType.FLOAT_MATRIX_2_2:
                 case EVariableType.FLOAT_MATRIX_2_3:
@@ -238,7 +238,7 @@ namespace ThinGin.OpenGL.Common
                 case EVariableType.FLOAT_MATRIX_4_2:
                 case EVariableType.FLOAT_MATRIX_4_3:
                 case EVariableType.FLOAT_MATRIX_4_4:
-                    return EValueType.FLOAT;
+                    return EValueType.Float32;
 
                 case EVariableType.DOUBLE:
                 case EVariableType.DOUBLE_VEC2:
@@ -262,10 +262,10 @@ namespace ThinGin.OpenGL.Common
                 case EVariableType.BOOL_VEC2:
                 case EVariableType.BOOL_VEC3:
                 case EVariableType.BOOL_VEC4:
-                    return EValueType.INT;
+                    return EValueType.Int32;
 
                 case EVariableType.HANDLE:
-                    return EValueType.INT;
+                    return EValueType.Int32;
 
                 default:
                     throw new NotImplementedException(uType.ToString());
@@ -293,9 +293,9 @@ namespace ThinGin.OpenGL.Common
         {
             switch (Type)
             {
-                case ETopology.Points:
+                case ETopology.PointList:
                     return PrimitiveType.Points;
-                case ETopology.Lines:
+                case ETopology.LineList:
                     return PrimitiveType.Lines;
                 case ETopology.LineLoop:
                     return PrimitiveType.LineLoop;
@@ -325,15 +325,15 @@ namespace ThinGin.OpenGL.Common
         {
             switch (DataType)
             {
-                case EValueType.BYTE: return VertexAttribPointerType.UnsignedByte;
-                case EValueType.SBYTE: return VertexAttribPointerType.Byte;
-                case EValueType.SHORT: return VertexAttribPointerType.Short;
-                case EValueType.USHORT: return VertexAttribPointerType.UnsignedShort;
-                case EValueType.FLOAT: return VertexAttribPointerType.Float;
-                case EValueType.FLOAT_HALF: return VertexAttribPointerType.HalfFloat;
+                case EValueType.UInt8: return VertexAttribPointerType.UnsignedByte;
+                case EValueType.Int8: return VertexAttribPointerType.Byte;
+                case EValueType.Int16: return VertexAttribPointerType.Short;
+                case EValueType.UInt16: return VertexAttribPointerType.UnsignedShort;
+                case EValueType.Float32: return VertexAttribPointerType.Float;
+                case EValueType.Float16: return VertexAttribPointerType.HalfFloat;
                 case EValueType.DOUBLE: return VertexAttribPointerType.Double;
-                case EValueType.INT: return VertexAttribPointerType.Int;
-                case EValueType.UINT: return VertexAttribPointerType.UnsignedInt;
+                case EValueType.Int32: return VertexAttribPointerType.Int;
+                case EValueType.UInt32: return VertexAttribPointerType.UnsignedInt;
                 default:
                     throw new System.NotImplementedException($"Translation value unknown for {nameof(EValueType)}.{DataType}");
             }

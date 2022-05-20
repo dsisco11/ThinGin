@@ -22,9 +22,36 @@ SEE: https://www.youtube.com/watch?v=qx1c190aGhs
 - MeshRenderer needs to be something else, maybe the RHI?
 - Meshes need to also know what shader they are using and what set of shader vars too.
 
+- Replace Pixel Buffer Objects with a unified GByteBuffer object
+
 
 - Move EngineInstance GFX handling stuff into its render manager
 - Add defaults for Shader objects
 - Create RHI command system
 - need vertex factorys
 - need to move things like mesh and camera into component system
+
+
+
+===========================================
+			NEW RHI SYSTEM
+===========================================
+
+Okay so in the new RHI based system the general idea is that everything is abstracted into layers like so:
+
+[Engine Component] 
+	Uses RHI objects to facilitate specific engine level components and features.
+[RHI Abstract Object] 
+	Represents the general idea of objects and capabilities of rendering hardware. Eg; the general concept of a pixel shader, or a buffer holding vertex/index data.
+[Driver Implementation]
+	Facilitates the actual implementation of objects and capabilities provided by the RHI using the specific feature set of the underlying graphics driver.
+
+
+	
+===========================================
+				DIFFERENCES
+===========================================
+
+- We dont use BulkDataInterface objects, we use DMAInterface objects which are given a kind of resource context object which describes what it is being used for (buffer, texture, etc)
+
+

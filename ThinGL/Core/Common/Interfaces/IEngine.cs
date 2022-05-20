@@ -3,7 +3,6 @@ using System.Drawing;
 using ThinGin.Core.Common.Textures;
 using ThinGin.Core.Common.Enums;
 using ThinGin.Core.Common.Engine;
-using ThinGin.Core.Common.Engine.Types;
 using ThinGin.Core.Engine.Common;
 using System;
 using ThinGin.Core.Common.Cameras;
@@ -16,7 +15,6 @@ namespace ThinGin.Core.Common.Interfaces
     {
         #region Properties
         IGraphicsImplementation Provider { get; }
-        EngineCompatabilityList Compatability { get; }
         #endregion
 
         #region Settings
@@ -51,10 +49,6 @@ namespace ThinGin.Core.Common.Interfaces
         public void Set_Viewport(Rectangle area);
         #endregion
 
-        #region Extensions
-        bool IsSupported(string extension);
-        #endregion
-
         #region Object Management
         void Think();
         #endregion
@@ -70,23 +64,6 @@ namespace ThinGin.Core.Common.Interfaces
         #region Frame Management
         void BeginFrame();
         void EndFrame();
-        #endregion
-
-        #region Textures
-        TextureCache TextureCache { get; }
-        /// <summary>
-        /// Returns the default GPU pixel layout recommended by the engine implementation.
-        /// </summary>
-        PixelDescriptor Get_Default_Texture_Internal_Pixel_Layout();
-
-        /// <summary>
-        /// Returns whether the specified <paramref name="PixelLayout"/> is a pixel data arrangement the current engine supports.
-        /// </summary>
-        /// <param name="PixelLayout"></param>
-        /// <returns></returns>
-        bool IsSupported(PixelDescriptor PixelLayout);
-        //IGpuTask Upload_Texture(TextureMetadata Metadata, ReadOnlyMemory<byte> pixelData, PixelDescriptor GpuLayout, ITexture Target, out int ID);
-
         #endregion
 
         #region Errors
@@ -137,7 +114,7 @@ namespace ThinGin.Core.Common.Interfaces
 
         #region Framebuffers
 
-        void Bind_Framebuffer(GBuffer frameBuffer, EBufferAccess BufferMode);
+        void Bind_Framebuffer(GBuffer frameBuffer, ERHIAccess BufferMode);
         void Unbind_Framebuffer(GBuffer frameBuffer);
         void Blit(Rectangle Source, Rectangle Dest);
         #endregion

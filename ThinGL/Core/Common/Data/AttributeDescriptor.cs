@@ -26,7 +26,7 @@ namespace ThinGin.Core.Common.Data
         /// <summary>
         /// The type of each component
         /// </summary>
-        public EValueType ValueType { get; private set; } = EValueType.NULL;
+        public EValueType ValueType { get; private set; } = EValueType.Null;
 
         /// <summary> <inheritdoc cref="IDataAlignmentDescriptor.Interleaved"/> </summary>
         public bool Interleaved { get; set; } = true;
@@ -46,16 +46,16 @@ namespace ThinGin.Core.Common.Data
             {// This value is meant for the gpu really, so even though an "int" for .net can technically be larger than 32-bits, for the GPU hardware its always 32-bit.
                 return ValueType switch
                 {
-                    EValueType.NULL => 0,
-                    EValueType.BYTE => 1,
-                    EValueType.SBYTE => 1,
-                    EValueType.FLOAT_HALF => 2,
-                    EValueType.FLOAT => 4,
+                    EValueType.Null => 0,
+                    EValueType.UInt8 => 1,
+                    EValueType.Int8 => 1,
+                    EValueType.Float16 => 2,
+                    EValueType.Float32 => 4,
                     EValueType.DOUBLE => 8,
-                    EValueType.SHORT => 2,
-                    EValueType.USHORT => 2,
-                    EValueType.INT => 4,
-                    EValueType.UINT => 4,
+                    EValueType.Int16 => 2,
+                    EValueType.UInt16 => 2,
+                    EValueType.Int32 => 4,
+                    EValueType.UInt32 => 4,
                     _ => throw new System.NotImplementedException($"Logical handling not implemented for {nameof(EValueType)}.{System.Enum.GetName(typeof(EValueType), ValueType)}"),
                 };
             }
@@ -125,53 +125,53 @@ namespace ThinGin.Core.Common.Data
         #region Common Formats
 
         #region 8-bit Unsigned Integer
-        public static AttributeDescriptor BYTE1 => new AttributeDescriptor(1, EValueType.BYTE);
-        public static AttributeDescriptor BYTE2 => new AttributeDescriptor(2, EValueType.BYTE);
-        public static AttributeDescriptor BYTE3 => new AttributeDescriptor(3, EValueType.BYTE);
-        public static AttributeDescriptor BYTE4 => new AttributeDescriptor(4, EValueType.BYTE);
+        public static AttributeDescriptor BYTE1 => new AttributeDescriptor(1, EValueType.UInt8);
+        public static AttributeDescriptor BYTE2 => new AttributeDescriptor(2, EValueType.UInt8);
+        public static AttributeDescriptor BYTE3 => new AttributeDescriptor(3, EValueType.UInt8);
+        public static AttributeDescriptor BYTE4 => new AttributeDescriptor(4, EValueType.UInt8);
         #endregion
 
         #region 8-bit Signed Integer
-        public static AttributeDescriptor SBYTE1 => new AttributeDescriptor(1, EValueType.SBYTE);
-        public static AttributeDescriptor SBYTE2 => new AttributeDescriptor(2, EValueType.SBYTE);
-        public static AttributeDescriptor SBYTE3 => new AttributeDescriptor(3, EValueType.SBYTE);
-        public static AttributeDescriptor SBYTE4 => new AttributeDescriptor(4, EValueType.SBYTE);
+        public static AttributeDescriptor SBYTE1 => new AttributeDescriptor(1, EValueType.Int8);
+        public static AttributeDescriptor SBYTE2 => new AttributeDescriptor(2, EValueType.Int8);
+        public static AttributeDescriptor SBYTE3 => new AttributeDescriptor(3, EValueType.Int8);
+        public static AttributeDescriptor SBYTE4 => new AttributeDescriptor(4, EValueType.Int8);
         #endregion
 
         #region 16-bit Unsigned Integer
-        public static AttributeDescriptor USHORT1 => new AttributeDescriptor(1, EValueType.USHORT);
-        public static AttributeDescriptor USHORT2 => new AttributeDescriptor(2, EValueType.USHORT);
-        public static AttributeDescriptor USHORT3 => new AttributeDescriptor(3, EValueType.USHORT);
-        public static AttributeDescriptor USHORT4 => new AttributeDescriptor(4, EValueType.USHORT);
+        public static AttributeDescriptor USHORT1 => new AttributeDescriptor(1, EValueType.UInt16);
+        public static AttributeDescriptor USHORT2 => new AttributeDescriptor(2, EValueType.UInt16);
+        public static AttributeDescriptor USHORT3 => new AttributeDescriptor(3, EValueType.UInt16);
+        public static AttributeDescriptor USHORT4 => new AttributeDescriptor(4, EValueType.UInt16);
         #endregion
 
         #region 16-bit Signed Integer
-        public static AttributeDescriptor SHORT1 => new AttributeDescriptor(1, EValueType.SHORT);
-        public static AttributeDescriptor SHORT2 => new AttributeDescriptor(2, EValueType.SHORT);
-        public static AttributeDescriptor SHORT3 => new AttributeDescriptor(3, EValueType.SHORT);
-        public static AttributeDescriptor SHORT4 => new AttributeDescriptor(4, EValueType.SHORT);
+        public static AttributeDescriptor SHORT1 => new AttributeDescriptor(1, EValueType.Int16);
+        public static AttributeDescriptor SHORT2 => new AttributeDescriptor(2, EValueType.Int16);
+        public static AttributeDescriptor SHORT3 => new AttributeDescriptor(3, EValueType.Int16);
+        public static AttributeDescriptor SHORT4 => new AttributeDescriptor(4, EValueType.Int16);
         #endregion
 
         #region 32-bit Unsigned Integer
-        public static AttributeDescriptor UINT1 => new AttributeDescriptor(1, EValueType.UINT);
-        public static AttributeDescriptor UINT2 => new AttributeDescriptor(2, EValueType.UINT);
-        public static AttributeDescriptor UINT3 => new AttributeDescriptor(3, EValueType.UINT);
-        public static AttributeDescriptor UINT4 => new AttributeDescriptor(4, EValueType.UINT);
+        public static AttributeDescriptor UINT1 => new AttributeDescriptor(1, EValueType.UInt32);
+        public static AttributeDescriptor UINT2 => new AttributeDescriptor(2, EValueType.UInt32);
+        public static AttributeDescriptor UINT3 => new AttributeDescriptor(3, EValueType.UInt32);
+        public static AttributeDescriptor UINT4 => new AttributeDescriptor(4, EValueType.UInt32);
         #endregion
 
         #region 32-bit Signed Integer
-        public static AttributeDescriptor INT1 => new AttributeDescriptor(1, EValueType.INT);
-        public static AttributeDescriptor INT2 => new AttributeDescriptor(2, EValueType.INT);
-        public static AttributeDescriptor INT3 => new AttributeDescriptor(3, EValueType.INT);
-        public static AttributeDescriptor INT4 => new AttributeDescriptor(4, EValueType.INT);
+        public static AttributeDescriptor INT1 => new AttributeDescriptor(1, EValueType.Int32);
+        public static AttributeDescriptor INT2 => new AttributeDescriptor(2, EValueType.Int32);
+        public static AttributeDescriptor INT3 => new AttributeDescriptor(3, EValueType.Int32);
+        public static AttributeDescriptor INT4 => new AttributeDescriptor(4, EValueType.Int32);
         #endregion
 
 
         #region Float
-        public static AttributeDescriptor FLOAT1 => new AttributeDescriptor(1, EValueType.FLOAT);
-        public static AttributeDescriptor FLOAT2 => new AttributeDescriptor(2, EValueType.FLOAT);
-        public static AttributeDescriptor FLOAT3 => new AttributeDescriptor(3, EValueType.FLOAT);
-        public static AttributeDescriptor FLOAT4 => new AttributeDescriptor(4, EValueType.FLOAT);
+        public static AttributeDescriptor FLOAT1 => new AttributeDescriptor(1, EValueType.Float32);
+        public static AttributeDescriptor FLOAT2 => new AttributeDescriptor(2, EValueType.Float32);
+        public static AttributeDescriptor FLOAT3 => new AttributeDescriptor(3, EValueType.Float32);
+        public static AttributeDescriptor FLOAT4 => new AttributeDescriptor(4, EValueType.Float32);
         #endregion
 
         #region Double

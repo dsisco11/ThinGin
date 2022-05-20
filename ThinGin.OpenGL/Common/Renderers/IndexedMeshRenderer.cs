@@ -59,14 +59,14 @@ namespace ThinGin.OpenGL.Common.Renderers
         {
             return new EngineDelegate(() =>
             {
-                VBO = new VertexBufferObject(Engine);
+                VBO = new VertexBufferObject(RHI);
                 VBO.Bind();
                 VBO.Upload(mesh.Data, null);
 
-                VAO = new VertexArrayObject(Engine, mesh.Layout);
+                VAO = new VertexArrayObject(RHI, mesh.Layout);
                 VAO.Bind();
 
-                EBO = new ElementBufferObject(Engine);
+                EBO = new ElementBufferObject(RHI);
                 EBO.Bind();
                 EBO.Upload(mesh.Indices.Data, mesh.Indices.Layout);
 
@@ -84,7 +84,7 @@ namespace ThinGin.OpenGL.Common.Renderers
                 VBO.Upload(mesh.Data, null);
                 EBO.Upload(mesh.Indices.Data, mesh.Indices.Layout);
 #if DEBUG
-                Engine.ErrorCheck(out _);
+                RHI.ErrorCheck(out _);
 #endif
             });
         }
@@ -96,19 +96,19 @@ namespace ThinGin.OpenGL.Common.Renderers
             if (!IsInitialized)
                 return;
 
-            Engine.Bind(VAO);
+            RHI.Bind(VAO);
 
             var primitive = Common.Bridge.Translate(Primitive);
             GL.DrawElements(primitive, EBO.Length, EBO.ElementType, System.IntPtr.Zero);
 
 #if DEBUG
-            if (Engine.ErrorCheck(out var msg))
+            if (RHI.ErrorCheck(out var msg))
             {
                 System.Diagnostics.Debugger.Break();
             }
 #endif
 
-            Engine.Unbind(VAO);
+            RHI.Unbind(VAO);
         }
         #endregion
     }

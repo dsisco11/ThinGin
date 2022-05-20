@@ -1,7 +1,7 @@
 ﻿using OpenTK.Graphics.OpenGL;
 
-using ThinGin.Core.Common.Interfaces;
 using ThinGin.Core.Common.Textures;
+using ThinGin.Core.Engine.Common.Core;
 using ThinGin.OpenGL.Common.Exceptions;
 
 namespace ThinGin.OpenGL.Common.Textures
@@ -13,9 +13,9 @@ namespace ThinGin.OpenGL.Common.Textures
         #endregion
 
         #region Constructors
-        public GLTextureMultisample(IEngine Engine, PixelDescriptor GpuLayout, int samples) : base(Engine, GpuLayout)
+        public GLTextureMultisample(EngineInstance engine, PixelDescriptor GpuLayout, int samples) : base(engine, GpuLayout)
         {
-            if (!Engine.IsSupported("arb_texture_multisample"))
+            if (!engine.Renderer.IsSupported("arb_texture_multisample"))
             {
                 throw new OpenGLUnsupportedException(nameof(GLTextureMultisample));
             }
@@ -26,7 +26,7 @@ namespace ThinGin.OpenGL.Common.Textures
 
 
         #region Initialization
-        public override bool TryLoad(TextureMetadata Metadata, byte[] RawPixels)
+        public override bool TryLoad(TextureDescriptor Metadata, byte[] RawPixels)
         {
             try
             {

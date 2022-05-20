@@ -40,16 +40,6 @@ namespace ThinGin.Core.Common.Objects
         public override int GetHashCode() => Id.Value;
         #endregion
 
-        #region World
-        internal void OnRegistered(ObjectID id)
-        {
-        }
-
-        internal void OnUnregistered(ObjectID id)
-        {
-        }
-        #endregion
-
         #region Processing
         /// <summary>
         /// Attempts to process a 'command' on this object
@@ -63,9 +53,7 @@ namespace ThinGin.Core.Common.Objects
 
 
         #region Common Events
-        public virtual void OnTick(double time)
-        {
-        }
+        public virtual void OnTick(double time) { }
         #endregion
     }
 }

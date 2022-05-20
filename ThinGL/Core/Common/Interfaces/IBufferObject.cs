@@ -40,7 +40,7 @@ namespace ThinGin.Core.Common.Interfaces
         /// <param name="dmaAddress"></param>
         /// <returns>Success</returns>
         /// <exception cref="ThinGinException"></exception>
-        bool TryMap(EBufferAccess Access, out IntPtr dmaAddress);
+        bool TryMap(ERHIAccess Access, out IntPtr dmaAddress);
 
         /// <summary>
         /// Releases the buffer from client address space

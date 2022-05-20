@@ -1,9 +1,10 @@
 ﻿
 using ThinGin.Core.Common.Interfaces;
+using ThinGin.Core.RenderHardware.Resources;
 
 namespace ThinGin.Core.Common.Engine.Types
 {
-    public abstract class GpuSyncPrimitive : GObject
+    public abstract class GpuSyncPrimitive : RHIResource
     {
         #region Values
         /// <summary>

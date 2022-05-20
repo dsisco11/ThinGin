@@ -35,7 +35,7 @@ namespace ThinGin.Core.Common.Data
 		public DataChunk(byte v0)
 		{
 			Layout = DataChunkDescriptor.BYTE1;
-			Type = EValueType.BYTE;
+			Type = EValueType.UInt8;
 			const int _size = SIZE_BYTE * 1;
 			Data = new byte[_size];
 
@@ -53,7 +53,7 @@ namespace ThinGin.Core.Common.Data
 		public DataChunk(byte v0, byte v1)
 		{
 			Layout = DataChunkDescriptor.BYTE2;
-			Type = EValueType.BYTE;
+			Type = EValueType.UInt8;
 			const int _size = SIZE_BYTE * 2;
 			Data = new byte[_size];
 
@@ -73,7 +73,7 @@ namespace ThinGin.Core.Common.Data
 		public DataChunk(byte v0, byte v1, byte v2)
 		{
 			Layout = DataChunkDescriptor.BYTE3;
-			Type = EValueType.BYTE;
+			Type = EValueType.UInt8;
 			const int _size = SIZE_BYTE * 3;
 			Data = new byte[_size];
 
@@ -95,7 +95,7 @@ namespace ThinGin.Core.Common.Data
 		public DataChunk(byte v0, byte v1, byte v2, byte v3)
 		{
 			Layout = DataChunkDescriptor.BYTE4;
-			Type = EValueType.BYTE;
+			Type = EValueType.UInt8;
 			const int _size = SIZE_BYTE * 4;
 			Data = new byte[_size];
 
@@ -121,7 +121,7 @@ namespace ThinGin.Core.Common.Data
 		public DataChunk(sbyte v0)
 		{
 			Layout = DataChunkDescriptor.SBYTE1;
-			Type = EValueType.SBYTE;
+			Type = EValueType.Int8;
 			const int _size = SIZE_SBYTE * 1;
 			Data = new byte[_size];
 
@@ -139,7 +139,7 @@ namespace ThinGin.Core.Common.Data
 		public DataChunk(sbyte v0, sbyte v1)
 		{
 			Layout = DataChunkDescriptor.SBYTE2;
-			Type = EValueType.SBYTE;
+			Type = EValueType.Int8;
 			const int _size = SIZE_SBYTE * 2;
 			Data = new byte[_size];
 
@@ -159,7 +159,7 @@ namespace ThinGin.Core.Common.Data
 		public DataChunk(sbyte v0, sbyte v1, sbyte v2)
 		{
 			Layout = DataChunkDescriptor.SBYTE3;
-			Type = EValueType.SBYTE;
+			Type = EValueType.Int8;
 			const int _size = SIZE_SBYTE * 3;
 			Data = new byte[_size];
 
@@ -181,7 +181,7 @@ namespace ThinGin.Core.Common.Data
 		public DataChunk(sbyte v0, sbyte v1, sbyte v2, sbyte v3)
 		{
 			Layout = DataChunkDescriptor.SBYTE4;
-			Type = EValueType.SBYTE;
+			Type = EValueType.Int8;
 			const int _size = SIZE_SBYTE * 4;
 			Data = new byte[_size];
 
@@ -207,7 +207,7 @@ namespace ThinGin.Core.Common.Data
 		public DataChunk(ushort v0)
 		{
 			Layout = DataChunkDescriptor.USHORT1;
-			Type = EValueType.USHORT;
+			Type = EValueType.UInt16;
 			const int _size = SIZE_USHORT * 1;
 			Data = new byte[_size];
 
@@ -225,7 +225,7 @@ namespace ThinGin.Core.Common.Data
 		public DataChunk(ushort v0, ushort v1)
 		{
 			Layout = DataChunkDescriptor.USHORT2;
-			Type = EValueType.USHORT;
+			Type = EValueType.UInt16;
 			const int _size = SIZE_USHORT * 2;
 			Data = new byte[_size];
 
@@ -245,7 +245,7 @@ namespace ThinGin.Core.Common.Data
 		public DataChunk(ushort v0, ushort v1, ushort v2)
 		{
 			Layout = DataChunkDescriptor.USHORT3;
-			Type = EValueType.USHORT;
+			Type = EValueType.UInt16;
 			const int _size = SIZE_USHORT * 3;
 			Data = new byte[_size];
 
@@ -267,7 +267,7 @@ namespace ThinGin.Core.Common.Data
 		public DataChunk(ushort v0, ushort v1, ushort v2, ushort v3)
 		{
 			Layout = DataChunkDescriptor.USHORT4;
-			Type = EValueType.USHORT;
+			Type = EValueType.UInt16;
 			const int _size = SIZE_USHORT * 4;
 			Data = new byte[_size];
 
@@ -293,7 +293,7 @@ namespace ThinGin.Core.Common.Data
 		public DataChunk(short v0)
 		{
 			Layout = DataChunkDescriptor.SHORT1;
-			Type = EValueType.SHORT;
+			Type = EValueType.Int16;
 			const int _size = SIZE_SHORT * 1;
 			Data = new byte[_size];
 
@@ -311,7 +311,7 @@ namespace ThinGin.Core.Common.Data
 		public DataChunk(short v0, short v1)
 		{
 			Layout = DataChunkDescriptor.SHORT2;
-			Type = EValueType.SHORT;
+			Type = EValueType.Int16;
 			const int _size = SIZE_SHORT * 2;
 			Data = new byte[_size];
 
@@ -331,7 +331,7 @@ namespace ThinGin.Core.Common.Data
 		public DataChunk(short v0, short v1, short v2)
 		{
 			Layout = DataChunkDescriptor.SHORT3;
-			Type = EValueType.SHORT;
+			Type = EValueType.Int16;
 			const int _size = SIZE_SHORT * 3;
 			Data = new byte[_size];
 
@@ -353,7 +353,7 @@ namespace ThinGin.Core.Common.Data
 		public DataChunk(short v0, short v1, short v2, short v3)
 		{
 			Layout = DataChunkDescriptor.SHORT4;
-			Type = EValueType.SHORT;
+			Type = EValueType.Int16;
 			const int _size = SIZE_SHORT * 4;
 			Data = new byte[_size];
 
@@ -379,7 +379,7 @@ namespace ThinGin.Core.Common.Data
 		public DataChunk(uint v0)
 		{
 			Layout = DataChunkDescriptor.UINT1;
-			Type = EValueType.UINT;
+			Type = EValueType.UInt32;
 			const int _size = SIZE_UINT * 1;
 			Data = new byte[_size];
 
@@ -397,7 +397,7 @@ namespace ThinGin.Core.Common.Data
 		public DataChunk(uint v0, uint v1)
 		{
 			Layout = DataChunkDescriptor.UINT2;
-			Type = EValueType.UINT;
+			Type = EValueType.UInt32;
 			const int _size = SIZE_UINT * 2;
 			Data = new byte[_size];
 
@@ -417,7 +417,7 @@ namespace ThinGin.Core.Common.Data
 		public DataChunk(uint v0, uint v1, uint v2)
 		{
 			Layout = DataChunkDescriptor.UINT3;
-			Type = EValueType.UINT;
+			Type = EValueType.UInt32;
 			const int _size = SIZE_UINT * 3;
 			Data = new byte[_size];
 
@@ -439,7 +439,7 @@ namespace ThinGin.Core.Common.Data
 		public DataChunk(uint v0, uint v1, uint v2, uint v3)
 		{
 			Layout = DataChunkDescriptor.UINT4;
-			Type = EValueType.UINT;
+			Type = EValueType.UInt32;
 			const int _size = SIZE_UINT * 4;
 			Data = new byte[_size];
 
@@ -465,7 +465,7 @@ namespace ThinGin.Core.Common.Data
 		public DataChunk(int v0)
 		{
 			Layout = DataChunkDescriptor.INT1;
-			Type = EValueType.INT;
+			Type = EValueType.Int32;
 			const int _size = SIZE_INT * 1;
 			Data = new byte[_size];
 
@@ -483,7 +483,7 @@ namespace ThinGin.Core.Common.Data
 		public DataChunk(int v0, int v1)
 		{
 			Layout = DataChunkDescriptor.INT2;
-			Type = EValueType.INT;
+			Type = EValueType.Int32;
 			const int _size = SIZE_INT * 2;
 			Data = new byte[_size];
 
@@ -503,7 +503,7 @@ namespace ThinGin.Core.Common.Data
 		public DataChunk(int v0, int v1, int v2)
 		{
 			Layout = DataChunkDescriptor.INT3;
-			Type = EValueType.INT;
+			Type = EValueType.Int32;
 			const int _size = SIZE_INT * 3;
 			Data = new byte[_size];
 
@@ -525,7 +525,7 @@ namespace ThinGin.Core.Common.Data
 		public DataChunk(int v0, int v1, int v2, int v3)
 		{
 			Layout = DataChunkDescriptor.INT4;
-			Type = EValueType.INT;
+			Type = EValueType.Int32;
 			const int _size = SIZE_INT * 4;
 			Data = new byte[_size];
 
@@ -551,7 +551,7 @@ namespace ThinGin.Core.Common.Data
 		public DataChunk(float v0)
 		{
 			Layout = DataChunkDescriptor.FLOAT1;
-			Type = EValueType.FLOAT;
+			Type = EValueType.Float32;
 			const int _size = SIZE_FLOAT * 1;
 			Data = new byte[_size];
 
@@ -569,7 +569,7 @@ namespace ThinGin.Core.Common.Data
 		public DataChunk(float v0, float v1)
 		{
 			Layout = DataChunkDescriptor.FLOAT2;
-			Type = EValueType.FLOAT;
+			Type = EValueType.Float32;
 			const int _size = SIZE_FLOAT * 2;
 			Data = new byte[_size];
 
@@ -589,7 +589,7 @@ namespace ThinGin.Core.Common.Data
 		public DataChunk(float v0, float v1, float v2)
 		{
 			Layout = DataChunkDescriptor.FLOAT3;
-			Type = EValueType.FLOAT;
+			Type = EValueType.Float32;
 			const int _size = SIZE_FLOAT * 3;
 			Data = new byte[_size];
 
@@ -611,7 +611,7 @@ namespace ThinGin.Core.Common.Data
 		public DataChunk(float v0, float v1, float v2, float v3)
 		{
 			Layout = DataChunkDescriptor.FLOAT4;
-			Type = EValueType.FLOAT;
+			Type = EValueType.Float32;
 			const int _size = SIZE_FLOAT * 4;
 			Data = new byte[_size];
 
@@ -732,9 +732,9 @@ namespace ThinGin.Core.Common.Data
 				2 => DataChunkDescriptor.BYTE2,
 				3 => DataChunkDescriptor.BYTE3,
 				4 => DataChunkDescriptor.BYTE4,
-				_ => new DataChunkDescriptor(v0.Length, EValueType.BYTE)
+				_ => new DataChunkDescriptor(v0.Length, EValueType.UInt8)
 			};
-			Type = EValueType.BYTE;
+			Type = EValueType.UInt8;
 			Data = new byte[SIZE_BYTE * v0.Length];
 
 			unsafe
@@ -766,9 +766,9 @@ namespace ThinGin.Core.Common.Data
 				2 => DataChunkDescriptor.SBYTE2,
 				3 => DataChunkDescriptor.SBYTE3,
 				4 => DataChunkDescriptor.SBYTE4,
-				_ => new DataChunkDescriptor(v0.Length, EValueType.SBYTE)
+				_ => new DataChunkDescriptor(v0.Length, EValueType.Int8)
 			};
-			Type = EValueType.SBYTE;
+			Type = EValueType.Int8;
 			Data = new byte[SIZE_SBYTE * v0.Length];
 
 			unsafe
@@ -800,9 +800,9 @@ namespace ThinGin.Core.Common.Data
 				2 => DataChunkDescriptor.USHORT2,
 				3 => DataChunkDescriptor.USHORT3,
 				4 => DataChunkDescriptor.USHORT4,
-				_ => new DataChunkDescriptor(v0.Length, EValueType.USHORT)
+				_ => new DataChunkDescriptor(v0.Length, EValueType.UInt16)
 			};
-			Type = EValueType.USHORT;
+			Type = EValueType.UInt16;
 			Data = new byte[SIZE_USHORT * v0.Length];
 
 			unsafe
@@ -834,9 +834,9 @@ namespace ThinGin.Core.Common.Data
 				2 => DataChunkDescriptor.SHORT2,
 				3 => DataChunkDescriptor.SHORT3,
 				4 => DataChunkDescriptor.SHORT4,
-				_ => new DataChunkDescriptor(v0.Length, EValueType.SHORT)
+				_ => new DataChunkDescriptor(v0.Length, EValueType.Int16)
 			};
-			Type = EValueType.SHORT;
+			Type = EValueType.Int16;
 			Data = new byte[SIZE_SHORT * v0.Length];
 
 			unsafe
@@ -868,9 +868,9 @@ namespace ThinGin.Core.Common.Data
 				2 => DataChunkDescriptor.UINT2,
 				3 => DataChunkDescriptor.UINT3,
 				4 => DataChunkDescriptor.UINT4,
-				_ => new DataChunkDescriptor(v0.Length, EValueType.UINT)
+				_ => new DataChunkDescriptor(v0.Length, EValueType.UInt32)
 			};
-			Type = EValueType.UINT;
+			Type = EValueType.UInt32;
 			Data = new byte[SIZE_UINT * v0.Length];
 
 			unsafe
@@ -902,9 +902,9 @@ namespace ThinGin.Core.Common.Data
 				2 => DataChunkDescriptor.INT2,
 				3 => DataChunkDescriptor.INT3,
 				4 => DataChunkDescriptor.INT4,
-				_ => new DataChunkDescriptor(v0.Length, EValueType.INT)
+				_ => new DataChunkDescriptor(v0.Length, EValueType.Int32)
 			};
-			Type = EValueType.INT;
+			Type = EValueType.Int32;
 			Data = new byte[SIZE_INT * v0.Length];
 
 			unsafe
@@ -936,9 +936,9 @@ namespace ThinGin.Core.Common.Data
 				2 => DataChunkDescriptor.FLOAT2,
 				3 => DataChunkDescriptor.FLOAT3,
 				4 => DataChunkDescriptor.FLOAT4,
-				_ => new DataChunkDescriptor(v0.Length, EValueType.FLOAT)
+				_ => new DataChunkDescriptor(v0.Length, EValueType.Float32)
 			};
-			Type = EValueType.FLOAT;
+			Type = EValueType.Float32;
 			Data = new byte[SIZE_FLOAT * v0.Length];
 
 			unsafe
@@ -1004,13 +1004,13 @@ namespace ThinGin.Core.Common.Data
 			{
 				switch(Type)
 				{
-					case EValueType.BYTE: { _vt_quick_cast__byte_to_byte(result, Count); } break;
-					case EValueType.SBYTE: { _vt_quick_cast__sbyte_to_byte(result, Count); } break;
-					case EValueType.USHORT: { _vt_quick_cast__ushort_to_byte(result, Count); } break;
-					case EValueType.SHORT: { _vt_quick_cast__short_to_byte(result, Count); } break;
-					case EValueType.UINT: { _vt_quick_cast__uint_to_byte(result, Count); } break;
-					case EValueType.INT: { _vt_quick_cast__int_to_byte(result, Count); } break;
-					case EValueType.FLOAT: { _vt_quick_cast__float_to_byte(result, Count); } break;
+					case EValueType.UInt8: { _vt_quick_cast__byte_to_byte(result, Count); } break;
+					case EValueType.Int8: { _vt_quick_cast__sbyte_to_byte(result, Count); } break;
+					case EValueType.UInt16: { _vt_quick_cast__ushort_to_byte(result, Count); } break;
+					case EValueType.Int16: { _vt_quick_cast__short_to_byte(result, Count); } break;
+					case EValueType.UInt32: { _vt_quick_cast__uint_to_byte(result, Count); } break;
+					case EValueType.Int32: { _vt_quick_cast__int_to_byte(result, Count); } break;
+					case EValueType.Float32: { _vt_quick_cast__float_to_byte(result, Count); } break;
 					case EValueType.DOUBLE: { _vt_quick_cast__double_to_byte(result, Count); } break;
 				}
 			}
@@ -1024,13 +1024,13 @@ namespace ThinGin.Core.Common.Data
 			{
 				switch(Type)
 				{
-					case EValueType.BYTE: { _vt_quick_cast__byte_to_sbyte(result, Count); } break;
-					case EValueType.SBYTE: { _vt_quick_cast__sbyte_to_sbyte(result, Count); } break;
-					case EValueType.USHORT: { _vt_quick_cast__ushort_to_sbyte(result, Count); } break;
-					case EValueType.SHORT: { _vt_quick_cast__short_to_sbyte(result, Count); } break;
-					case EValueType.UINT: { _vt_quick_cast__uint_to_sbyte(result, Count); } break;
-					case EValueType.INT: { _vt_quick_cast__int_to_sbyte(result, Count); } break;
-					case EValueType.FLOAT: { _vt_quick_cast__float_to_sbyte(result, Count); } break;
+					case EValueType.UInt8: { _vt_quick_cast__byte_to_sbyte(result, Count); } break;
+					case EValueType.Int8: { _vt_quick_cast__sbyte_to_sbyte(result, Count); } break;
+					case EValueType.UInt16: { _vt_quick_cast__ushort_to_sbyte(result, Count); } break;
+					case EValueType.Int16: { _vt_quick_cast__short_to_sbyte(result, Count); } break;
+					case EValueType.UInt32: { _vt_quick_cast__uint_to_sbyte(result, Count); } break;
+					case EValueType.Int32: { _vt_quick_cast__int_to_sbyte(result, Count); } break;
+					case EValueType.Float32: { _vt_quick_cast__float_to_sbyte(result, Count); } break;
 					case EValueType.DOUBLE: { _vt_quick_cast__double_to_sbyte(result, Count); } break;
 				}
 			}
@@ -1044,13 +1044,13 @@ namespace ThinGin.Core.Common.Data
 			{
 				switch(Type)
 				{
-					case EValueType.BYTE: { _vt_quick_cast__byte_to_ushort(result, Count); } break;
-					case EValueType.SBYTE: { _vt_quick_cast__sbyte_to_ushort(result, Count); } break;
-					case EValueType.USHORT: { _vt_quick_cast__ushort_to_ushort(result, Count); } break;
-					case EValueType.SHORT: { _vt_quick_cast__short_to_ushort(result, Count); } break;
-					case EValueType.UINT: { _vt_quick_cast__uint_to_ushort(result, Count); } break;
-					case EValueType.INT: { _vt_quick_cast__int_to_ushort(result, Count); } break;
-					case EValueType.FLOAT: { _vt_quick_cast__float_to_ushort(result, Count); } break;
+					case EValueType.UInt8: { _vt_quick_cast__byte_to_ushort(result, Count); } break;
+					case EValueType.Int8: { _vt_quick_cast__sbyte_to_ushort(result, Count); } break;
+					case EValueType.UInt16: { _vt_quick_cast__ushort_to_ushort(result, Count); } break;
+					case EValueType.Int16: { _vt_quick_cast__short_to_ushort(result, Count); } break;
+					case EValueType.UInt32: { _vt_quick_cast__uint_to_ushort(result, Count); } break;
+					case EValueType.Int32: { _vt_quick_cast__int_to_ushort(result, Count); } break;
+					case EValueType.Float32: { _vt_quick_cast__float_to_ushort(result, Count); } break;
 					case EValueType.DOUBLE: { _vt_quick_cast__double_to_ushort(result, Count); } break;
 				}
 			}
@@ -1064,13 +1064,13 @@ namespace ThinGin.Core.Common.Data
 			{
 				switch(Type)
 				{
-					case EValueType.BYTE: { _vt_quick_cast__byte_to_short(result, Count); } break;
-					case EValueType.SBYTE: { _vt_quick_cast__sbyte_to_short(result, Count); } break;
-					case EValueType.USHORT: { _vt_quick_cast__ushort_to_short(result, Count); } break;
-					case EValueType.SHORT: { _vt_quick_cast__short_to_short(result, Count); } break;
-					case EValueType.UINT: { _vt_quick_cast__uint_to_short(result, Count); } break;
-					case EValueType.INT: { _vt_quick_cast__int_to_short(result, Count); } break;
-					case EValueType.FLOAT: { _vt_quick_cast__float_to_short(result, Count); } break;
+					case EValueType.UInt8: { _vt_quick_cast__byte_to_short(result, Count); } break;
+					case EValueType.Int8: { _vt_quick_cast__sbyte_to_short(result, Count); } break;
+					case EValueType.UInt16: { _vt_quick_cast__ushort_to_short(result, Count); } break;
+					case EValueType.Int16: { _vt_quick_cast__short_to_short(result, Count); } break;
+					case EValueType.UInt32: { _vt_quick_cast__uint_to_short(result, Count); } break;
+					case EValueType.Int32: { _vt_quick_cast__int_to_short(result, Count); } break;
+					case EValueType.Float32: { _vt_quick_cast__float_to_short(result, Count); } break;
 					case EValueType.DOUBLE: { _vt_quick_cast__double_to_short(result, Count); } break;
 				}
 			}
@@ -1084,13 +1084,13 @@ namespace ThinGin.Core.Common.Data
 			{
 				switch(Type)
 				{
-					case EValueType.BYTE: { _vt_quick_cast__byte_to_uint(result, Count); } break;
-					case EValueType.SBYTE: { _vt_quick_cast__sbyte_to_uint(result, Count); } break;
-					case EValueType.USHORT: { _vt_quick_cast__ushort_to_uint(result, Count); } break;
-					case EValueType.SHORT: { _vt_quick_cast__short_to_uint(result, Count); } break;
-					case EValueType.UINT: { _vt_quick_cast__uint_to_uint(result, Count); } break;
-					case EValueType.INT: { _vt_quick_cast__int_to_uint(result, Count); } break;
-					case EValueType.FLOAT: { _vt_quick_cast__float_to_uint(result, Count); } break;
+					case EValueType.UInt8: { _vt_quick_cast__byte_to_uint(result, Count); } break;
+					case EValueType.Int8: { _vt_quick_cast__sbyte_to_uint(result, Count); } break;
+					case EValueType.UInt16: { _vt_quick_cast__ushort_to_uint(result, Count); } break;
+					case EValueType.Int16: { _vt_quick_cast__short_to_uint(result, Count); } break;
+					case EValueType.UInt32: { _vt_quick_cast__uint_to_uint(result, Count); } break;
+					case EValueType.Int32: { _vt_quick_cast__int_to_uint(result, Count); } break;
+					case EValueType.Float32: { _vt_quick_cast__float_to_uint(result, Count); } break;
 					case EValueType.DOUBLE: { _vt_quick_cast__double_to_uint(result, Count); } break;
 				}
 			}
@@ -1104,13 +1104,13 @@ namespace ThinGin.Core.Common.Data
 			{
 				switch(Type)
 				{
-					case EValueType.BYTE: { _vt_quick_cast__byte_to_int(result, Count); } break;
-					case EValueType.SBYTE: { _vt_quick_cast__sbyte_to_int(result, Count); } break;
-					case EValueType.USHORT: { _vt_quick_cast__ushort_to_int(result, Count); } break;
-					case EValueType.SHORT: { _vt_quick_cast__short_to_int(result, Count); } break;
-					case EValueType.UINT: { _vt_quick_cast__uint_to_int(result, Count); } break;
-					case EValueType.INT: { _vt_quick_cast__int_to_int(result, Count); } break;
-					case EValueType.FLOAT: { _vt_quick_cast__float_to_int(result, Count); } break;
+					case EValueType.UInt8: { _vt_quick_cast__byte_to_int(result, Count); } break;
+					case EValueType.Int8: { _vt_quick_cast__sbyte_to_int(result, Count); } break;
+					case EValueType.UInt16: { _vt_quick_cast__ushort_to_int(result, Count); } break;
+					case EValueType.Int16: { _vt_quick_cast__short_to_int(result, Count); } break;
+					case EValueType.UInt32: { _vt_quick_cast__uint_to_int(result, Count); } break;
+					case EValueType.Int32: { _vt_quick_cast__int_to_int(result, Count); } break;
+					case EValueType.Float32: { _vt_quick_cast__float_to_int(result, Count); } break;
 					case EValueType.DOUBLE: { _vt_quick_cast__double_to_int(result, Count); } break;
 				}
 			}
@@ -1124,13 +1124,13 @@ namespace ThinGin.Core.Common.Data
 			{
 				switch(Type)
 				{
-					case EValueType.BYTE: { _vt_quick_cast__byte_to_float(result, Count); } break;
-					case EValueType.SBYTE: { _vt_quick_cast__sbyte_to_float(result, Count); } break;
-					case EValueType.USHORT: { _vt_quick_cast__ushort_to_float(result, Count); } break;
-					case EValueType.SHORT: { _vt_quick_cast__short_to_float(result, Count); } break;
-					case EValueType.UINT: { _vt_quick_cast__uint_to_float(result, Count); } break;
-					case EValueType.INT: { _vt_quick_cast__int_to_float(result, Count); } break;
-					case EValueType.FLOAT: { _vt_quick_cast__float_to_float(result, Count); } break;
+					case EValueType.UInt8: { _vt_quick_cast__byte_to_float(result, Count); } break;
+					case EValueType.Int8: { _vt_quick_cast__sbyte_to_float(result, Count); } break;
+					case EValueType.UInt16: { _vt_quick_cast__ushort_to_float(result, Count); } break;
+					case EValueType.Int16: { _vt_quick_cast__short_to_float(result, Count); } break;
+					case EValueType.UInt32: { _vt_quick_cast__uint_to_float(result, Count); } break;
+					case EValueType.Int32: { _vt_quick_cast__int_to_float(result, Count); } break;
+					case EValueType.Float32: { _vt_quick_cast__float_to_float(result, Count); } break;
 					case EValueType.DOUBLE: { _vt_quick_cast__double_to_float(result, Count); } break;
 				}
 			}
@@ -1144,13 +1144,13 @@ namespace ThinGin.Core.Common.Data
 			{
 				switch(Type)
 				{
-					case EValueType.BYTE: { _vt_quick_cast__byte_to_double(result, Count); } break;
-					case EValueType.SBYTE: { _vt_quick_cast__sbyte_to_double(result, Count); } break;
-					case EValueType.USHORT: { _vt_quick_cast__ushort_to_double(result, Count); } break;
-					case EValueType.SHORT: { _vt_quick_cast__short_to_double(result, Count); } break;
-					case EValueType.UINT: { _vt_quick_cast__uint_to_double(result, Count); } break;
-					case EValueType.INT: { _vt_quick_cast__int_to_double(result, Count); } break;
-					case EValueType.FLOAT: { _vt_quick_cast__float_to_double(result, Count); } break;
+					case EValueType.UInt8: { _vt_quick_cast__byte_to_double(result, Count); } break;
+					case EValueType.Int8: { _vt_quick_cast__sbyte_to_double(result, Count); } break;
+					case EValueType.UInt16: { _vt_quick_cast__ushort_to_double(result, Count); } break;
+					case EValueType.Int16: { _vt_quick_cast__short_to_double(result, Count); } break;
+					case EValueType.UInt32: { _vt_quick_cast__uint_to_double(result, Count); } break;
+					case EValueType.Int32: { _vt_quick_cast__int_to_double(result, Count); } break;
+					case EValueType.Float32: { _vt_quick_cast__float_to_double(result, Count); } break;
 					case EValueType.DOUBLE: { _vt_quick_cast__double_to_double(result, Count); } break;
 				}
 			}
@@ -1968,131 +1968,131 @@ namespace ThinGin.Core.Common.Data
 			var TypeRight = other.Type;
 			switch (TypeLeft, TypeRight)
 			{
-				case (EValueType.BYTE, EValueType.BYTE):
+				case (EValueType.UInt8, EValueType.UInt8):
 					return _vt_high_perf_compare_byte__byte(other);
-				case (EValueType.BYTE, EValueType.SBYTE):
+				case (EValueType.UInt8, EValueType.Int8):
 					return _vt_high_perf_compare_byte__sbyte(other);
-				case (EValueType.BYTE, EValueType.USHORT):
+				case (EValueType.UInt8, EValueType.UInt16):
 					return _vt_high_perf_compare_byte__ushort(other);
-				case (EValueType.BYTE, EValueType.SHORT):
+				case (EValueType.UInt8, EValueType.Int16):
 					return _vt_high_perf_compare_byte__short(other);
-				case (EValueType.BYTE, EValueType.UINT):
+				case (EValueType.UInt8, EValueType.UInt32):
 					return _vt_high_perf_compare_byte__uint(other);
-				case (EValueType.BYTE, EValueType.INT):
+				case (EValueType.UInt8, EValueType.Int32):
 					return _vt_high_perf_compare_byte__int(other);
-				case (EValueType.BYTE, EValueType.FLOAT):
+				case (EValueType.UInt8, EValueType.Float32):
 					return _vt_high_perf_compare_byte__float(other);
-				case (EValueType.BYTE, EValueType.DOUBLE):
+				case (EValueType.UInt8, EValueType.DOUBLE):
 					return _vt_high_perf_compare_byte__double(other);
-				case (EValueType.SBYTE, EValueType.BYTE):
+				case (EValueType.Int8, EValueType.UInt8):
 					return _vt_high_perf_compare_sbyte__byte(other);
-				case (EValueType.SBYTE, EValueType.SBYTE):
+				case (EValueType.Int8, EValueType.Int8):
 					return _vt_high_perf_compare_sbyte__sbyte(other);
-				case (EValueType.SBYTE, EValueType.USHORT):
+				case (EValueType.Int8, EValueType.UInt16):
 					return _vt_high_perf_compare_sbyte__ushort(other);
-				case (EValueType.SBYTE, EValueType.SHORT):
+				case (EValueType.Int8, EValueType.Int16):
 					return _vt_high_perf_compare_sbyte__short(other);
-				case (EValueType.SBYTE, EValueType.UINT):
+				case (EValueType.Int8, EValueType.UInt32):
 					return _vt_high_perf_compare_sbyte__uint(other);
-				case (EValueType.SBYTE, EValueType.INT):
+				case (EValueType.Int8, EValueType.Int32):
 					return _vt_high_perf_compare_sbyte__int(other);
-				case (EValueType.SBYTE, EValueType.FLOAT):
+				case (EValueType.Int8, EValueType.Float32):
 					return _vt_high_perf_compare_sbyte__float(other);
-				case (EValueType.SBYTE, EValueType.DOUBLE):
+				case (EValueType.Int8, EValueType.DOUBLE):
 					return _vt_high_perf_compare_sbyte__double(other);
-				case (EValueType.USHORT, EValueType.BYTE):
+				case (EValueType.UInt16, EValueType.UInt8):
 					return _vt_high_perf_compare_ushort__byte(other);
-				case (EValueType.USHORT, EValueType.SBYTE):
+				case (EValueType.UInt16, EValueType.Int8):
 					return _vt_high_perf_compare_ushort__sbyte(other);
-				case (EValueType.USHORT, EValueType.USHORT):
+				case (EValueType.UInt16, EValueType.UInt16):
 					return _vt_high_perf_compare_ushort__ushort(other);
-				case (EValueType.USHORT, EValueType.SHORT):
+				case (EValueType.UInt16, EValueType.Int16):
 					return _vt_high_perf_compare_ushort__short(other);
-				case (EValueType.USHORT, EValueType.UINT):
+				case (EValueType.UInt16, EValueType.UInt32):
 					return _vt_high_perf_compare_ushort__uint(other);
-				case (EValueType.USHORT, EValueType.INT):
+				case (EValueType.UInt16, EValueType.Int32):
 					return _vt_high_perf_compare_ushort__int(other);
-				case (EValueType.USHORT, EValueType.FLOAT):
+				case (EValueType.UInt16, EValueType.Float32):
 					return _vt_high_perf_compare_ushort__float(other);
-				case (EValueType.USHORT, EValueType.DOUBLE):
+				case (EValueType.UInt16, EValueType.DOUBLE):
 					return _vt_high_perf_compare_ushort__double(other);
-				case (EValueType.SHORT, EValueType.BYTE):
+				case (EValueType.Int16, EValueType.UInt8):
 					return _vt_high_perf_compare_short__byte(other);
-				case (EValueType.SHORT, EValueType.SBYTE):
+				case (EValueType.Int16, EValueType.Int8):
 					return _vt_high_perf_compare_short__sbyte(other);
-				case (EValueType.SHORT, EValueType.USHORT):
+				case (EValueType.Int16, EValueType.UInt16):
 					return _vt_high_perf_compare_short__ushort(other);
-				case (EValueType.SHORT, EValueType.SHORT):
+				case (EValueType.Int16, EValueType.Int16):
 					return _vt_high_perf_compare_short__short(other);
-				case (EValueType.SHORT, EValueType.UINT):
+				case (EValueType.Int16, EValueType.UInt32):
 					return _vt_high_perf_compare_short__uint(other);
-				case (EValueType.SHORT, EValueType.INT):
+				case (EValueType.Int16, EValueType.Int32):
 					return _vt_high_perf_compare_short__int(other);
-				case (EValueType.SHORT, EValueType.FLOAT):
+				case (EValueType.Int16, EValueType.Float32):
 					return _vt_high_perf_compare_short__float(other);
-				case (EValueType.SHORT, EValueType.DOUBLE):
+				case (EValueType.Int16, EValueType.DOUBLE):
 					return _vt_high_perf_compare_short__double(other);
-				case (EValueType.UINT, EValueType.BYTE):
+				case (EValueType.UInt32, EValueType.UInt8):
 					return _vt_high_perf_compare_uint__byte(other);
-				case (EValueType.UINT, EValueType.SBYTE):
+				case (EValueType.UInt32, EValueType.Int8):
 					return _vt_high_perf_compare_uint__sbyte(other);
-				case (EValueType.UINT, EValueType.USHORT):
+				case (EValueType.UInt32, EValueType.UInt16):
 					return _vt_high_perf_compare_uint__ushort(other);
-				case (EValueType.UINT, EValueType.SHORT):
+				case (EValueType.UInt32, EValueType.Int16):
 					return _vt_high_perf_compare_uint__short(other);
-				case (EValueType.UINT, EValueType.UINT):
+				case (EValueType.UInt32, EValueType.UInt32):
 					return _vt_high_perf_compare_uint__uint(other);
-				case (EValueType.UINT, EValueType.INT):
+				case (EValueType.UInt32, EValueType.Int32):
 					return _vt_high_perf_compare_uint__int(other);
-				case (EValueType.UINT, EValueType.FLOAT):
+				case (EValueType.UInt32, EValueType.Float32):
 					return _vt_high_perf_compare_uint__float(other);
-				case (EValueType.UINT, EValueType.DOUBLE):
+				case (EValueType.UInt32, EValueType.DOUBLE):
 					return _vt_high_perf_compare_uint__double(other);
-				case (EValueType.INT, EValueType.BYTE):
+				case (EValueType.Int32, EValueType.UInt8):
 					return _vt_high_perf_compare_int__byte(other);
-				case (EValueType.INT, EValueType.SBYTE):
+				case (EValueType.Int32, EValueType.Int8):
 					return _vt_high_perf_compare_int__sbyte(other);
-				case (EValueType.INT, EValueType.USHORT):
+				case (EValueType.Int32, EValueType.UInt16):
 					return _vt_high_perf_compare_int__ushort(other);
-				case (EValueType.INT, EValueType.SHORT):
+				case (EValueType.Int32, EValueType.Int16):
 					return _vt_high_perf_compare_int__short(other);
-				case (EValueType.INT, EValueType.UINT):
+				case (EValueType.Int32, EValueType.UInt32):
 					return _vt_high_perf_compare_int__uint(other);
-				case (EValueType.INT, EValueType.INT):
+				case (EValueType.Int32, EValueType.Int32):
 					return _vt_high_perf_compare_int__int(other);
-				case (EValueType.INT, EValueType.FLOAT):
+				case (EValueType.Int32, EValueType.Float32):
 					return _vt_high_perf_compare_int__float(other);
-				case (EValueType.INT, EValueType.DOUBLE):
+				case (EValueType.Int32, EValueType.DOUBLE):
 					return _vt_high_perf_compare_int__double(other);
-				case (EValueType.FLOAT, EValueType.BYTE):
+				case (EValueType.Float32, EValueType.UInt8):
 					return _vt_high_perf_compare_float__byte(other);
-				case (EValueType.FLOAT, EValueType.SBYTE):
+				case (EValueType.Float32, EValueType.Int8):
 					return _vt_high_perf_compare_float__sbyte(other);
-				case (EValueType.FLOAT, EValueType.USHORT):
+				case (EValueType.Float32, EValueType.UInt16):
 					return _vt_high_perf_compare_float__ushort(other);
-				case (EValueType.FLOAT, EValueType.SHORT):
+				case (EValueType.Float32, EValueType.Int16):
 					return _vt_high_perf_compare_float__short(other);
-				case (EValueType.FLOAT, EValueType.UINT):
+				case (EValueType.Float32, EValueType.UInt32):
 					return _vt_high_perf_compare_float__uint(other);
-				case (EValueType.FLOAT, EValueType.INT):
+				case (EValueType.Float32, EValueType.Int32):
 					return _vt_high_perf_compare_float__int(other);
-				case (EValueType.FLOAT, EValueType.FLOAT):
+				case (EValueType.Float32, EValueType.Float32):
 					return _vt_high_perf_compare_float__float(other);
-				case (EValueType.FLOAT, EValueType.DOUBLE):
+				case (EValueType.Float32, EValueType.DOUBLE):
 					return _vt_high_perf_compare_float__double(other);
-				case (EValueType.DOUBLE, EValueType.BYTE):
+				case (EValueType.DOUBLE, EValueType.UInt8):
 					return _vt_high_perf_compare_double__byte(other);
-				case (EValueType.DOUBLE, EValueType.SBYTE):
+				case (EValueType.DOUBLE, EValueType.Int8):
 					return _vt_high_perf_compare_double__sbyte(other);
-				case (EValueType.DOUBLE, EValueType.USHORT):
+				case (EValueType.DOUBLE, EValueType.UInt16):
 					return _vt_high_perf_compare_double__ushort(other);
-				case (EValueType.DOUBLE, EValueType.SHORT):
+				case (EValueType.DOUBLE, EValueType.Int16):
 					return _vt_high_perf_compare_double__short(other);
-				case (EValueType.DOUBLE, EValueType.UINT):
+				case (EValueType.DOUBLE, EValueType.UInt32):
 					return _vt_high_perf_compare_double__uint(other);
-				case (EValueType.DOUBLE, EValueType.INT):
+				case (EValueType.DOUBLE, EValueType.Int32):
 					return _vt_high_perf_compare_double__int(other);
-				case (EValueType.DOUBLE, EValueType.FLOAT):
+				case (EValueType.DOUBLE, EValueType.Float32):
 					return _vt_high_perf_compare_double__float(other);
 				case (EValueType.DOUBLE, EValueType.DOUBLE):
 					return _vt_high_perf_compare_double__double(other);

@@ -18,6 +18,7 @@
 
   <ItemGroup>
     <Folder Include="Common\Enums\" />
+    <Folder Include="Common\RenderHardware\Resources\Views\" />
   </ItemGroup>
 
 </Project>
