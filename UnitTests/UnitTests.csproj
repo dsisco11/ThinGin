@@ -16,7 +16,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <ProjectReference Include="..\ThinGL\ThinGin.csproj" />
+    <ProjectReference Include="..\ThinGin\ThinGin.csproj" />
   </ItemGroup>
 
 </Project>

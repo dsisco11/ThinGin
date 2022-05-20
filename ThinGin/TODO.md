@@ -12,7 +12,7 @@
 ====== [v0.5 REFACTOR] ======
 SEE: https://www.youtube.com/watch?v=qx1c190aGhs
 
-- Move render engine crap into RHI implementations
+- Move render engine stuff into RHI implementations
 	RHI = RenderHardwareImplementation
 
 - Frames collected into RHICommandList instances that essentially contain which shaders to bind and which verticies to draw for it

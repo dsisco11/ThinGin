@@ -3,7 +3,7 @@ Microsoft Visual Studio Solution File, Format Version 12.00
 # Visual Studio Version 17
 VisualStudioVersion = 17.0.31912.275
 MinimumVisualStudioVersion = 10.0.40219.1
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThinGin", "ThinGL\ThinGin.csproj", "{A6A85C44-15F0-4FDC-9535-0BEAE6B12443}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThinGin", "ThinGin\ThinGin.csproj", "{A6A85C44-15F0-4FDC-9535-0BEAE6B12443}"
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "ThinGin.OpenGL", "ThinGin.OpenGL\ThinGin.OpenGL.csproj", "{F7D06AC9-0C96-492A-A239-DB4D65F384F5}"
 EndProject

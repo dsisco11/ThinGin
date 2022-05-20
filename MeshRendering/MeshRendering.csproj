@@ -21,7 +21,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\ThinGin.OpenGL\ThinGin.OpenGL.csproj" />
-    <ProjectReference Include="..\ThinGL\ThinGin.csproj" />
+    <ProjectReference Include="..\ThinGin\ThinGin.csproj" />
   </ItemGroup>
 
   <ItemGroup>
