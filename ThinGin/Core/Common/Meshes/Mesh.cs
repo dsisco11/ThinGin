@@ -36,7 +36,7 @@ namespace ThinGin.Core.Common.Meshes
         public Shader Shader => _shader;
         public BoundingDimensions Bounds;
         public IMeshRenderer Renderer { get; protected set; } = null;
-        public ETopology Topology = ETopology.Triangles;
+        public ETopology Topology = ETopology.TriangleList;
 
         /// <summary>
         /// Vertex count
@@ -60,18 +60,18 @@ namespace ThinGin.Core.Common.Meshes
         #endregion
 
         #region Constructors
-        private Mesh(EngineInstance engine, Shader shader)
+        private Mesh(EngineInstance engine, Shader Shader)
         {
             if (engine is null)
             {
                 throw new ArgumentNullException(nameof(engine));
             }
 
-            _shader = shader;
+            _shader = Shader;
             _engineRef.SetTarget(engine);
         }
 
-        public Mesh(EngineInstance engine, Shader shader, byte[] Data, VertexLayout Layout, int Count, ETopology Topology, DataChunk Indicies = null) : this(engine, shader)
+        public Mesh(EngineInstance engine, Shader Shader, byte[] Data, VertexLayout Layout, int Count, ETopology Topology, DataChunk Indicies = null) : this(engine, Shader)
         {
             _dataBuffer = Data ?? throw new ArgumentNullException(nameof(Data));
 
@@ -80,7 +80,7 @@ namespace ThinGin.Core.Common.Meshes
             this.Count = Count;
             this.Topology = Topology;
         }
-        public Mesh(EngineInstance engine, Shader shader, MeshBuilder Builder) : this(engine, shader)
+        public Mesh(EngineInstance engine, Shader Shader, MeshBuilder Builder) : this(engine, Shader)
         {
             Update(Builder);
         }
@@ -167,10 +167,10 @@ namespace ThinGin.Core.Common.Meshes
         {
             var layout = new VertexLayout(Position: new AttributeDescriptor(2, EValueType.Int32),
                                               UV: new AttributeDescriptor(2, EValueType.Int16));
-            var mesh = new MeshBuilder(layout, ETopology.Triangles);
-            mesh.Filters.Add(ReindexingFilter.Instance);
+            var meshBuilder = new MeshBuilder(layout, ETopology.TriangleList);
+            meshBuilder.Filters.Add(ReindexingFilter.Instance);
 
-            mesh.Push_Data(0, new[] {
+            meshBuilder.Push_Data(0, new[] {
                     new DataChunk(Bounds.Left, Bounds.Top),
                     new DataChunk(Bounds.Left, Bounds.Bottom),
                     new DataChunk(Bounds.Right, Bounds.Bottom),
@@ -180,7 +180,7 @@ namespace ThinGin.Core.Common.Meshes
                     new DataChunk(Bounds.Left, Bounds.Top),
                         });
 
-            mesh.Push_Data(1, new[] {
+            meshBuilder.Push_Data(1, new[] {
                         new DataChunk((short)0, (short)1),
                         new DataChunk((short)0, (short)0),
                         new DataChunk((short)1, (short)0),
@@ -189,15 +189,15 @@ namespace ThinGin.Core.Common.Meshes
                         new DataChunk((short)1, (short)1),
                         new DataChunk((short)0, (short)1),
                             });
-
-            return new Mesh(Engine, mesh);
+            // TODO: Add default shader for unlit textured quads
+            return new Mesh(Engine, meshBuilder);
         }
         public static Mesh Create_Textured_Quad(EngineInstance Engine, RectangleF Bounds)
         {
             var layout = new VertexLayout(Position: new AttributeDescriptor(2, EValueType.Int32),
                                               UV: new AttributeDescriptor(2, EValueType.Int16));
-            var mesh = new MeshBuilder(layout, ETopology.Triangles);
-            mesh.Push_Data(0, new[] {
+            var meshBuilder = new MeshBuilder(layout, ETopology.TriangleList);
+            meshBuilder.Push_Data(0, new[] {
                     new DataChunk(Bounds.Left, Bounds.Top),
                     new DataChunk(Bounds.Left, Bounds.Bottom),
                     new DataChunk(Bounds.Right, Bounds.Bottom),
@@ -207,7 +207,7 @@ namespace ThinGin.Core.Common.Meshes
                     new DataChunk(Bounds.Left, Bounds.Top),
                         });
 
-            mesh.Push_Data(1, new[] {
+            meshBuilder.Push_Data(1, new[] {
                         new DataChunk((short)0, (short)1),
                         new DataChunk((short)0, (short)0),
                         new DataChunk((short)1, (short)0),
@@ -217,7 +217,8 @@ namespace ThinGin.Core.Common.Meshes
                         new DataChunk((short)0, (short)1),
                             });
 
-            return new Mesh(Engine, mesh);
+            // TODO: Add default shader for unlit textured quads
+            return new Mesh(Engine, meshBuilder);
         }
         #endregion
     }

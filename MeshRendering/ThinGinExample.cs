@@ -13,6 +13,7 @@ using ThinGin.Core.Common.Enums;
 using ThinGin.Core.Common.Geometry.Filters;
 using ThinGin.Core.Common.Interfaces;
 using ThinGin.Core.Common.Meshes;
+using ThinGin.Core.Engine.Common.Core;
 using ThinGin.Core.Shaders;
 
 namespace MeshRendering
@@ -38,8 +39,8 @@ namespace MeshRendering
         #endregion
 
         #region Values
-        private IEngine _engine = null;
-        private IShader shader = null;
+        private EngineInstance _engine = null;
+        private Shader shader = null;
         private Mesh _cubeMesh = null;
         private Mesh _gizmoMesh = null;
         private Mesh _gridMesh = null;
@@ -50,7 +51,7 @@ namespace MeshRendering
         #endregion
 
         #region Properties
-        public IEngine Engine { get => _engine; protected set => _engine = value; }
+        public EngineInstance Engine { get => _engine; protected set => _engine = value; }
 
         float modelRotation = 0f;
         Matrix4x4 modelMatrix = Matrix4x4.Identity;
@@ -288,24 +289,19 @@ namespace MeshRendering
         protected override void OnLoad()
         {
             base.OnLoad();
+            // Initialize engine
             Engine = new ThinGin.OpenGL.GL3.GL3Engine(null);
             Engine.Initialize();
+            // Setup camera
             Engine.Camera.ProjectionMode = EProjectionMode.Perspective;
             Engine.Camera.ViewMode = ECameraViewMode.FirstPerson;
             Engine.Camera.Transform.Position = new Vector3(1f, 0f, 0f);
-
-            _cubeMesh = new Mesh(Engine, Generate_Cube(0.5f));
-            _gizmoMesh = new Mesh(Engine, Generate_AxisGizmo(1f));
-            _gridMesh = new Mesh(Engine, Generate_The_Grid(50, 0.5f));
-
-            _camDebugMesh = new Mesh(Engine, Engine.Camera.Get_Debug_Vis());
-
+            // Setup shaders
             string vertexSliceName = "default.vert.glsl";
             string fragmentSliceName = "default.frag.glsl";
 
             string vertexSlice = System.IO.File.ReadAllText(vertexSliceName);
             string fragmentSlice = System.IO.File.ReadAllText(fragmentSliceName);
-
 
             shader = new Shader(Engine);
             shader.Include(EShaderType.Vertex, vertexSliceName, vertexSlice);
@@ -314,8 +310,14 @@ namespace MeshRendering
             shader.Compile();
             shaderVars = new ShaderVars(shader);
 
-
             shaderVars["modelMatrix"].Set(Matrix4x4.Identity);
+
+            // Setup meshes
+            _cubeMesh = new Mesh(Engine, Shader: shader, Builder: Generate_Cube(0.5f));
+            _gizmoMesh = new Mesh(Engine, Shader: shader, Builder: Generate_AxisGizmo(1f));
+            _gridMesh = new Mesh(Engine, Shader: shader, Builder: Generate_The_Grid(50, 0.5f));
+
+            _camDebugMesh = new Mesh(Engine, Shader: shader, Builder: Engine.Camera.Get_Debug_Vis());
         }
 
         protected override void OnUnload()
@@ -339,7 +341,7 @@ namespace MeshRendering
                 Position: AttributeDescriptor.FLOAT3
                 );
 
-            var builder = new MeshBuilder(vertexLayout, ETopology.Triangles, AutoOptimize: false);
+            var builder = new MeshBuilder(vertexLayout, ETopology.TriangleList, AutoOptimize: false);
 
             builder.Push_Data(vertexLayout.IndexOf(EVertexAttribute.Position), points);
             builder.Push_Indices(vertexLayout.IndexOf(EVertexAttribute.Position), new[] { 0, 1, 2 });
@@ -455,7 +457,7 @@ namespace MeshRendering
                 Color: AttributeDescriptor.FLOAT3
                 );
 
-            var builder = new MeshBuilder(vertexLayout, ETopology.Quads, AutoOptimize: true);
+            var builder = new MeshBuilder(vertexLayout, ETopology.TriangleList, AutoOptimize: true);
 
             // Modern OpenGL has depreciated drawing quads (for good reasons), so we have to send it triangles.
             // But we also don't want to generate the mesh as triangles because its annoying and quads are easier for humans to visualize.

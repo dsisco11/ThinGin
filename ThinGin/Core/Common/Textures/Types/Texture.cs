@@ -18,7 +18,8 @@ namespace ThinGin.Core.Common.Textures.Types
         #endregion
 
         #region Constructors
-        protected Texture(EngineInstance engine, PixelDescriptor GpuLayout) : base(engine, GpuLayout)
+        // TODO: Need to convert PixelDescriptors into EPixelFormat enum values
+        protected Texture(EngineInstance engine, PixelDescriptor GpuLayout) : base(engine.Renderer.RHI, GpuLayout)
         {
         }
         #endregion
