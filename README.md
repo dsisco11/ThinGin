@@ -3,7 +3,7 @@
 ThinGin (Thin rendering Engine) is intended to provide an efficient abstraction layer overtop the most common rendering APIs (Vulkan, DirectX, OpenGL).
 
 ### Abstraction layer
-An abstraction layer for rendering APIs is an intermediate interface which provides conveniant abstractions for the fundamental concepts which all graphics APIs support.   
+A Rendering API asbstraction layer provides conveniant abstractions for the fundamental concepts which all graphics APIs support.   
 Concepts such as: Meshes, Shaders, GBuffers, Textures, Compute Resources, Etc.   
 
 ### Refactor Status
