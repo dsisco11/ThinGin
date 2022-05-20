@@ -6,6 +6,7 @@ using ThinGin.Core.Common.Enums;
 using ThinGin.Core.Common.Interfaces;
 using ThinGin.Core.Common.Meshes;
 using ThinGin.Core.Common.Units.Types;
+using ThinGin.Core.Engine.Common.Core;
 
 namespace ThinGin.Core.Common.Cameras
 {
@@ -99,7 +100,7 @@ namespace ThinGin.Core.Common.Cameras
         #endregion
 
         #region Constructors
-        public Camera(IEngine Engine) : base(Engine)
+        public Camera(EngineInstance Engine) : base(Engine)
         {
         }
         #endregion

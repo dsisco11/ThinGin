@@ -2,6 +2,7 @@
 using ThinGin.Core.Common.Providers;
 using ThinGin.Core.Common.Textures;
 using ThinGin.Core.Common.Textures.Types;
+using ThinGin.Core.Engine.Common.Core;
 using ThinGin.OpenGL.Common.Textures;
 
 namespace ThinGin.OpenGL.Common.Providers
@@ -13,12 +14,12 @@ namespace ThinGin.OpenGL.Common.Providers
         #endregion
 
 
-        public Texture Create(IEngine Engine, PixelDescriptor GpuLayout)
+        public Texture Create(EngineInstance Engine, PixelDescriptor GpuLayout)
         {
             return new GLTexture2D(Engine, GpuLayout);
         }
 
-        public TextureHandle Create_Handle(IEngine Engine)
+        public TextureHandle Create_Handle(EngineInstance Engine)
         {
             return new GLTextureHandle(Engine);
         }

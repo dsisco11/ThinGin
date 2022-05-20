@@ -1,6 +1,7 @@
 ﻿using ThinGin.Core.Common.Data.Interfaces;
 using ThinGin.Core.Common.Interfaces;
 using ThinGin.Core.Common.Types;
+using ThinGin.Core.Engine.Common.Core;
 
 namespace ThinGin.Core.Common
 {
@@ -28,7 +29,7 @@ namespace ThinGin.Core.Common
 
         #region Constructors
 
-        public DataBufferObject(IEngine Engine) : base(Engine)
+        public DataBufferObject(EngineInstance Engine) : base(Engine)
         {
         }
         #endregion

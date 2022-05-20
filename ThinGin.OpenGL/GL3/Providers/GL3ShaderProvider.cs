@@ -2,6 +2,7 @@
 using ThinGin.Core.Common.Data;
 using ThinGin.Core.Common.Interfaces;
 using ThinGin.Core.Common.Providers;
+using ThinGin.Core.Engine.Common.Core;
 using ThinGin.Core.Shaders;
 using ThinGin.OpenGL.Common.Shaders;
 
@@ -13,7 +14,7 @@ namespace ThinGin.OpenGL.GL3.Providers
         public static IShaderProvider Instance = new GL3ShaderProvider();
         #endregion
 
-        public IShaderInstance Create(IEngine Engine)
+        public IShaderInstance Create(EngineInstance Engine)
         {
             return new GLShaderInstance(Engine);
         }

@@ -1,6 +1,7 @@
 ﻿using ThinGin.Core.Common.Interfaces;
 
 using OpenTK.Graphics.OpenGL;
+using ThinGin.Core.Engine.Common.Core;
 
 namespace ThinGin.OpenGL.Common.BufferObjects
 {
@@ -20,7 +21,7 @@ namespace ThinGin.OpenGL.Common.BufferObjects
         #endregion
 
         #region Constructors
-        public VertexBufferObject(IEngine Engine) : base(Engine)
+        public VertexBufferObject(EngineInstance Engine) : base(Engine)
         {
             if (!Engine.IsSupported("arb_vertex_buffer_object"))
             {

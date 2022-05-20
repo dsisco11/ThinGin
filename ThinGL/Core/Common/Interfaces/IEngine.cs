@@ -9,6 +9,7 @@ using System;
 using ThinGin.Core.Common.Cameras;
 using ThinGin.Core.World;
 using ThinGin.Core.Common.Units;
+using ThinGin.Core.Engine;
 
 namespace ThinGin.Core.Common.Interfaces
 {
@@ -16,6 +17,7 @@ namespace ThinGin.Core.Common.Interfaces
     {
         #region Properties
         IGraphicsImplementation Provider { get; }
+        RenderManager Rendering { get; }
         EngineCompatabilityList Compatability { get; }
         #endregion
 

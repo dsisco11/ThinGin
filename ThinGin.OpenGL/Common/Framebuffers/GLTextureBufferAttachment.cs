@@ -7,6 +7,7 @@ using ThinGin.Core.Common.Textures.Types;
 using ThinGin.Core.Common.Engine.Types;
 using ThinGin.Core.Common.Engine.Interfaces;
 using ThinGin.Core.Common.Engine.Delegates;
+using ThinGin.Core.Engine.Common.Core;
 
 namespace ThinGin.OpenGL.Common.Framebuffers
 {
@@ -29,7 +30,7 @@ namespace ThinGin.OpenGL.Common.Framebuffers
 
         #region Constructors
 
-        public GLTextureBufferAttachment(IEngine Engine, GBuffer Owner) : base(Engine)
+        public GLTextureBufferAttachment(EngineInstance Engine, GBuffer Owner) : base(Engine)
         {
             if (Owner is null)
             {

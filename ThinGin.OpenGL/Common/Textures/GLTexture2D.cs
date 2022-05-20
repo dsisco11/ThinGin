@@ -4,6 +4,7 @@ using System;
 
 using ThinGin.Core.Common.Interfaces;
 using ThinGin.Core.Common.Textures;
+using ThinGin.Core.Engine.Common.Core;
 
 namespace ThinGin.OpenGL.Common.Textures
 {
@@ -15,7 +16,7 @@ namespace ThinGin.OpenGL.Common.Textures
         #endregion
 
         #region Constructors
-        public GLTexture2D(IEngine Engine, PixelDescriptor GpuLayout) : base(Engine, GpuLayout)
+        public GLTexture2D(EngineInstance Engine, PixelDescriptor GpuLayout) : base(Engine, GpuLayout)
         {
         }
         #endregion

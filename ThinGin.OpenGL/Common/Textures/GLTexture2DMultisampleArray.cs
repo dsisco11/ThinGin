@@ -2,6 +2,7 @@
 
 using ThinGin.Core.Common.Interfaces;
 using ThinGin.Core.Common.Textures;
+using ThinGin.Core.Engine.Common.Core;
 
 namespace ThinGin.OpenGL.Common.Textures
 {
@@ -16,7 +17,7 @@ namespace ThinGin.OpenGL.Common.Textures
         #endregion
 
         #region Constructors
-        public GLTexture2DMultisampleArray(IEngine Engine, PixelDescriptor GpuLayout, int Samples) : base(Engine, GpuLayout, Samples)
+        public GLTexture2DMultisampleArray(EngineInstance Engine, PixelDescriptor GpuLayout, int Samples) : base(Engine, GpuLayout, Samples)
         {
         }
         #endregion

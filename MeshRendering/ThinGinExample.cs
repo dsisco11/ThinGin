@@ -15,10 +15,16 @@ using ThinGin.Core.Common.Enums;
 using ThinGin.Core.Common.Geometry.Filters;
 using ThinGin.Core.Common.Interfaces;
 using ThinGin.Core.Common.Meshes;
+using ThinGin.Core.Engine.Common.Core;
 using ThinGin.Core.Shaders;
 
 namespace MeshRendering
 {
+    /*
+     * === CONTROLS ===
+     * Movement = WASD / Spacebar
+     * Camera Rotation = LeftClick & Drag
+     */
     public class ThinGinExample : GameWindow
     {
         #region Settings
@@ -40,8 +46,8 @@ namespace MeshRendering
         #endregion
 
         #region Values
-        private IEngine _engine = null;
-        private IShader shader = null;
+        private EngineInstance _engine = null;
+        private Shader shader = null;
         private Mesh _cubeMesh = null;
         private Mesh _gizmoMesh = null;
         private Mesh _gridMesh = null;
@@ -52,7 +58,7 @@ namespace MeshRendering
         #endregion
 
         #region Properties
-        public IEngine Engine { get => _engine; protected set => _engine = value; }
+        public EngineInstance Engine { get => _engine; protected set => _engine = value; }
 
         float modelRotation = 0f;
         Matrix4x4 modelMatrix = Matrix4x4.Identity;
@@ -234,7 +240,7 @@ namespace MeshRendering
         {
             base.OnMouseMove(e);
 
-            if (MouseState.IsButtonDown(MouseButton.Middle))
+            if (MouseState.IsButtonDown(MouseButton.Left))
             {
                 const float sensitivity = 0.35f;
                 var delta = e.Delta * sensitivity;
@@ -290,24 +296,20 @@ namespace MeshRendering
         protected override void OnLoad()
         {
             base.OnLoad();
+            // Initialize engine
             Engine = new ThinGin.OpenGL.GL3.GL3Engine(null);
             Engine.Initialize();
+            // Setup camera
             Engine.Camera.ProjectionMode = EProjectionMode.Perspective;
             Engine.Camera.ViewMode = ECameraViewMode.FirstPerson;
-            Engine.Camera.Transform.Position = new Vector3(1f, 0f, 0f);
-
-            _cubeMesh = new Mesh(Engine, Generate_Cube(0.5f));
-            _gizmoMesh = new Mesh(Engine, Generate_AxisGizmo(1f));
-            _gridMesh = new Mesh(Engine, Generate_The_Grid(50, 0.5f));
-
-            _camDebugMesh = new Mesh(Engine, Engine.Camera.Get_Debug_Vis());
-
+            Engine.Camera.Transform.Position = new Vector3(1f, 0f, 1f);
+            Engine.Camera.Transform.Orientation = Quaternion.CreateFromAxisAngle(Vector3.UnitZ, 90f);
+            // Setup shader
             string vertexSliceName = "default.vert.glsl";
             string fragmentSliceName = "default.frag.glsl";
 
             string vertexSlice = System.IO.File.ReadAllText(vertexSliceName);
             string fragmentSlice = System.IO.File.ReadAllText(fragmentSliceName);
-
 
             shader = new Shader(Engine);
             shader.Include(EShaderType.Vertex, vertexSliceName, vertexSlice);
@@ -316,8 +318,14 @@ namespace MeshRendering
             shader.Compile();
             shaderVars = new ShaderVars(shader);
 
-
             shaderVars["modelMatrix"].Set(Matrix4x4.Identity);
+            // Setup mesh objects
+            _cubeMesh = new Mesh(Engine, Shader: shader, Builder: Generate_Cube(0.5f));
+            _gizmoMesh = new Mesh(Engine, Shader: shader, Builder: Generate_AxisGizmo(1f));
+            _gridMesh = new Mesh(Engine, Shader: shader, Builder: Generate_The_Grid(50, 0.5f));
+
+            _camDebugMesh = new Mesh(Engine, Shader: shader, Engine.Camera.Get_Debug_Vis());
+
         }
 
         protected override void OnUnload()

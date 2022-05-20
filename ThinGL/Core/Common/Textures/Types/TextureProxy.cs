@@ -3,6 +3,7 @@ using ThinGin.Core.Common.Interfaces;
 using ThinGin.Core.Common.Engine.Types;
 using ThinGin.Core.Common.Engine.Interfaces;
 using ThinGin.Core.Common.Engine.Delegates;
+using ThinGin.Core.Engine.Common.Core;
 
 namespace ThinGin.Core.Common.Textures.Types
 {
@@ -49,13 +50,13 @@ namespace ThinGin.Core.Common.Textures.Types
         /// Creates a new shared texture instance but does NOT increment its user count, which is why this constructor is internal...
         /// </summary>
         /// <param name="Root"></param>
-        internal TextureProxy(IEngine Engine, string Identifier, Texture Root) : base(Engine)
+        internal TextureProxy(EngineInstance Engine, string Identifier, Texture Root) : base(Engine)
         {
             this.Identifier = Identifier;
             _rootRef = new WeakReference<Texture>(Root);
         }
 
-        public TextureProxy(IEngine Engine, string Identifier) : base(Engine)
+        public TextureProxy(EngineInstance Engine, string Identifier) : base(Engine)
         {
             this.Identifier = Identifier;
             _rootRef = Engine.TextureCache.Lookup(Identifier);

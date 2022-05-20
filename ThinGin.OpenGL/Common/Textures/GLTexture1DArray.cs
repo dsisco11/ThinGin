@@ -4,6 +4,7 @@ using System;
 
 using ThinGin.Core.Common.Interfaces;
 using ThinGin.Core.Common.Textures;
+using ThinGin.Core.Engine.Common.Core;
 using ThinGin.OpenGL.Common.Exceptions;
 
 namespace ThinGin.OpenGL.Common.Textures
@@ -21,7 +22,7 @@ namespace ThinGin.OpenGL.Common.Textures
         #endregion
 
         #region Constructors
-        public GLTexture1DArray(IEngine Engine, PixelDescriptor GpuLayout) : base(Engine, GpuLayout)
+        public GLTexture1DArray(EngineInstance Engine, PixelDescriptor GpuLayout) : base(Engine, GpuLayout)
         {
             if (!Engine.IsSupported("ext_texture_array"))
             {

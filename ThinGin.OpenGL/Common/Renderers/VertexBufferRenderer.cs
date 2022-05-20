@@ -6,6 +6,7 @@ using ThinGin.Core.Common.Engine.Interfaces;
 using ThinGin.Core.Common.Enums;
 using ThinGin.Core.Common.Interfaces;
 using ThinGin.Core.Common.Meshes;
+using ThinGin.Core.Engine.Common.Core;
 using ThinGin.Core.Exceptions;
 using ThinGin.Core.Rendering.Common;
 using ThinGin.OpenGL.Common.BufferObjects;
@@ -22,7 +23,7 @@ namespace ThinGin.OpenGL.Common.Renderers
         #endregion
 
         #region Constructors
-        public VertexBufferRenderer(IEngine Engine, Mesh mesh) : base(Engine, mesh)
+        public VertexBufferRenderer(EngineInstance Engine, Mesh mesh) : base(Engine, mesh)
         {
         }
         #endregion

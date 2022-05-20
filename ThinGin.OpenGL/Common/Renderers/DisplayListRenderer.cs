@@ -6,6 +6,7 @@ using ThinGin.Core.Common.Engine.Interfaces;
 using ThinGin.Core.Common.Enums;
 using ThinGin.Core.Common.Interfaces;
 using ThinGin.Core.Common.Meshes;
+using ThinGin.Core.Engine.Common.Core;
 using ThinGin.OpenGL.Common.Types;
 
 namespace ThinGin.OpenGL.Common.Renderers
@@ -27,7 +28,7 @@ namespace ThinGin.OpenGL.Common.Renderers
         #endregion
 
         #region Constructors
-        public DisplayListRenderer(IEngine Engine, Mesh mesh) : base(Engine, mesh)
+        public DisplayListRenderer(EngineInstance Engine, Mesh mesh) : base(Engine, mesh)
         {
             displayList = new GLDisplayList(Engine, Initiate_Trainwreck);
         }

@@ -3,6 +3,7 @@ using ThinGin.Core.Common.Interfaces;
 using System;
 using System.Numerics;
 using ThinGin.Core.Common.Units.Types;
+using ThinGin.Core.Engine.Common.Core;
 
 namespace ThinGin.Core.Common
 {
@@ -12,7 +13,7 @@ namespace ThinGin.Core.Common
     public abstract class CameraObject : ICamera
     {
         #region Values
-        private WeakReference<IEngine> _engineRef = null;
+        private WeakReference<EngineInstance> _engineRef = new WeakReference<EngineInstance>(null);
 
         protected float _farClip = 500f;// x meters is a good default yea?
         protected float _nearClip = 0.01f;
@@ -127,9 +128,9 @@ namespace ThinGin.Core.Common
         #endregion
 
         #region Constructors
-        protected CameraObject(IEngine Engine)
+        protected CameraObject(EngineInstance Engine)
         {
-            _engineRef = new WeakReference<IEngine>(Engine);
+            _engineRef.SetTarget(Engine);
             _transform = new Transform(Engine);
         }
         #endregion

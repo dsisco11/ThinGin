@@ -6,6 +6,7 @@ using ThinGin.Core.Common.Engine.Interfaces;
 using ThinGin.Core.Common.Enums;
 using ThinGin.Core.Common.Interfaces;
 using ThinGin.Core.Common.Meshes;
+using ThinGin.Core.Engine.Common.Core;
 using ThinGin.Core.Rendering.Common;
 using ThinGin.OpenGL.Common.BufferObjects;
 
@@ -23,7 +24,7 @@ namespace ThinGin.OpenGL.Common.Renderers
         #endregion
 
         #region Constructors
-        public IndexedMeshRenderer(IEngine Engine, Mesh mesh) : base(Engine, mesh)
+        public IndexedMeshRenderer(EngineInstance Engine, Mesh mesh) : base(Engine, mesh)
         {
         }
         #endregion

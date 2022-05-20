@@ -43,8 +43,9 @@ namespace ThinGin.Core.Engine.Common.Core
         private readonly Camera camera;
         private SpatialOrientation coords = new SpatialOrientation();
         private WorldManager world;
-        internal readonly RenderManager Rendering = new RenderManager();
+        internal readonly RenderManager renderManager = new RenderManager();
 
+        public RenderManager Rendering => renderManager;
         public EngineCompatabilityList Compatability { get; protected set; } = null;
         #endregion
 

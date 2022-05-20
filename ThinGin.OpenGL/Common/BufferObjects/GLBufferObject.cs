@@ -7,6 +7,7 @@ using ThinGin.Core.Common.Enums;
 using ThinGin.Core.Common;
 using ThinGin.Core.Common.Engine.Interfaces;
 using ThinGin.Core.Common.Engine.Delegates;
+using ThinGin.Core.Engine.Common.Core;
 
 namespace ThinGin.OpenGL.Common
 {
@@ -31,7 +32,7 @@ namespace ThinGin.OpenGL.Common
         #region Constructors
         /// <summary>
         /// </summary>
-        public GLBufferObject(IEngine Engine) : base(Engine)
+        public GLBufferObject(EngineInstance Engine) : base(Engine)
         {
         }
         #endregion

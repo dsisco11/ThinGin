@@ -3,6 +3,7 @@
 using ThinGin.Core.Common.Interfaces;
 
 using OpenTK.Graphics.OpenGL;
+using ThinGin.Core.Engine.Common.Core;
 
 namespace ThinGin.OpenGL.Common
 {
@@ -27,7 +28,7 @@ namespace ThinGin.OpenGL.Common
         /// </summary>
         /// <param name="Mode"></param>
         /// <param name="Length">byte length of buffer</param>
-        public GLPixelBuffer(IEngine Engine, EPixelBufferMode Mode, int Length) : base(Engine)
+        public GLPixelBuffer(EngineInstance Engine, EPixelBufferMode Mode, int Length) : base(Engine)
         {
             if (!Engine.IsSupported("arb_pixel_buffer_object"))
             {

@@ -9,6 +9,7 @@ using ThinGin.Core.Shaders;
 using System.Linq;
 using ThinGin.Core.Common.Engine.Types;
 using System.Collections.Generic;
+using ThinGin.Core.Engine.Common.Core;
 
 namespace ThinGin.OpenGL.Common.Shaders
 {
@@ -43,7 +44,7 @@ namespace ThinGin.OpenGL.Common.Shaders
 
 
         #region Constructors
-        public GLShaderInstance(IEngine Engine) : base(Engine)
+        public GLShaderInstance(EngineInstance Engine) : base(Engine)
         {
         }
         #endregion

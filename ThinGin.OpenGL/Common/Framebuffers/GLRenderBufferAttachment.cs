@@ -6,6 +6,7 @@ using System;
 using ThinGin.Core.Common.Engine.Types;
 using ThinGin.Core.Common.Engine.Interfaces;
 using ThinGin.Core.Common.Engine.Delegates;
+using ThinGin.Core.Engine.Common.Core;
 
 namespace ThinGin.OpenGL.Common.Framebuffers
 {
@@ -30,7 +31,7 @@ namespace ThinGin.OpenGL.Common.Framebuffers
         #endregion
 
         #region Constructors
-        public GLRenderBufferAttachment(IEngine Engine, GBuffer Owner, RenderbufferStorage Storage, RenderBufferOptions Options) : base(Engine)
+        public GLRenderBufferAttachment(EngineInstance Engine, GBuffer Owner, RenderbufferStorage Storage, RenderBufferOptions Options) : base(Engine)
         {
             _ownerRef = new WeakReference<GBuffer>(Owner);
             this.Storage = Storage;

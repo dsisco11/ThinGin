@@ -1,5 +1,6 @@
 ﻿using ThinGin.Core.Common.Interfaces;
 using ThinGin.Core.Common.Enums;
+using ThinGin.Core.Engine.Common.Core;
 
 namespace ThinGin.Core.Shaders
 {
@@ -15,7 +16,7 @@ namespace ThinGin.Core.Shaders
         #endregion
 
         #region Constructors
-        public Shader(IEngine Engine)
+        public Shader(EngineInstance Engine)
         {
             _instance = Engine.Provider.Shaders.Create(Engine);
         }

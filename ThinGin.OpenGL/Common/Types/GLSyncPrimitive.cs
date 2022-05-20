@@ -5,6 +5,7 @@ using ThinGin.Core.Common.Engine.Interfaces;
 using ThinGin.Core.Common.Engine.Delegates;
 using OpenTK.Graphics.OpenGL;
 using ThinGin.Core.Common.Engine.Types;
+using ThinGin.Core.Engine.Common.Core;
 
 namespace ThinGin.OpenGL.Common.Types
 {
@@ -18,7 +19,7 @@ namespace ThinGin.OpenGL.Common.Types
         #endregion
 
         #region Constructors
-        public GLSyncPrimitive(IEngine Engine) : base(Engine)
+        public GLSyncPrimitive(EngineInstance Engine) : base(Engine)
         {
         }
         #endregion

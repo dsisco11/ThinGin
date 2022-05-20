@@ -2,6 +2,7 @@
 
 using ThinGin.Core.Common.Engine.Types;
 using ThinGin.Core.Common.Interfaces;
+using ThinGin.Core.Engine.Common.Core;
 
 namespace ThinGin.Core.Common.Textures.Types
 {
@@ -27,7 +28,7 @@ namespace ThinGin.Core.Common.Textures.Types
         #endregion
 
         #region Constructors
-        protected TextureHandle(IEngine Engine) : base(Engine)
+        protected TextureHandle(EngineInstance Engine) : base(Engine)
         {
         }
         #endregion

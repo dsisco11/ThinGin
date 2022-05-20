@@ -30,7 +30,7 @@ namespace ThinGin.Core.Common.Objects
         public EngineInstance Engine => _engineRef.TryGetTarget(out var outRef) ? outRef : null;
         public EngineObjectBase Parent => _parentRef.TryGetTarget(out var outRef) ? outRef : null;
 
-        public EngineObjectManager Manager => Engine.Objects;
+        public EngineObjectManager Manager => Engine.World.Objects;
 
         public bool IsInitialized => (_initializedValue != 0);
         #endregion

@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using ThinGin.Core.Common.Interfaces;
 using ThinGin.Core.Common.Textures.Decoders;
 using ThinGin.Core.Common.Textures.Types;
+using ThinGin.Core.Engine.Common.Core;
 using ThinGin.Core.Resources.Common;
 
 namespace ThinGin.Core.Common.Textures
@@ -84,7 +85,7 @@ namespace ThinGin.Core.Common.Textures
         /// <returns></returns>
         /// <exception cref="System.IO.IOException"></exception>
         /// <exception cref="Exception"></exception>
-        public static TextureProxy Create(IEngine Engine, string Name) => Create(Engine, Name, Engine.Get_Default_Texture_Internal_Pixel_Layout());
+        public static TextureProxy Create(EngineInstance Engine, string Name) => Create(Engine, Name, Engine.Get_Default_Texture_Internal_Pixel_Layout());
 
         /// <summary>
         /// Creates a new texture instance, retrieving it from the cache if possible.
@@ -95,7 +96,7 @@ namespace ThinGin.Core.Common.Textures
         /// <returns></returns>
         /// <exception cref="System.IO.IOException"></exception>
         /// <exception cref="Exception"></exception>
-        public static TextureProxy Create(IEngine Engine, string Name, PixelDescriptor GpuLayout)
+        public static TextureProxy Create(EngineInstance Engine, string Name, PixelDescriptor GpuLayout)
         {
             if (!Engine.TextureCache.IsCached(Name))
             {

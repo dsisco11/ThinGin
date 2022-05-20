@@ -1,5 +1,6 @@
 ﻿
 using ThinGin.Core.Common.Interfaces;
+using ThinGin.Core.Engine.Common.Core;
 
 namespace ThinGin.Core.Common.Engine.Types
 {
@@ -16,7 +17,7 @@ namespace ThinGin.Core.Common.Engine.Types
         #endregion
 
         #region Constructors
-        public GpuSyncPrimitive(IEngine Engine) : base(Engine)
+        public GpuSyncPrimitive(EngineInstance Engine) : base(Engine)
         {
         }
         #endregion

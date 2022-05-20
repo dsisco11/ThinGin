@@ -5,6 +5,7 @@ using ThinGin.Core.Common.Engine.Types;
 using ThinGin.Core.Common.Enums;
 using ThinGin.Core.Common.Interfaces;
 using ThinGin.Core.Common.Meshes;
+using ThinGin.Core.Engine.Common.Core;
 
 namespace ThinGin.Core.Rendering.Common
 {
@@ -19,7 +20,7 @@ namespace ThinGin.Core.Rendering.Common
         #endregion
 
         #region Constructors
-        public MeshRenderer(IEngine Engine, Mesh mesh) : base(Engine)
+        public MeshRenderer(EngineInstance Engine, Mesh mesh) : base(Engine)
         {
             _meshRef = new WeakReference<Mesh>(mesh);
         }

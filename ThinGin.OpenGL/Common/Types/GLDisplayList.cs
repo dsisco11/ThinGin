@@ -7,6 +7,7 @@ using ThinGin.Core.Common.Engine.Delegates;
 using ThinGin.Core.Common.Engine.Interfaces;
 using ThinGin.Core.Common.Engine.Types;
 using ThinGin.Core.Common.Interfaces;
+using ThinGin.Core.Engine.Common.Core;
 
 namespace ThinGin.OpenGL.Common.Types
 {
@@ -25,7 +26,7 @@ namespace ThinGin.OpenGL.Common.Types
         #endregion
 
         #region Constructors
-        public GLDisplayList(IEngine Engine) : base(Engine)
+        public GLDisplayList(EngineInstance Engine) : base(Engine)
         {
         }
         /// <summary>
@@ -33,7 +34,7 @@ namespace ThinGin.OpenGL.Common.Types
         /// </summary>
         /// <param name="Engine"></param>
         /// <param name="CommandBuilder"></param>
-        public GLDisplayList(IEngine Engine, Action CommandBuilder) : base(Engine)
+        public GLDisplayList(EngineInstance Engine, Action CommandBuilder) : base(Engine)
         {
             _command_list_delegate = CommandBuilder;
         }

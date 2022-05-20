@@ -1,5 +1,6 @@
 ﻿using System;
 
+using ThinGin.Core.Common.Interfaces;
 using ThinGin.Core.Engine.Common.Core;
 
 namespace ThinGin.Core.Common.Engine.Interfaces

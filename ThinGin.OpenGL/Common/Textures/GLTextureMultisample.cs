@@ -2,6 +2,7 @@
 
 using ThinGin.Core.Common.Interfaces;
 using ThinGin.Core.Common.Textures;
+using ThinGin.Core.Engine.Common.Core;
 using ThinGin.OpenGL.Common.Exceptions;
 
 namespace ThinGin.OpenGL.Common.Textures
@@ -13,7 +14,7 @@ namespace ThinGin.OpenGL.Common.Textures
         #endregion
 
         #region Constructors
-        public GLTextureMultisample(IEngine Engine, PixelDescriptor GpuLayout, int samples) : base(Engine, GpuLayout)
+        public GLTextureMultisample(EngineInstance Engine, PixelDescriptor GpuLayout, int samples) : base(Engine, GpuLayout)
         {
             if (!Engine.IsSupported("arb_texture_multisample"))
             {

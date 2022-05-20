@@ -8,6 +8,7 @@ using System;
 using ThinGin.Core.Common.Meshes;
 using ThinGin.Core.Common.Engine.Interfaces;
 using ThinGin.Core.Common.Engine.Delegates;
+using ThinGin.Core.Engine.Common.Core;
 
 namespace ThinGin.OpenGL.Common.BufferObjects
 {
@@ -24,7 +25,7 @@ namespace ThinGin.OpenGL.Common.BufferObjects
         #endregion
 
         #region Constructors
-        public VertexArrayObject(IEngine Engine, VertexLayout Layout) : base(Engine)
+        public VertexArrayObject(EngineInstance Engine, VertexLayout Layout) : base(Engine)
         {
             if (!Engine.IsSupported("arb_vertex_array_object"))
             {

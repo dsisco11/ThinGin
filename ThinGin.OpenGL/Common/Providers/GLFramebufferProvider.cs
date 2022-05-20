@@ -2,6 +2,7 @@
 
 using ThinGin.Core.Common.Interfaces;
 using ThinGin.Core.Common.Providers;
+using ThinGin.Core.Engine.Common.Core;
 using ThinGin.Core.Rendering;
 using ThinGin.OpenGL.Common.Framebuffers;
 
@@ -13,7 +14,7 @@ namespace ThinGin.OpenGL.Common.Providers
         public static IFramebufferProvider Instance = new GLFramebufferProvider();
         #endregion
 
-        public GBuffer Create_FrameBuffer(IEngine Engine, Size Size)
+        public GBuffer Create_FrameBuffer(EngineInstance Engine, Size Size)
         {
             return new GLFrameBuffer(Engine, Size);
         }

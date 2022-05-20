@@ -1,12 +1,13 @@
 ﻿using ThinGin.Core.Common.Data;
 using ThinGin.Core.Common.Interfaces;
+using ThinGin.Core.Engine.Common.Core;
 using ThinGin.Core.Shaders;
 
 namespace ThinGin.Core.Common.Providers
 {
     public interface IShaderProvider
     {
-        IShaderInstance Create(IEngine Engine);
+        IShaderInstance Create(EngineInstance Engine);
 
         ShaderVariable Create_Variable(ShaderVariable Variable);
         ShaderVariable Create_Variable(ShaderVariable Variable, ReferencedDataDescriptor Descriptor);

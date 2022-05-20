@@ -3,6 +3,7 @@ using System.Numerics;
 
 using ThinGin.Core.Common.Enums;
 using ThinGin.Core.Common.Interfaces;
+using ThinGin.Core.Engine.Common.Core;
 
 namespace ThinGin.Core.Common.Cameras
 {
@@ -129,7 +130,7 @@ namespace ThinGin.Core.Common.Cameras
         #endregion
 
         #region Constructors
-        public CameraEuler(IEngine Engine) : base(Engine)
+        public CameraEuler(EngineInstance Engine) : base(Engine)
         {
         }
         #endregion

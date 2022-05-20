@@ -9,6 +9,7 @@ using ThinGin.Core.Common.Interfaces;
 using ThinGin.Core.Common.Meshes;
 using ThinGin.Core.Common.Textures;
 using ThinGin.Core.Common.Types;
+using ThinGin.Core.Engine.Common.Core;
 
 namespace ThinGin.Core.Text
 {
@@ -44,14 +45,14 @@ namespace ThinGin.Core.Text
         #endregion
 
         #region Constructors
-        public TextRun(IEngine Engine) : base(Engine)
+        public TextRun(EngineInstance Engine) : base(Engine)
         {
         }
-        public TextRun(IEngine Engine, IFontRasterizer Font) : base(Engine)
+        public TextRun(EngineInstance Engine, IFontRasterizer Font) : base(Engine)
         {
             this.Font = Font;
         }
-        public TextRun(IEngine Engine, string Text) : base(Engine)
+        public TextRun(EngineInstance Engine, string Text) : base(Engine)
         {
             Set_Text(Text);
         }

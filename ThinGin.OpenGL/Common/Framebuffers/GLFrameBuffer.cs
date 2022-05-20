@@ -9,6 +9,7 @@ using ThinGin.Core.Rendering;
 using ThinGin.Core.Common.Engine.Interfaces;
 using ThinGin.Core.Common.Engine.Delegates;
 using ThinGin.Core.Common.Meshes;
+using ThinGin.Core.Engine.Common.Core;
 
 namespace ThinGin.OpenGL.Common.Framebuffers
 {
@@ -75,7 +76,7 @@ namespace ThinGin.OpenGL.Common.Framebuffers
         #endregion
 
         #region Constructors
-        public GLFrameBuffer(IEngine Engine, Size size) : base(Engine, size)
+        public GLFrameBuffer(EngineInstance Engine, Size size) : base(Engine, size)
         {
         }
 
@@ -83,7 +84,7 @@ namespace ThinGin.OpenGL.Common.Framebuffers
         /// Create the RenderBuffer
         /// </summary>
         /// <param name="size">Desired size</param>
-        public GLFrameBuffer(IEngine Engine, Size size, FrameBufferOptions Options) : base(Engine, size)
+        public GLFrameBuffer(EngineInstance Engine, Size size, FrameBufferOptions Options) : base(Engine, size)
         {// XXX: TODO: Consider doing lazy creation of this to be more flexible surrounding OpenGL contexts
 
             if (!Engine.IsSupported("ext_framebuffer_object")) throw new Exception("Framebuffer objects are not supported by the graphics driver!");

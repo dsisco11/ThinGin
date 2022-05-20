@@ -4,6 +4,7 @@ using ThinGin.Core.Exceptions;
 using ThinGin.Core.Common.Enums;
 using ThinGin.Core.Common.Interfaces;
 using ThinGin.Core.Common.Engine.Types;
+using ThinGin.Core.Engine.Common.Core;
 
 namespace ThinGin.Core.Common.Types
 {
@@ -31,7 +32,7 @@ namespace ThinGin.Core.Common.Types
         #endregion
 
         #region Constructors
-        public BufferObject(IEngine Engine) : base(Engine)
+        public BufferObject(EngineInstance Engine) : base(Engine)
         {
         }
         #endregion

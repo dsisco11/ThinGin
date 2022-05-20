@@ -32,7 +32,7 @@ namespace ThinGin.Core.Common.Engine.Types
 
         #region Accessors
         /// <summary>
-        /// The <see cref="IEngine"/> which has ownership of this resource.
+        /// The <see cref="EngineInstance"/> which has ownership of this resource.
         /// </summary>
         public EngineInstance Engine => _engineRef.TryGetTarget(out var outRef) ? outRef : null;
         //public GraphicsObjectManager Manager => 

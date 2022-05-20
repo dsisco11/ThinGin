@@ -8,6 +8,7 @@ using ThinGin.Core.Common.Engine.Interfaces;
 using ThinGin.Core.Common.Engine.Types;
 using ThinGin.Core.Common.Enums;
 using ThinGin.Core.Common.Interfaces;
+using ThinGin.Core.Engine.Common.Core;
 
 namespace ThinGin.OpenGL.Common.Shaders
 {
@@ -41,7 +42,7 @@ namespace ThinGin.OpenGL.Common.Shaders
         #endregion
 
         #region Constructors
-        public GLShaderInclude(IEngine Engine, string Name, EShaderType Type, string Code) : base(Engine)
+        public GLShaderInclude(EngineInstance Engine, string Name, EShaderType Type, string Code) : base(Engine)
         {
             this.Code = Code;
             this.Name = Name;

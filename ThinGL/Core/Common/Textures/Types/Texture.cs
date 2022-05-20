@@ -1,6 +1,7 @@
 ﻿
 using ThinGin.Core.Common.Engine.Types;
 using ThinGin.Core.Common.Interfaces;
+using ThinGin.Core.Engine.Common.Core;
 
 namespace ThinGin.Core.Common.Textures.Types
 {
@@ -33,7 +34,7 @@ namespace ThinGin.Core.Common.Textures.Types
         /// <summary>
         /// Creates a new GPU texture
         /// </summary>
-        protected Texture(IEngine Engine, PixelDescriptor GpuLayout) : base(Engine)
+        protected Texture(EngineInstance Engine, PixelDescriptor GpuLayout) : base(Engine)
         {
             this.GpuLayout = GpuLayout;
         }

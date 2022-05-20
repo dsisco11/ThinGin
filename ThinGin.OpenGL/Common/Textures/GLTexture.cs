@@ -8,6 +8,7 @@ using ThinGin.Core.Common.Engine;
 using ThinGin.Core.Common.Engine.Interfaces;
 using ThinGin.Core.Common.Engine.Delegates;
 using ThinGin.OpenGL.Common.Types;
+using ThinGin.Core.Engine.Common.Core;
 
 namespace ThinGin.OpenGL.Common.Textures
 {
@@ -50,7 +51,7 @@ namespace ThinGin.OpenGL.Common.Textures
         /// <summary>
         /// Creates a new GPU texture
         /// </summary>
-        public GLTexture(IEngine Engine, PixelDescriptor GpuLayout) : base(Engine, GpuLayout)
+        public GLTexture(EngineInstance Engine, PixelDescriptor GpuLayout) : base(Engine, GpuLayout)
         {
             UseCompression = Engine.AutoCompressTextures;
             EnableMipMaps = Engine.AutoGenerateMipMaps;
