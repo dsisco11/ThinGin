@@ -127,16 +127,16 @@ For a cross-API RHI, consider defining:
 
 **Needed:**
 
-- Decide on shader source and compilation pipeline:
-  - GLSL only (initially), or
-  - HLSL -> SPIR-V -> GLSL (or native Vulkan) later.
+- Implement the chosen shader pipeline:
+  - HLSL authoring compiled to SPIR-V, with backend-specific translation as needed.
+  - Use `TinyTokenizer`, `TinyPreprocessor`, and `TinyAst.Preprocessor` for AST processing.
 
 Core missing pieces:
 
 - Shader compilation/build step
 - Reflection (uniforms, blocks, textures)
 - Caching keys (`ShaHash` exists)
-- “Library” implementation or replacement (currently has incomplete methods)
+- "Library" implementation or replacement (currently has incomplete methods)
 
 ### 8) Presentation / swapchain / viewport
 

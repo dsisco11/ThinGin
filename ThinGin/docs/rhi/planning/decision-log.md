@@ -19,3 +19,9 @@ This file records key architecture decisions that impact the RHI planning docume
 - Status: accepted
 - Decision: use an explicit access and pipeline state model with subresource granularity and explicit transitions.
 - Details: ERHIAccess-like bitmask states, per-pipeline tracking (graphics/async compute), subresource ranges for textures, and transition objects with extended flags (discard/clear/aliasing) and RHI-side validation.
+
+## Decision 004: Shader pipeline and AST tooling
+
+- Status: accepted
+- Decision: use HLSL as the authoring language compiled to SPIR-V, with backend-specific translation as needed.
+- Details: shader AST processing should leverage `TinyTokenizer`, `TinyPreprocessor`, and `TinyAst.Preprocessor` packages.
