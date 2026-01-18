@@ -18,6 +18,8 @@ The command model defines how the renderer records work and how the driver execu
 - Submission is an explicit boundary with fences for synchronization.
 - Multithreaded recording is supported via per-thread command allocators and a centralized submit path.
 - An optional dedicated RHI thread can be enabled per platform/configuration.
+- Parallel recording uses a task-based model with explicit command list APIs available.
+- Lightweight validation may run during recording, with authoritative validation at submit/execute time.
 
 ## Dependencies
 

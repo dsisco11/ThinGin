@@ -73,3 +73,9 @@ This file records key architecture decisions that impact the RHI planning docume
 - Status: accepted
 - Decision: support multithreaded command recording with a render thread and optional dedicated RHI thread.
 - Details: use immediate and deferred command lists, allow task-based parallel recording, and submit through a centralized path with per-thread command allocators.
+
+## Decision 013: Parallel recording API and validation timing
+
+- Status: accepted
+- Decision: use a task-based parallel recording model with explicit command list APIs available.
+- Details: lightweight validation may run during recording in debug builds, with authoritative validation at submit/execute time.
