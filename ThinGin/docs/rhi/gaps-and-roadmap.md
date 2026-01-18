@@ -62,7 +62,8 @@ Concrete fixes required either way:
   - `Submit(RHICommandListBase list)` (or similar)
   - `Flush()` semantics for immediate lists vs deferred lists
 
-**Stretch goal:** separate “RHI thread” / render thread model.
+**Stretch goal:** separate "RHI thread" / render thread model.
+**Decision:** multithreaded recording with an optional RHI thread is part of the target model.
 
 ### 3) Resource lifecycle (real init/release)
 

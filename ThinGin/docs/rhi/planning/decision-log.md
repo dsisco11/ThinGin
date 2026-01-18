@@ -67,3 +67,9 @@ This file records key architecture decisions that impact the RHI planning docume
 - Status: accepted
 - Decision: hybrid upload model with staging resources for large/static data and ring-buffer updates for dynamic data.
 - Details: use explicit copy commands for staging uploads; allow map/lock-style updates only where safe and backend-supported.
+
+## Decision 012: Multithreaded recording and RHI thread
+
+- Status: accepted
+- Decision: support multithreaded command recording with a render thread and optional dedicated RHI thread.
+- Details: use immediate and deferred command lists, allow task-based parallel recording, and submit through a centralized path with per-thread command allocators.

@@ -7,7 +7,7 @@ The command model defines how the renderer records work and how the driver execu
 ## Goals
 
 - Make the execution path explicit and backend-reachable.
-- Support record and replay first, with room for immediate convenience and multithreaded recording later.
+- Support record and replay with multithreaded recording and optional immediate convenience.
 - Keep command semantics stable across backends.
 
 ## Key decisions
@@ -16,6 +16,8 @@ The command model defines how the renderer records work and how the driver execu
 - Command lists are recorded then submitted; execution happens through `IRHICommandContext`.
 - Immediate execution is optional and layered on top of the same command semantics.
 - Submission is an explicit boundary with fences for synchronization.
+- Multithreaded recording is supported via per-thread command allocators and a centralized submit path.
+- An optional dedicated RHI thread can be enabled per platform/configuration.
 
 ## Dependencies
 
@@ -26,4 +28,4 @@ The command model defines how the renderer records work and how the driver execu
 
 - Command list types and submission path defined at the RHI layer.
 - Clear execution semantics and validation hooks.
-- Optional RHI thread model described and reserved for later phases.
+- RHI thread model and parallel recording guidelines described.
