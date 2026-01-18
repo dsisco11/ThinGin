@@ -2,7 +2,7 @@
 
 ## Goals
 
-- Provide a UE5-like, driver-centric RHI that is C#-native and backend-agnostic.
+- Provide a driver-centric, explicit RHI that is C#-native and backend-agnostic.
 - Separate renderer intent from backend API specifics.
 - Keep resource and synchronization semantics explicit and portable.
 

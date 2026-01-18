@@ -1,6 +1,6 @@
 # RHI Planning Hierarchy
 
-This directory defines the architecture-first plan for building a full UE5-like RHI in ThinGin. It focuses on system design, boundaries, and milestones rather than code details.
+This directory defines the architecture-first plan for building a full driver-centric RHI in ThinGin. It focuses on system design, boundaries, and milestones rather than code details.
 
 ## Document map
 

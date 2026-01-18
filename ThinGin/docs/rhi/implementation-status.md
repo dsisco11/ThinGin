@@ -20,7 +20,7 @@ This track is wired into the `IGraphicsImplementation` provider model:
 
 This system is **engine-centric** (the engine calls GL directly via provider classes), rather than **driver-centric** (RHI commands recorded and submitted to a driver).
 
-### Track B: New UE5-inspired RHI core (in progress)
+### Track B: New driver-centric RHI core (in progress)
 
 The newer RHI effort lives under:
 
@@ -28,7 +28,7 @@ The newer RHI effort lives under:
 
 Key observations:
 
-- The codebase contains explicit UE5-inspired terminology (e.g., the `IRHIDriver` comment referencing “DynamicRHI”).
+- The codebase contains explicit driver-centric terminology (e.g., the `IRHIDriver` comment referencing a dynamic RHI concept).
 - Many types are present (textures, buffers, pipeline init structs, fences), but **most implementations are still placeholders**.
 - The new RHI core is **not fully integrated** with the legacy engine/provider runtime.
 
@@ -44,7 +44,7 @@ Key observations:
   - Current implementation is extremely minimal (stores driver, creates a resource manager, `Shutdown()` stub).
 
 - `IRHIDriver` (`ThinGin/Core/RenderHardware/Interfaces/IRHIDriver.cs`)
-  - Intended as the “DynamicRHI-like” driver surface.
+  - Intended as the driver interface surface.
   - Already contains real API commitments:
     - Feature/limit reporting (`RHIDriverFeatures`)
     - Extension queries
@@ -100,7 +100,7 @@ The RHI resource taxonomy is largely present (even if many methods are placehold
 
 ### Pipelines and state objects
 
-UE-like pipeline init types exist:
+Modern pipeline init types exist:
 
 - `GraphicsPipelineStateInit` (`ThinGin/Core/RenderHardware/Pipelines/GraphicsPipelineStateInit.cs`)
 - `BoundShaderStateInput`, `DepthStencilStateInit`, `ExclusiveDepthStencilAccess`, etc.
@@ -216,4 +216,4 @@ There are also multiple warnings indicating `ITexture` is obsolete in favor of `
 - Shader library and pipeline binary library functionality.
 - DMA mapping/staging helpers.
 
-For “what to implement next” in a UE5-like order, see [Gaps and Roadmap](gaps-and-roadmap.md).
+For "what to implement next" in a recommended order, see [Gaps and Roadmap](gaps-and-roadmap.md).

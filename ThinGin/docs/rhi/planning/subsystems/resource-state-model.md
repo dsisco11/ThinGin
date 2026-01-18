@@ -1,4 +1,4 @@
-# Resource State Model (UE5-aligned)
+# Resource State Model (Explicit Access and Pipeline)
 
 ## Purpose
 

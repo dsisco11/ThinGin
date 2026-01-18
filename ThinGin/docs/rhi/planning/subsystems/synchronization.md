@@ -15,7 +15,7 @@ See [Resource State Model](resource-state-model.md) for the explicit state and t
 
 ## Architectural decisions
 
-- Resource states are explicit and UE5-style: access masks plus pipeline scope (graphics/async compute).
+- Resource states are explicit: access masks plus pipeline scope (graphics/async compute).
 - Transitions are explicit, subresource-aware, and validated by the RHI layer.
 - Barriers include transition flags for discard/clear and aliasing, even if some backends treat them as logical.
 - Submission boundaries define visibility and execution ordering across pipelines.

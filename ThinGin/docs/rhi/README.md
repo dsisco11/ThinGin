@@ -1,6 +1,6 @@
-# ThinGin RHI (UE5-style) analysis
+# ThinGin RHI architecture analysis
 
-These documents summarize the current state of ThinGin’s Render Hardware Interface (RHI) effort, with a focus on building a C#-native system that resembles Unreal Engine 5’s RHI layering.
+These documents summarize the current state of ThinGin's Render Hardware Interface (RHI) effort, with a focus on building a C#-native, driver-centric RHI architecture.
 
 ## Scope
 
@@ -16,7 +16,7 @@ These documents summarize the current state of ThinGin’s Render Hardware Inter
   - Notable incomplete areas detected in code.
 
 - [Gaps and Roadmap](gaps-and-roadmap.md)
-  - What remains to implement to reach a UE5-like RHI.
+  - What remains to implement to reach the target driver-centric RHI.
   - Recommended sequencing/milestones to reduce rework.
   - Concrete "next 2-4 weeks" tasks vs longer-term items.
 
@@ -25,6 +25,6 @@ These documents summarize the current state of ThinGin’s Render Hardware Inter
 
 ## Quick take
 
-- There is a **new RHI core surface area** in `ThinGin/Core/RenderHardware` that already defines many UE-like concepts (resource types, pipeline init structs, command list types, fences, etc.).
+- There is a **new RHI core surface area** in `ThinGin/Core/RenderHardware` that already defines many modern RHI concepts (resource types, pipeline init structs, command list types, fences, etc.).
 - There is also a **legacy (older) engine/provider model** in `ThinGin.OpenGL/Common` that binds OpenGL directly and powers the existing examples.
 - The new RHI is **not yet fully wired into the runtime**, and many pieces are currently **stubs / placeholders**.

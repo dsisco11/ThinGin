@@ -1,14 +1,14 @@
 # Gaps and Roadmap
 
-This document describes what still needs to be implemented to reach a UE5-like RHI system in C#, based on what exists in the repository today.
+This document describes what still needs to be implemented to reach a driver-centric, explicit RHI system in C#, based on what exists in the repository today.
 
-## Target architecture (UE5-inspired)
+## Target architecture (driver-centric)
 
-A UE5-like RHI typically stabilizes around these layers:
+A driver-centric RHI typically stabilizes around these layers:
 
 1. **High-level rendering (renderer, frame graph, passes)**
 2. **RHI command recording API** (command lists/contexts)
-3. **DynamicRHI / backend driver** (D3D12/Vulkan/Metal/OpenGL)
+3. **Backend driver interface** (D3D12/Vulkan/Metal/OpenGL)
 4. **Device objects** (buffers/textures/samplers/PSOs)
 5. **Synchronization** (fences, semaphores, resource barriers)
 6. **Shader system** (compilation, reflection, libraries/caches)
@@ -75,7 +75,7 @@ Concrete fixes required either way:
 
 **Important design choice:**
 
-- UE5 tends to keep RHI resources “small handles” and pushes heavier data into driver-managed structures.
+- A driver-centric approach tends to keep RHI resources as small handles and pushes heavier data into driver-managed structures.
 - ThinGin currently has both patterns starting (e.g., `RHIHandle` + OpenGL handle wrapper).
 
 ### 4) Pipeline State Objects (PSO) / fixed-function state
@@ -96,7 +96,7 @@ Concrete fixes required either way:
 
 **Needed:**
 
-- Implement a UE5-style access and pipeline state model:
+- Implement an explicit access and pipeline state model:
   - ERHIAccess-like bitmask states (SRV/UAV/RTV/DSV/Copy/Present/etc).
   - Pipeline scope for graphics and async compute.
   - Subresource ranges for textures (mip/array/plane).
@@ -113,7 +113,7 @@ Concrete fixes required either way:
 **Needed:**
 
 - Define how shaders bind resources:
-  - UE5-style: descriptor tables / bindless options.
+  - Descriptor-table or bindless options.
   - OpenGL-style: texture units + uniform locations + UBO binding points.
 
 For a cross-API RHI, consider defining:
@@ -150,7 +150,7 @@ Core missing pieces:
 If the current examples rely on OpenTK’s window/context management, decide whether:
 
 - presentation belongs to the engine host (outside RHI), or
-- presentation is an RHI responsibility (UE5-like).
+- presentation is an RHI responsibility.
 
 ## Recommended milestone plan (pragmatic)
 
@@ -171,9 +171,9 @@ If the current examples rely on OpenTK’s window/context management, decide whe
 - Implement `GBuffer`/render target creation through the RHI backend.
 - Ensure consistent binding semantics (read/write, clear, blit/copy).
 
-### Milestone 4: "UE-style features"
+### Milestone 4: "Explicit RHI features"
 
-- Resource barriers and transitions (UE5-style access+pipeline + validation).
+- Resource barriers and transitions (explicit access+pipeline + validation).
 - SRV/UAV and descriptor binding model.
 - Asynchronous uploads via staging/DMA.
 - Shader libraries / pipeline binary caching.
@@ -191,7 +191,7 @@ Consider converging on one to avoid split lifetime control.
 
 ## What to do next
 
-If you want fastest forward progress toward UE5-like RHI semantics:
+If you want fastest forward progress toward the target RHI semantics:
 
 1. Implement `IRHIDriver` for OpenGL (GL3).
 2. Make command execution able to call the driver.
