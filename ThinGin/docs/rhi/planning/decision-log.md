@@ -37,3 +37,9 @@ This file records key architecture decisions that impact the RHI planning docume
 - Status: accepted
 - Decision: use an immutable pipeline core (shaders + fixed-function state) with a defined dynamic state set (viewport/scissor/stencil ref/blend factors).
 - Details: cache PSOs by a stable initializer hash; start with runtime cache and allow an offline/serialized PSO library later; OpenGL maps PSOs to cached state bundles.
+
+## Decision 007: Presentation ownership and frame pacing
+
+- Status: accepted
+- Decision: RHI owns presentation with a platform-provided surface and a swapchain/viewport abstraction.
+- Details: RHI handles present/sync; platform layer supplies native window handles; frame pacing supports vsync control with room for explicit timing policies.

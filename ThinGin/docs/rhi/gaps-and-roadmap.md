@@ -146,13 +146,10 @@ Core missing pieces:
 
 **Needed:**
 
-- Define a platform abstraction for windowing/swapchain.
-- Implement present scheduling and frame pacing.
+- Define a platform surface abstraction and RHI-owned swapchain/viewport.
+- Implement present scheduling and frame pacing (vsync first, explicit timing later).
 
-If the current examples rely on OpenTK’s window/context management, decide whether:
-
-- presentation belongs to the engine host (outside RHI), or
-- presentation is an RHI responsibility.
+If the current examples rely on OpenTK's window/context management, align the host layer to supply window handles while the RHI owns presentation.
 
 ## Recommended milestone plan (pragmatic)
 

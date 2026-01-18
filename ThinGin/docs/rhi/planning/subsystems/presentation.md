@@ -12,9 +12,11 @@ Presentation handles how rendered images reach the screen and how the RHI intera
 
 ## Architectural decisions
 
-- Presentation is part of the RHI, with a platform abstraction for windowing.
-- The swapchain model supports at least double buffering with explicit present timing.
+- Presentation is owned by the RHI, with a platform-provided surface and windowing abstraction.
+- The swapchain/viewport model supports double buffering or better with explicit present timing.
+- The platform layer supplies native window handles; the RHI controls present and sync.
 - Presentation APIs should allow external window systems without rewriting the driver.
+- Frame pacing starts with vsync control and can expand to explicit timing policies.
 
 ## Deliverables
 
