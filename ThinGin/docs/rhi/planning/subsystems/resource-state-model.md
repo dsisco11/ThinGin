@@ -26,6 +26,16 @@ Define the explicit resource state model used by the RHI for correctness, valida
 - Transition object
   - Aggregates one or more transition infos and aliasing infos for transient resources.
 
+## Access state set (planned)
+
+- CPURead, Present, IndirectArgs, VertexOrIndexBuffer.
+- SRVGraphics, SRVCompute.
+- UAVGraphics, UAVCompute.
+- RTV, DSVRead, DSVWrite.
+- CopySrc, CopyDest, ResolveSrc, ResolveDest.
+- ShadingRateSource.
+- BVHRead, BVHWrite.
+
 ## Transition flags and aliasing
 
 - Discard and clear hints for transient or fully overwritten resources.

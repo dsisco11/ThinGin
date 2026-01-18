@@ -108,3 +108,56 @@ This file records key architecture decisions that impact the RHI planning docume
 - Status: accepted
 - Decision: APIs without explicit barriers treat transitions as logical ordering plus validation.
 - Details: transitions are still recorded and validated; backends implement ordering and cache management as needed without native barrier primitives.
+
+## Decision 019: Memory residency and allocator model
+
+- Status: accepted
+- Decision: use pooled allocators with transient aliasing for per-frame resources.
+- Details: backend tracks budgets and residency; out-of-budget allocations fail fast unless a defined fallback exists.
+
+## Decision 020: Fence and cross-queue synchronization
+
+- Status: accepted
+- Decision: expose timeline-style fences with binary fallback and explicit signal/wait ordering across queues.
+- Details: cross-pipeline dependencies require explicit fences and pipeline-scoped transitions.
+
+## Decision 021: Command list lifecycle and ordering
+
+- Status: accepted
+- Decision: command allocators are per-thread and reset after GPU completion or a frame fence.
+- Details: submission order is preserved within each pipeline; cross-pipeline ordering requires explicit sync.
+
+## Decision 022: Binding space conventions and descriptor lifetime
+
+- Status: accepted
+- Decision: reserve binding spaces by update frequency and define clear descriptor lifetimes.
+- Details: space 0 per-frame, space 1 per-view, space 2 per-material, space 3 per-draw; transient tables reset each frame, persistent tables are reference-counted.
+
+## Decision 023: Shader toolchain and permutation strategy
+
+- Status: accepted
+- Decision: compile HLSL with DXC to SPIR-V and use reflection-driven permutation keys.
+- Details: permutations are driven by compile-time defines and stable hashes; debug info is included in development builds and minimized in release builds.
+
+## Decision 024: Presentation swapchain policy
+
+- Status: accepted
+- Decision: default to triple buffering with fall back to double buffering and support vsync and immediate present modes.
+- Details: prefer low-latency present modes when available; support sRGB by default with optional HDR; recreate swapchain on resize.
+
+## Decision 025: Validation severity and crash capture
+
+- Status: accepted
+- Decision: define validation severities and capture GPU crash diagnostics where supported.
+- Details: errors fail fast in development builds, shipping logs are minimal; crash capture records markers and resource names.
+
+## Decision 026: Thread-safety and ownership
+
+- Status: accepted
+- Decision: command list recording is thread-safe; resource creation is serialized through the RHI.
+- Details: backend contexts are not shared across threads without explicit synchronization.
+
+## Decision 027: Cache invalidation policy
+
+- Status: accepted
+- Decision: shader and PSO cache artifacts are invalidated on backend, compiler, shader format, or driver version changes.

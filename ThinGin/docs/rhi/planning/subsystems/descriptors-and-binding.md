@@ -42,3 +42,16 @@ Operational flow:
 - Layouts are merged into a pipeline layout with stage visibility.
 - Descriptor tables are allocated per layout and populated by the renderer.
 - OpenGL backend translates layout slots to texture units and binding points at bind time.
+
+## Binding space conventions
+
+- Space 0: per-frame or global resources.
+- Space 1: per-view or per-camera resources.
+- Space 2: per-material resources.
+- Space 3: per-draw resources.
+
+## Descriptor lifetime and ownership
+
+- Per-frame descriptor tables are transient and reset each frame.
+- Persistent tables are reference-counted and released by the RHI.
+- Descriptor updates are validated against the binding layout at update time.

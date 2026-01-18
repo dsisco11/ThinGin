@@ -32,3 +32,16 @@ The shader system covers compilation, reflection, caching, and libraries.
 - Reflection schema and binding metadata.
 - Library and cache strategy aligned with the pipeline cache.
 - AST processing workflow based on the Tiny* packages.
+
+## Toolchain and permutations
+
+- Use DXC to compile HLSL to SPIR-V by default.
+- Run reflection and optional optimization on SPIR-V before caching.
+- Permutations are driven by compile-time defines and keyed by stable hashes.
+- Debug info is included in development builds and stripped or minimized in release builds.
+
+## Library ownership
+
+- Shader libraries are owned by the RHI and keyed by backend, profile, and permutation hash.
+- Libraries can be persisted to disk and rehydrated at startup.
+- Cache artifacts are invalidated when the backend, compiler version, or shader format changes.

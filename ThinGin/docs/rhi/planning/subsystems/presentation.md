@@ -19,6 +19,18 @@ Presentation handles how rendered images reach the screen and how the RHI intera
 - Frame pacing supports vsync control and explicit timing policies.
 - The platform surface contract includes size, DPI scaling, resize events, and present preferences.
 
+## Swapchain policy
+
+- Default to triple buffering when available; fall back to double buffering.
+- Support vsync and immediate present modes where available.
+- Prefer mailbox or low-latency present modes when supported.
+
+## Color space and resize
+
+- Default to sRGB color space; enable HDR when supported by the platform and backend.
+- Recreate the swapchain on resize and rebind dependent resources.
+- Handle minimize and zero-size surfaces gracefully by pausing present.
+
 ## Deliverables
 
 - RHI viewport or swapchain interface with clear ownership.

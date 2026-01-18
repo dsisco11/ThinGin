@@ -29,6 +29,7 @@ This directory defines the architecture-first plan for building a full driver-ce
 - Resources are described at creation and owned by the RHI, with backend-managed native objects.
 - Command recording uses record and replay with multithreaded recording; immediate execution is an optional convenience.
 - Cross-API concepts are explicit: resource states, pipeline layouts, descriptors, and synchronization.
+- Single-device focus; multi-GPU is deferred.
 
 ## Capability gating
 

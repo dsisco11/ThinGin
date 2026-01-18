@@ -78,6 +78,7 @@ Concrete fixes required either way:
   - Store native handles in backend-owned resource implementations; expose opaque RHI references.
 - Centralize lifetime control in the RHI resource manager with deferred destruction and fence/epoch tracking.
 - Implement the hybrid upload path: staging resources for large/static data and ring-buffer updates for dynamic data.
+- Implement pooled allocators, transient aliasing, and residency/budget tracking.
 
 **Important design choice:**
 
@@ -107,6 +108,7 @@ Concrete fixes required either way:
   - Pipeline scope for graphics and async compute.
   - Subresource ranges for textures (mip/array/plane).
 - Provide explicit transition commands with AccessBefore/After and extended flags (discard/clear/aliasing).
+- Implement the canonical access state set and validation rules for invalid mixes.
 
 **Backend note:**
 
@@ -123,6 +125,7 @@ Concrete fixes required either way:
   - Descriptor tables as the primary model, with OpenGL slot translation.
   - Bindless as a capability-gated optional layer.
   - Transient ring buffers for per-frame descriptors and persistent pools for long-lived descriptors.
+- Implement binding space conventions and descriptor lifetime rules.
 
 For a cross-API RHI, consider defining:
 
@@ -138,6 +141,7 @@ For a cross-API RHI, consider defining:
 - Implement the chosen shader pipeline:
   - HLSL authoring compiled to SPIR-V, with backend-specific translation as needed.
   - Use `TinyTokenizer`, `TinyPreprocessor`, and `TinyAst.Preprocessor` for AST processing.
+- Integrate DXC for SPIR-V compilation and define permutation hashing.
 
 Core missing pieces:
 
@@ -155,6 +159,7 @@ Core missing pieces:
 - Define a platform surface abstraction and RHI-owned swapchain/viewport.
 - Implement present scheduling and frame pacing (vsync first, explicit timing later).
 - Specify the platform surface contract (size, DPI scaling, resize events, present preferences).
+- Implement swapchain present modes, color space/HDR policy, and resize behavior.
 
 If the current examples rely on OpenTK's window/context management, align the host layer to supply window handles while the RHI owns presentation.
 
@@ -167,6 +172,7 @@ If the current examples rely on OpenTK's window/context management, align the ho
 - Layered validation (RHI + backend/native) with consistent error reporting.
 - Debug markers/events, GPU profiling hooks, and baseline stats.
 - Build-config gating with runtime toggles for key diagnostics features.
+- Define validation severities and GPU crash capture flow.
 
 ## Recommended milestone plan (pragmatic)
 
@@ -195,6 +201,12 @@ If the current examples rely on OpenTK's window/context management, align the ho
 - Shader libraries / pipeline binary caching.
 - Optional: multithreaded command recording.
 
+## Capability check points
+
+- Query limits and feature flags at device creation and block unsupported usage.
+- Gate bindless, ray tracing, async compute efficiency, and pipeline libraries by capability.
+- Record capability data in diagnostics for debugging and profiling.
+
 ## Known refactor hotspots (plan for churn)
 
 - The type name `IRHI` currently represents the new RHI facade, but many call-sites appear to treat the engine instance as "the RHI". Update those call-sites to depend on a new RHI-owned object and remove the legacy engine pathway.
@@ -204,6 +216,10 @@ If the current examples rely on OpenTK's window/context management, align the ho
   - `ThinGin/Core/Engine/RenderManager.Objects`
 
 Converge on the RHI resource manager to avoid split lifetime control.
+
+## Non-goals (for now)
+
+- Multi-GPU and multi-adapter scheduling.
 
 ## What to do next
 

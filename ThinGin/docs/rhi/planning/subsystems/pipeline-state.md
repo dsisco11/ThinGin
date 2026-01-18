@@ -25,3 +25,9 @@ Pipeline state objects encapsulate shader programs and fixed-function state into
 - Graphics pipeline state definition with a cache strategy.
 - Compute pipeline state definition even if backend support is phased.
 - Pipeline layout contract shared with the descriptor system.
+
+## Cache ownership
+
+- Pipeline caches are owned by the RHI and keyed by backend and PSO hash.
+- Offline cache artifacts are versioned and invalidated on shader or layout changes.
+- Cache artifacts are also invalidated on backend or driver version changes.

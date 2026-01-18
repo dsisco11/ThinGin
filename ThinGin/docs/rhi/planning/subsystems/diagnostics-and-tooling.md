@@ -24,3 +24,15 @@ Diagnostics provide visibility into GPU work, errors, and performance.
 - Validation policy and error reporting surface.
 - Baseline GPU stats and memory tracking.
 - Profiling hook surface for GPU events and counters.
+
+## Severity and reporting
+
+- Define validation severities: info, warning, error, fatal.
+- Errors fail fast in development builds; shipping builds log minimal errors.
+- Validation output includes resource names and command context when possible.
+
+## GPU crash capture flow
+
+- When supported, capture GPU breadcrumbs and markers on device loss.
+- Emit a structured crash report with recent markers and resource names.
+- Enable crash capture via build config and runtime toggle.

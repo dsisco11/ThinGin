@@ -31,3 +31,16 @@ The command model defines how the renderer records work and how the driver execu
 - Command list types and submission path defined at the RHI layer.
 - Clear execution semantics and validation hooks.
 - RHI thread model and parallel recording guidelines described.
+
+## Lifecycle and ordering
+
+- Command allocators are per-thread and reset after GPU completion or a frame fence.
+- Submission order is preserved within each pipeline.
+- Cross-pipeline ordering requires explicit fences or transitions.
+- Frame boundaries are defined by present and RHI frame counters.
+
+## Thread-safety and ownership
+
+- Command list recording is thread-safe by design; resource creation is serialized through the RHI.
+- RHI objects are owned by the RHI and released through deferred destruction.
+- Backend contexts are not shared across threads without explicit synchronization.

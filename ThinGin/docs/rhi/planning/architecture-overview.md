@@ -63,6 +63,12 @@ Renderer and frame graph
 - Debug markers, events, and profiling hooks are exposed with build/runtime gating.
 - See [Diagnostics and Tooling](subsystems/diagnostics-and-tooling.md).
 
+## Fallback and error handling
+
+- Capability-gated features fail fast with explicit validation errors by default.
+- Documented fallbacks are used only when they preserve correctness.
+- Fallback usage is recorded in diagnostics to avoid silent behavior changes.
+
 ## Capability gating checklist
 
 - Query limits and feature flags at device creation and treat them as immutable.
@@ -80,3 +86,4 @@ Renderer and frame graph
 
 - High-level renderer or frame graph design details.
 - Platform windowing implementation details beyond the presentation boundary.
+- Multi-GPU and multi-adapter scheduling (deferred; single-device focus).
