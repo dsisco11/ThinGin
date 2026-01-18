@@ -73,6 +73,7 @@ Concrete fixes required either way:
 - For each GPU-backed resource type (buffers, textures, samplers, shader programs):
   - Provide `Get_Initializer` / `Get_Releaser` delegates that call into the backend driver.
   - Decide whether resources store a native handle directly or via driver-owned tables.
+- Centralize lifetime control in the RHI resource manager with deferred destruction and fence/epoch tracking.
 
 **Important design choice:**
 

@@ -49,3 +49,9 @@ This file records key architecture decisions that impact the RHI planning docume
 - Status: accepted
 - Decision: one active backend per platform/build, starting with OpenGL.
 - Details: expose separate graphics and async-compute contexts in the API; backends that lack async compute map both pipelines to a single context and report capability flags.
+
+## Decision 009: Resource lifetime and destruction
+
+- Status: accepted
+- Decision: use deferred destruction managed by the RHI with fence/epoch tracking, plus a frame-lag fallback when needed.
+- Details: centralize lifetime control in the RHI resource manager; avoid immediate deletion while GPU work may still reference resources.
