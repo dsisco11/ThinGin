@@ -112,14 +112,16 @@ Concrete fixes required either way:
 
 **Needed:**
 
-- Define how shaders bind resources:
-  - Descriptor-table or bindless options.
-  - OpenGL-style: texture units + uniform locations + UBO binding points.
+- Implement the chosen binding model:
+  - Reflection-driven descriptor layouts grouped by frequency.
+  - Descriptor tables as the primary model, with OpenGL slot translation.
+  - Bindless as an optional layer.
+  - Transient ring buffers for per-frame descriptors and persistent pools for long-lived descriptors.
 
 For a cross-API RHI, consider defining:
 
 - `RHIShaderParameterBindings` / root signature equivalent
-- “descriptor” types (sampler/texture/buffer binding)
+- "descriptor" types (sampler/texture/buffer binding)
 
 ### 7) Shader system: compilation, reflection, libraries
 

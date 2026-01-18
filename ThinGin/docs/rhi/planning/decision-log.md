@@ -25,3 +25,9 @@ This file records key architecture decisions that impact the RHI planning docume
 - Status: accepted
 - Decision: use HLSL as the authoring language compiled to SPIR-V, with backend-specific translation as needed.
 - Details: shader AST processing should leverage `TinyTokenizer`, `TinyPreprocessor`, and `TinyAst.Preprocessor` packages.
+
+## Decision 005: Descriptor and binding model
+
+- Status: accepted
+- Decision: use reflection-driven descriptor layouts (descriptor tables) with per-frequency grouping, plus a slot-translation layer for OpenGL.
+- Details: validate bindings against layouts at pipeline creation and bind time; use transient ring buffers for per-frame descriptors and persistent pools for long-lived descriptors; bindless is optional and layered on top.

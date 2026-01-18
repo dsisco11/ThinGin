@@ -13,12 +13,32 @@ This plan defines how shaders bind textures, buffers, samplers, and other resour
 
 ## Architectural decisions
 
-- Binding layouts are explicit and validated at pipeline creation.
+- Binding layouts are reflection-driven and validated at pipeline creation and bind time.
 - Descriptors are grouped by frequency such as per-frame, per-draw, and per-material.
+- Descriptor tables are the primary model; OpenGL uses a slot-translation layer.
 - Bindless support is optional and layered on top of the core model.
+- Descriptor allocation uses transient ring buffers for per-frame data and persistent pools for long-lived resources.
 
 ## Deliverables
 
 - Descriptor layout specification and validation rules.
 - Allocation strategy for descriptors or binding tables.
 - Backend mapping rules for OpenGL and future APIs.
+
+## Binding layout object (concept)
+
+The binding layout object represents the shader-visible resource contract for a pipeline. It is created from shader reflection, validated against resource usage, and used to drive binding and slot translation.
+
+Key properties:
+
+- Immutable description of resource slots grouped by frequency (per-frame/per-material/per-draw).
+- Explicit resource types per slot (SRV/UAV/CBV/sampler) and visibility (graphics/compute).
+- Stable layout hash for pipeline caching and descriptor allocation.
+- Optional aliasing or merging rules for compatible layouts.
+
+Operational flow:
+
+- Reflection builds the layout for each shader stage.
+- Layouts are merged into a pipeline layout with stage visibility.
+- Descriptor tables are allocated per layout and populated by the renderer.
+- OpenGL backend translates layout slots to texture units and binding points at bind time.
