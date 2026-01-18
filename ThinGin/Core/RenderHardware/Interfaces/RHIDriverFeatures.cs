@@ -38,5 +38,37 @@
         /// Indicates whether the current engine can support attribute divisors
         /// </summary>
         public readonly bool Supports_AttributeDivisors;
+        /// <summary>
+        /// Indicates whether the backend supports async compute
+        /// </summary>
+        public readonly bool Supports_AsyncCompute;
+        /// <summary>
+        /// Indicates whether async compute is efficient on this backend
+        /// </summary>
+        public readonly bool Supports_EfficientAsyncCompute;
+        /// <summary>
+        /// Indicates whether the backend supports bindless resources
+        /// </summary>
+        public readonly bool Supports_BindlessResources;
+        /// <summary>
+        /// Indicates whether the backend supports ray tracing
+        /// </summary>
+        public readonly bool Supports_RayTracing;
+        /// <summary>
+        /// Indicates whether the backend supports pipeline libraries or PSO caching
+        /// </summary>
+        public readonly bool Supports_PipelineLibraries;
+        /// <summary>
+        /// Indicates whether the backend supports sparse or tiled resources
+        /// </summary>
+        public readonly bool Supports_SparseResources;
+        /// <summary>
+        /// Indicates whether the backend supports sampler anisotropy
+        /// </summary>
+        public readonly bool Supports_SamplerAnisotropy;
+        /// <summary>
+        /// Indicates whether the backend supports debug markers
+        /// </summary>
+        public readonly bool Supports_DebugMarkers;
     }
 }

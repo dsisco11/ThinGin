@@ -36,6 +36,40 @@ Renderer and frame graph
 - Prefer immutable pipeline state objects with caching and hashing.
 - Keep presentation as part of the RHI layer with a platform abstraction for surfaces.
 
+## Execution model
+
+- Record and replay command lists with task-based parallel recording.
+- Submit through a centralized path with per-thread command allocators.
+- Support graphics and async-compute contexts, with optional dedicated RHI thread.
+- See [Command Model](subsystems/command-model.md).
+
+## Resource and data flow
+
+- Resource lifetime is RHI-owned with deferred destruction and fence/epoch tracking.
+- Uploads use a hybrid model: staging resources for large/static data and ring-buffer updates for dynamic data.
+- Resource descriptors include explicit initial access state and subresource ranges.
+- See [Resource System](subsystems/resource-system.md) and [Resource State Model](subsystems/resource-state-model.md).
+
+## Shader and binding model
+
+- Author in HLSL and compile to SPIR-V with reflection-driven layouts.
+- Descriptor tables are the primary binding model, grouped by update frequency.
+- OpenGL uses slot translation for binding; bindless is capability-gated.
+- See [Shader System](subsystems/shader-system.md) and [Descriptors and Binding](subsystems/descriptors-and-binding.md).
+
+## Validation and diagnostics
+
+- Validation is layered (RHI + backend/native where available).
+- Debug markers, events, and profiling hooks are exposed with build/runtime gating.
+- See [Diagnostics and Tooling](subsystems/diagnostics-and-tooling.md).
+
+## Capability gating checklist
+
+- Query limits and feature flags at device creation and treat them as immutable.
+- Gate optional features at resource/pipeline creation and bind time.
+- Enforce limits early with clear validation errors.
+- Define explicit fallback paths for unsupported features.
+
 ## Integration boundary with higher-level rendering
 
 - The renderer or frame graph schedules work and produces command lists.

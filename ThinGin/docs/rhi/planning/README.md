@@ -30,6 +30,12 @@ This directory defines the architecture-first plan for building a full driver-ce
 - Command recording uses record and replay with multithreaded recording; immediate execution is an optional convenience.
 - Cross-API concepts are explicit: resource states, pipeline layouts, descriptors, and synchronization.
 
+## Capability gating
+
+- The RHI queries backend limits and feature flags at device creation and treats them as immutable.
+- Optional features are guarded by explicit capability checks at resource/pipeline creation and bind time.
+- Unsupported feature usage fails fast (validation error) or routes to a defined fallback path.
+
 ## Relationship to existing docs
 
 - [Implementation status](../implementation-status.md)

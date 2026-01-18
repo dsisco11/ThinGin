@@ -28,3 +28,26 @@ Backend drivers implement `IRHIDriver` for each native API. They translate RHI c
 - OpenGL driver that supports buffers, textures, shaders, and drawing.
 - Capability reporting and feature flags.
 - A backend interface that does not leak API-specific types into the RHI frontend.
+
+## Capability and limit reporting (draft)
+
+Backends should report a structured set of limits and feature flags to gate optional RHI paths.
+
+Limits (examples):
+
+- MaxTextureSize, Max3DTextureSize, MaxCubeMapTextureSize.
+- MaxArrayTextureLayers, MaxTextureUnits, MaxTextureImageUnits.
+- MaxRenderbufferSize, MaxTextureBufferSize.
+- MaxVertexAttribs, MaxUniformBufferBindings.
+- MaxElementsVertices, MaxElementsIndices.
+- MaxMSAASamplesTileMem.
+
+Feature flags (examples):
+
+- SupportsAsyncCompute, SupportsEfficientAsyncCompute.
+- SupportsBindlessResources.
+- SupportsRayTracing.
+- SupportsPipelineLibraries (PSO cache/library).
+- SupportsSparseResources (tiled/virtual textures).
+- SupportsSamplerAnisotropy.
+- SupportsDebugMarkers.
