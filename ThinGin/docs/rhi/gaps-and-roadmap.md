@@ -22,12 +22,7 @@ Right now the codebase appears to mix two ownership models:
 - **Engine-centric model**: the engine (OpenGL engine) owns API state and directly issues GL calls.
 - **RHI-centric model**: the engine records high-level RHI work, and a driver submits it.
 
-To make progress quickly (without rewriting everything), you likely need one explicit bridging decision:
-
-- Either: **Wrap the existing OpenGL engine code behind an `IRHIDriver` implementation**, then move call-sites incrementally.
-- Or: **Keep the engine-centric model and treat `IRHIDriver` as the new “engine API”**, minimizing duplication.
-
-A UE5-like direction strongly favors the first option.
+With no backward compatibility requirements, avoid bridging. Choose the RHI-centric model and replace the legacy engine/provider path rather than wrapping it. Legacy code can be used as reference, but it should not be kept as an adapter layer.
 
 ## Gaps by subsystem
 
@@ -186,9 +181,7 @@ If the current examples rely on OpenTK’s window/context management, decide whe
 
 ## Known refactor hotspots (plan for churn)
 
-- The type name `IRHI` currently represents the new RHI facade, but many call-sites appear to treat the engine instance as “the RHI”. You will likely need to:
-  - either implement `IRHI` on the engine, or
-  - update those call-sites to depend on a new RHI-owned object.
+- The type name `IRHI` currently represents the new RHI facade, but many call-sites appear to treat the engine instance as "the RHI". Update those call-sites to depend on a new RHI-owned object and remove the legacy engine pathway.
 
 - There are multiple resource managers:
   - `ThinGin/Core/RenderHardware/Core/RHIResourceManager`
@@ -204,4 +197,4 @@ If you want fastest forward progress toward UE5-like RHI semantics:
 2. Make command execution able to call the driver.
 3. Convert one vertical slice end-to-end (shader + vertex buffer + draw) using the new RHI.
 
-Once that slice exists, you’ll have a stable foundation to migrate the existing provider-based renderer incrementally.
+Once that slice exists, remove the legacy provider-based renderer and build forward exclusively on the new RHI.

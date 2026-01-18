@@ -18,7 +18,10 @@ These documents summarize the current state of ThinGin’s Render Hardware Inter
 - [Gaps and Roadmap](gaps-and-roadmap.md)
   - What remains to implement to reach a UE5-like RHI.
   - Recommended sequencing/milestones to reduce rework.
-  - Concrete “next 2–4 weeks” tasks vs longer-term items.
+  - Concrete "next 2-4 weeks" tasks vs longer-term items.
+
+- [Planning Hierarchy](planning/README.md)
+  - Architecture-first plan and subsystem breakdown.
 
 ## Quick take
 
