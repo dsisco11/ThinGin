@@ -14,10 +14,13 @@ Diagnostics provide visibility into GPU work, errors, and performance.
 ## Architectural decisions
 
 - Diagnostics are optional but consistent across backends.
-- Validation is layered and can be enabled per build configuration.
+- Validation is layered (RHI + backend/native) where available.
+- Diagnostics are gated by build configuration with runtime toggles for key features.
+- Optional GPU crash/debug capture is supported when the backend allows it.
 
 ## Deliverables
 
 - RHI-level debug marker API.
 - Validation policy and error reporting surface.
 - Baseline GPU stats and memory tracking.
+- Profiling hook surface for GPU events and counters.

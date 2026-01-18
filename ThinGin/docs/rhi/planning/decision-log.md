@@ -55,3 +55,9 @@ This file records key architecture decisions that impact the RHI planning docume
 - Status: accepted
 - Decision: use deferred destruction managed by the RHI with fence/epoch tracking, plus a frame-lag fallback when needed.
 - Details: centralize lifetime control in the RHI resource manager; avoid immediate deletion while GPU work may still reference resources.
+
+## Decision 010: Validation and diagnostics policy
+
+- Status: accepted
+- Decision: use layered validation (RHI validation + backend/native validation where available).
+- Details: expose debug markers/events, error reporting, and GPU profiling hooks; gate by build configuration with runtime toggles for key diagnostics features; allow optional GPU crash/debug capture when supported.

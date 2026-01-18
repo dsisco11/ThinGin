@@ -153,6 +153,16 @@ Core missing pieces:
 
 If the current examples rely on OpenTK's window/context management, align the host layer to supply window handles while the RHI owns presentation.
 
+### 9) Diagnostics and validation
+
+**Status:** Diagnostics types exist but lack a unified policy.
+
+**Needed:**
+
+- Layered validation (RHI + backend/native) with consistent error reporting.
+- Debug markers/events, GPU profiling hooks, and baseline stats.
+- Build-config gating with runtime toggles for key diagnostics features.
+
 ## Recommended milestone plan (pragmatic)
 
 ### Milestone 1: “RHI can draw a triangle”
