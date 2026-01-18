@@ -153,6 +153,7 @@ Core missing pieces:
 
 - Define a platform surface abstraction and RHI-owned swapchain/viewport.
 - Implement present scheduling and frame pacing (vsync first, explicit timing later).
+- Specify the platform surface contract (size, DPI scaling, resize events, present preferences).
 
 If the current examples rely on OpenTK's window/context management, align the host layer to supply window handles while the RHI owns presentation.
 

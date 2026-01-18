@@ -79,3 +79,9 @@ This file records key architecture decisions that impact the RHI planning docume
 - Status: accepted
 - Decision: use a task-based parallel recording model with explicit command list APIs available.
 - Details: lightweight validation may run during recording in debug builds, with authoritative validation at submit/execute time.
+
+## Decision 014: Platform surface contract for presentation
+
+- Status: accepted
+- Decision: use an extended surface contract provided by the platform/host layer.
+- Details: host supplies native window handle plus sizing, DPI scaling, resize events, and present/vsync preferences; RHI owns swapchain/viewport and present.
