@@ -43,3 +43,9 @@ This file records key architecture decisions that impact the RHI planning docume
 - Status: accepted
 - Decision: RHI owns presentation with a platform-provided surface and a swapchain/viewport abstraction.
 - Details: RHI handles present/sync; platform layer supplies native window handles; frame pacing supports vsync control with room for explicit timing policies.
+
+## Decision 008: Backend strategy and command contexts
+
+- Status: accepted
+- Decision: one active backend per platform/build, starting with OpenGL.
+- Details: expose separate graphics and async-compute contexts in the API; backends that lack async compute map both pipelines to a single context and report capability flags.

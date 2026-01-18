@@ -38,6 +38,7 @@ With no backward compatibility requirements, avoid bridging. Choose the RHI-cent
   - device/context lifecycle
   - per-thread contexts (if any)
   - debug/validation behavior
+- Expose graphics and async-compute contexts in the API, mapping both to a single context on backends without async compute.
 
 **Deliverable milestone:** A minimal backend that can:
 
