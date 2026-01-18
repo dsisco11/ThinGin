@@ -74,6 +74,7 @@ Concrete fixes required either way:
   - Provide `Get_Initializer` / `Get_Releaser` delegates that call into the backend driver.
   - Decide whether resources store a native handle directly or via driver-owned tables.
 - Centralize lifetime control in the RHI resource manager with deferred destruction and fence/epoch tracking.
+- Implement the hybrid upload path: staging resources for large/static data and ring-buffer updates for dynamic data.
 
 **Important design choice:**
 

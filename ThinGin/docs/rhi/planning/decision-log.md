@@ -61,3 +61,9 @@ This file records key architecture decisions that impact the RHI planning docume
 - Status: accepted
 - Decision: use layered validation (RHI validation + backend/native validation where available).
 - Details: expose debug markers/events, error reporting, and GPU profiling hooks; gate by build configuration with runtime toggles for key diagnostics features; allow optional GPU crash/debug capture when supported.
+
+## Decision 011: Upload and staging model
+
+- Status: accepted
+- Decision: hybrid upload model with staging resources for large/static data and ring-buffer updates for dynamic data.
+- Details: use explicit copy commands for staging uploads; allow map/lock-style updates only where safe and backend-supported.
