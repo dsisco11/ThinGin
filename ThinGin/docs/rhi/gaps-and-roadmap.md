@@ -96,13 +96,15 @@ Concrete fixes required either way:
 
 **Needed:**
 
-- Introduce a resource state model (at least logical states):
-  - Common states: `RenderTarget`, `DepthWrite`, `ShaderRead`, `CopySrc`, `CopyDst`, etc.
-- Provide transition commands / barrier batching.
+- Implement a UE5-style access and pipeline state model:
+  - ERHIAccess-like bitmask states (SRV/UAV/RTV/DSV/Copy/Present/etc).
+  - Pipeline scope for graphics and async compute.
+  - Subresource ranges for textures (mip/array/plane).
+- Provide explicit transition commands with AccessBefore/After and extended flags (discard/clear/aliasing).
 
 **Backend note:**
 
-- OpenGL has fewer explicit barriers than D3D12/Vulkan. Your OpenGL driver may implement “logical barriers” as validation + ordering only.
+- OpenGL has fewer explicit barriers than D3D12/Vulkan. Your OpenGL driver may implement "logical barriers" as validation + ordering only.
 
 ### 6) Views, descriptors, and binding model
 
@@ -169,9 +171,9 @@ If the current examples rely on OpenTK’s window/context management, decide whe
 - Implement `GBuffer`/render target creation through the RHI backend.
 - Ensure consistent binding semantics (read/write, clear, blit/copy).
 
-### Milestone 4: “UE-style features”
+### Milestone 4: "UE-style features"
 
-- Resource barriers (logical + validation).
+- Resource barriers and transitions (UE5-style access+pipeline + validation).
 - SRV/UAV and descriptor binding model.
 - Asynchronous uploads via staging/DMA.
 - Shader libraries / pipeline binary caching.

@@ -32,7 +32,7 @@ This roadmap is milestone-based and architecture focused. Each phase should end 
 
 ## Phase 4: Synchronization and resource states
 
-- Logical resource state model and transition commands.
+- UE5-style access and pipeline state model with explicit transitions.
 - GPU and CPU sync primitives with validation hooks.
 - Async uploads via staging or DMA concepts.
 - Outcome: safe multi-pass rendering with explicit barriers.

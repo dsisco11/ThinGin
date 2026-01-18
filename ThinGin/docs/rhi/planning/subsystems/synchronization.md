@@ -4,6 +4,8 @@
 
 Synchronization defines CPU to GPU and GPU to GPU coordination, plus resource state transitions.
 
+See [Resource State Model](resource-state-model.md) for the explicit state and transition definitions.
+
 ## Responsibilities
 
 - Fence and semaphore primitives for CPU to GPU coordination.
@@ -13,12 +15,13 @@ Synchronization defines CPU to GPU and GPU to GPU coordination, plus resource st
 
 ## Architectural decisions
 
-- Resource states are explicit in the RHI.
-- Backends may implement barriers as logical validation when native barriers are not available.
-- Submission boundaries define visibility and execution ordering.
+- Resource states are explicit and UE5-style: access masks plus pipeline scope (graphics/async compute).
+- Transitions are explicit, subresource-aware, and validated by the RHI layer.
+- Barriers include transition flags for discard/clear and aliasing, even if some backends treat them as logical.
+- Submission boundaries define visibility and execution ordering across pipelines.
 
 ## Deliverables
 
 - RHI fence and event semantics.
-- Resource transition model with clear state definitions.
-- Validation rules for incorrect state usage.
+- Resource transition model with clear access, pipeline, and subresource definitions.
+- Validation rules for incorrect state usage and hazard reporting.

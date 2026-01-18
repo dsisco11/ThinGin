@@ -12,6 +12,7 @@ This directory defines the architecture-first plan for building a full UE5-like 
   - [Driver Backends](subsystems/driver-backends.md)
   - [Command Model](subsystems/command-model.md)
   - [Resource System](subsystems/resource-system.md)
+  - [Resource State Model](subsystems/resource-state-model.md)
   - [Pipeline State](subsystems/pipeline-state.md)
   - [Synchronization and Barriers](subsystems/synchronization.md)
   - [Descriptors and Binding](subsystems/descriptors-and-binding.md)

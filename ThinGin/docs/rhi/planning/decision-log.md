@@ -13,3 +13,9 @@ This file records key architecture decisions that impact the RHI planning docume
 - Status: accepted
 - Decision: record and replay command lists (single-threaded) with a driver-owned `IRHICommandContext` as the execution boundary.
 - Rationale: clear submission boundary and validation path without the complexity of multi-threaded recording.
+
+## Decision 003: Resource state model (UE5-aligned)
+
+- Status: accepted
+- Decision: use an explicit access and pipeline state model with subresource granularity and explicit transitions (UE5-style).
+- Details: ERHIAccess-like bitmask states, per-pipeline tracking (graphics/async compute), subresource ranges for textures, and transition objects with extended flags (discard/clear/aliasing) and RHI-side validation.
