@@ -84,9 +84,9 @@ Concrete fixes required either way:
 
 **Needed:**
 
-- Define a real `RHIGraphicsPipelineState` that can be created/validated/cached.
-- Decide how PSOs map onto OpenGL:
-  - OpenGL does not have native PSOs like D3D12/Vulkan, so the driver will translate PSOs into a set of bound states.
+- Define a real `RHIGraphicsPipelineState` with an immutable core and defined dynamic state set.
+- Implement hashing and runtime PSO caching, with a path to offline/serialized caches.
+- Translate PSOs to cached state bundles on OpenGL.
 
 **Deliverable milestone:** A cached graphics pipeline state for a “simple mesh draw” (vertex+pixel shader, blend/depth/raster state).
 

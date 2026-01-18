@@ -31,3 +31,9 @@ This file records key architecture decisions that impact the RHI planning docume
 - Status: accepted
 - Decision: use reflection-driven descriptor layouts (descriptor tables) with per-frequency grouping, plus a slot-translation layer for OpenGL.
 - Details: validate bindings against layouts at pipeline creation and bind time; use transient ring buffers for per-frame descriptors and persistent pools for long-lived descriptors; bindless is optional and layered on top.
+
+## Decision 006: Pipeline state model and caching
+
+- Status: accepted
+- Decision: use an immutable pipeline core (shaders + fixed-function state) with a defined dynamic state set (viewport/scissor/stencil ref/blend factors).
+- Details: cache PSOs by a stable initializer hash; start with runtime cache and allow an offline/serialized PSO library later; OpenGL maps PSOs to cached state bundles.
