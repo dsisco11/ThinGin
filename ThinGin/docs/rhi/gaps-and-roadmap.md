@@ -49,11 +49,9 @@ With no backward compatibility requirements, avoid bridging. Choose the RHI-cent
 
 **Status:** Command list classes exist, but the execution model can’t yet reach a driver cleanly.
 
-**Needed:**
+**Decision:** record and replay command lists (single-threaded) with optional immediate execution layered on top.
 
-- Choose a command model:
-  - Immediate-only (simplest), or
-  - Record/replay (UE5-like), with optional multithreaded recording.
+**Needed:**
 
 Concrete fixes required either way:
 

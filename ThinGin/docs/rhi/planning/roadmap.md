@@ -12,7 +12,7 @@ This roadmap is milestone-based and architecture focused. Each phase should end 
 ## Phase 1: Minimal RHI vertical slice
 
 - Backend: OpenGL driver that can create buffers, shaders, and issue a draw.
-- Command model: immediate command list and submission path.
+- Command model: record and replay command list with explicit submission (single-threaded).
 - Resources: buffers, minimal textures, and basic samplers.
 - Outcome: draw a simple triangle through the RHI.
 
