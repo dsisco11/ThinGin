@@ -27,7 +27,7 @@ This directory defines the architecture-first plan for building a full driver-ce
 - One RHI frontend that the renderer and engine rely on; legacy paths are removed rather than bridged.
 - No backward compatibility requirements; avoid adapter layers.
 - Resources are described at creation and owned by the RHI, with backend-managed native objects.
-- Command recording starts with immediate execution and evolves toward record and replay with optional multithreaded recording.
+- Command recording uses record and replay with multithreaded recording; immediate execution is an optional convenience.
 - Cross-API concepts are explicit: resource states, pipeline layouts, descriptors, and synchronization.
 
 ## Relationship to existing docs

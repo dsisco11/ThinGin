@@ -16,7 +16,7 @@ This plan defines how shaders bind textures, buffers, samplers, and other resour
 - Binding layouts are reflection-driven and validated at pipeline creation and bind time.
 - Descriptors are grouped by frequency such as per-frame, per-draw, and per-material.
 - Descriptor tables are the primary model; OpenGL uses a slot-translation layer.
-- Bindless support is optional and layered on top of the core model.
+- Bindless support is capability-gated and layered on top of the core model.
 - Descriptor allocation uses transient ring buffers for per-frame data and persistent pools for long-lived resources.
 
 ## Deliverables

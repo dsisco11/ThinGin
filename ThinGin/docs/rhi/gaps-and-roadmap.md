@@ -34,10 +34,11 @@ With no backward compatibility requirements, avoid bridging. Choose the RHI-cent
 
 - Implement `IRHIDriver` for at least one backend.
   - Pragmatic starting point: OpenGL (GL3) using OpenTK.
-- Decide how the backend owns:
-  - device/context lifecycle
-  - per-thread contexts (if any)
-  - debug/validation behavior
+- Define backend ownership and context model:
+  - backend owns device and context lifecycle
+  - per-thread graphics/async contexts provided by the driver
+  - debug layers integrated alongside layered RHI validation
+- Define structured capability and limit reporting to gate optional features.
 - Expose graphics and async-compute contexts in the API, mapping both to a single context on backends without async compute.
 
 **Deliverable milestone:** A minimal backend that can:
@@ -50,7 +51,7 @@ With no backward compatibility requirements, avoid bridging. Choose the RHI-cent
 
 **Status:** Command list classes exist, but the execution model can’t yet reach a driver cleanly.
 
-**Decision:** record and replay command lists (single-threaded) with optional immediate execution layered on top.
+**Decision:** record and replay command lists with optional immediate execution layered on top.
 
 **Needed:**
 
@@ -74,7 +75,7 @@ Concrete fixes required either way:
 
 - For each GPU-backed resource type (buffers, textures, samplers, shader programs):
   - Provide `Get_Initializer` / `Get_Releaser` delegates that call into the backend driver.
-  - Decide whether resources store a native handle directly or via driver-owned tables.
+  - Store native handles in backend-owned resource implementations; expose opaque RHI references.
 - Centralize lifetime control in the RHI resource manager with deferred destruction and fence/epoch tracking.
 - Implement the hybrid upload path: staging resources for large/static data and ring-buffer updates for dynamic data.
 
@@ -90,7 +91,7 @@ Concrete fixes required either way:
 **Needed:**
 
 - Define a real `RHIGraphicsPipelineState` with an immutable core and defined dynamic state set.
-- Implement hashing and runtime PSO caching, with a path to offline/serialized caches.
+- Implement hashing, runtime PSO caching, and offline/serialized PSO libraries.
 - Translate PSOs to cached state bundles on OpenGL.
 
 **Deliverable milestone:** A cached graphics pipeline state for a “simple mesh draw” (vertex+pixel shader, blend/depth/raster state).
@@ -109,7 +110,7 @@ Concrete fixes required either way:
 
 **Backend note:**
 
-- OpenGL has fewer explicit barriers than D3D12/Vulkan. Your OpenGL driver may implement "logical barriers" as validation + ordering only.
+- OpenGL has fewer explicit barriers than D3D12/Vulkan. The OpenGL driver implements logical barriers as validation + ordering only.
 
 ### 6) Views, descriptors, and binding model
 
@@ -120,7 +121,7 @@ Concrete fixes required either way:
 - Implement the chosen binding model:
   - Reflection-driven descriptor layouts grouped by frequency.
   - Descriptor tables as the primary model, with OpenGL slot translation.
-  - Bindless as an optional layer.
+  - Bindless as a capability-gated optional layer.
   - Transient ring buffers for per-frame descriptors and persistent pools for long-lived descriptors.
 
 For a cross-API RHI, consider defining:
@@ -202,7 +203,7 @@ If the current examples rely on OpenTK's window/context management, align the ho
   - `ThinGin/Core/RenderHardware/Core/RHIResourceManager`
   - `ThinGin/Core/Engine/RenderManager.Objects`
 
-Consider converging on one to avoid split lifetime control.
+Converge on the RHI resource manager to avoid split lifetime control.
 
 ## What to do next
 

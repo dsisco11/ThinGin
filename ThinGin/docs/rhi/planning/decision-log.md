@@ -11,8 +11,8 @@ This file records key architecture decisions that impact the RHI planning docume
 ## Decision 002: Command model and execution boundary
 
 - Status: accepted
-- Decision: record and replay command lists (single-threaded) with a driver-owned `IRHICommandContext` as the execution boundary.
-- Rationale: clear submission boundary and validation path without the complexity of multi-threaded recording.
+- Decision: record and replay command lists with a driver-owned `IRHICommandContext` as the execution boundary.
+- Rationale: clear submission boundary and validation path with a stable execution contract.
 
 ## Decision 003: Resource state model (explicit access and pipeline)
 
@@ -30,19 +30,19 @@ This file records key architecture decisions that impact the RHI planning docume
 
 - Status: accepted
 - Decision: use reflection-driven descriptor layouts (descriptor tables) with per-frequency grouping, plus a slot-translation layer for OpenGL.
-- Details: validate bindings against layouts at pipeline creation and bind time; use transient ring buffers for per-frame descriptors and persistent pools for long-lived descriptors; bindless is optional and layered on top.
+- Details: validate bindings against layouts at pipeline creation and bind time; use transient ring buffers for per-frame descriptors and persistent pools for long-lived descriptors; bindless is capability-gated and layered on top.
 
 ## Decision 006: Pipeline state model and caching
 
 - Status: accepted
 - Decision: use an immutable pipeline core (shaders + fixed-function state) with a defined dynamic state set (viewport/scissor/stencil ref/blend factors).
-- Details: cache PSOs by a stable initializer hash; start with runtime cache and allow an offline/serialized PSO library later; OpenGL maps PSOs to cached state bundles.
+- Details: cache PSOs by a stable initializer hash; support runtime caches and offline/serialized PSO libraries; OpenGL maps PSOs to cached state bundles.
 
 ## Decision 007: Presentation ownership and frame pacing
 
 - Status: accepted
 - Decision: RHI owns presentation with a platform-provided surface and a swapchain/viewport abstraction.
-- Details: RHI handles present/sync; platform layer supplies native window handles; frame pacing supports vsync control with room for explicit timing policies.
+- Details: RHI handles present/sync; platform layer supplies native window handles; frame pacing supports vsync control and explicit timing policies.
 
 ## Decision 008: Backend strategy and command contexts
 
@@ -85,3 +85,26 @@ This file records key architecture decisions that impact the RHI planning docume
 - Status: accepted
 - Decision: use an extended surface contract provided by the platform/host layer.
 - Details: host supplies native window handle plus sizing, DPI scaling, resize events, and present/vsync preferences; RHI owns swapchain/viewport and present.
+
+## Decision 015: Backend ownership and context model
+
+- Status: accepted
+- Decision: backend owns device/context lifecycle and provides per-thread graphics and async-compute contexts.
+- Details: contexts are managed by the driver with capability flags; backend debug layers integrate with layered validation.
+
+## Decision 016: Native handle storage
+
+- Status: accepted
+- Decision: native GPU handles live in backend resource implementations; RHI exposes opaque references.
+
+## Decision 017: Capability and feature reporting
+
+- Status: accepted
+- Decision: backends report structured capabilities and limits with feature flags used to gate optional functionality.
+- Details: expose feature flags for async compute efficiency, bindless, ray tracing, and other optional systems; limits are explicit and queried via the driver.
+
+## Decision 018: Implicit API barrier behavior
+
+- Status: accepted
+- Decision: APIs without explicit barriers treat transitions as logical ordering plus validation.
+- Details: transitions are still recorded and validated; backends implement ordering and cache management as needed without native barrier primitives.

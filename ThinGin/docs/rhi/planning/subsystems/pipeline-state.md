@@ -18,7 +18,7 @@ Pipeline state objects encapsulate shader programs and fixed-function state into
 - Dynamic state includes viewport, scissor, stencil reference, and blend factors.
 - Shader reflection informs pipeline layout and binding validation.
 - OpenGL uses pipeline state as a cached state bundle rather than a native object.
- - Cache starts as runtime-only, with a path to offline/serialized PSO libraries.
+- Cache supports runtime and offline/serialized PSO libraries.
 
 ## Deliverables
 

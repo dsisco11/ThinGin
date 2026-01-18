@@ -4,7 +4,7 @@ This roadmap is milestone-based and architecture focused. Each phase should end 
 
 ## Phase 0: Architecture alignment
 
-- Decide the definitive RHI boundary and command model.
+- Confirm the driver-centric RHI boundary and record/replay command model.
 - Confirm resource descriptor and state model.
 - Choose the initial backend (OpenGL) and define driver responsibilities.
 - Confirm clean-slate replacement with no compatibility adapters.

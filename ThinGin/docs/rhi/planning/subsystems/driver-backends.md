@@ -19,6 +19,9 @@ Backend drivers implement `IRHIDriver` for each native API. They translate RHI c
 - The RHI defines logical resource states; backends map them to API semantics.
 - The initial backend target is OpenGL, with room for Vulkan or D3D12.
 - The API exposes graphics and async-compute contexts; backends without async compute map both to one context and report capability flags.
+- Backends own device/context lifecycle and provide per-thread contexts.
+- Backend debug layers integrate with the layered validation policy.
+- Backends report structured capabilities and limits to gate optional features.
 
 ## Deliverables
 

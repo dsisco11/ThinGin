@@ -10,7 +10,7 @@ Define the explicit resource state model used by the RHI for correctness, valida
 - Pipeline scope is explicit (graphics, async compute) and part of transition intent.
 - Texture state is tracked per subresource (mip, array slice, plane).
 - Transitions are explicit and describe AccessBefore, AccessAfter, and pipeline scopes.
-- The RHI validates state usage and hazards; backends may treat some barriers as logical.
+- The RHI validates state usage and hazards; backends without explicit barriers treat transitions as logical ordering plus validation.
 
 ## Core concepts
 
@@ -24,7 +24,7 @@ Define the explicit resource state model used by the RHI for correctness, valida
 - Transition info
   - Resource reference + subresource range + AccessBefore/AccessAfter + flags.
 - Transition object
-  - Aggregates one or more transition infos and optional aliasing infos.
+  - Aggregates one or more transition infos and aliasing infos for transient resources.
 
 ## Transition flags and aliasing
 
@@ -57,5 +57,5 @@ IRHICommandContext
 
 ## Backend notes
 
-- OpenGL may implement transitions as validation plus ordering, since native barriers are limited.
+- OpenGL implements transitions as validation plus ordering, since native barriers are limited.
 - Explicit APIs map access and pipeline masks to native barrier structures.

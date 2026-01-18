@@ -23,6 +23,7 @@ See [Resource State Model](resource-state-model.md) for the explicit state and t
 - Resource descriptors carry an explicit initial access state.
 - Destruction is deferred and synchronized with GPU work via fences or frame-lag tracking.
 - Data uploads use a hybrid model: staging resources for large/static data plus ring-buffer updates for dynamic data.
+- Native handles live in backend resource implementations; the RHI exposes opaque references.
 
 ## Deliverables
 

@@ -16,7 +16,7 @@ Presentation handles how rendered images reach the screen and how the RHI intera
 - The swapchain/viewport model supports double buffering or better with explicit present timing.
 - The platform layer supplies native window handles; the RHI controls present and sync.
 - Presentation APIs should allow external window systems without rewriting the driver.
-- Frame pacing starts with vsync control and can expand to explicit timing policies.
+- Frame pacing supports vsync control and explicit timing policies.
 - The platform surface contract includes size, DPI scaling, resize events, and present preferences.
 
 ## Deliverables
