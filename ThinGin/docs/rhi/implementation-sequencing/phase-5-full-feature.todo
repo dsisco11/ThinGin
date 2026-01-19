@@ -24,7 +24,7 @@ Docs: [Descriptors and Binding](../planning/subsystems/descriptors-and-binding.m
 - [ ] Expand descriptor update batching and pooling policies.
 
 ## Phase 5.3: Multithreaded recording and RHI thread
-Docs: [Command Model](../planning/subsystems/command-model.md)
+Docs: [Command Model](../planning/subsystems/command-model.md), [Driver Backends](../planning/subsystems/driver-backends.md)
 - [ ] Enable task-based parallel recording at scale.
 - [ ] Integrate optional dedicated RHI thread configuration.
 - [ ] Validate thread-safety in command allocators and submission.
@@ -42,7 +42,7 @@ Docs: [Diagnostics and Tooling](../planning/subsystems/diagnostics-and-tooling.m
 - [ ] Validate diagnostics overhead and gating.
 
 ## Phase 5.6: Compute pipeline and dispatch
-Docs: [Pipeline State](../planning/subsystems/pipeline-state.md), [Command Model](../planning/subsystems/command-model.md), [Resource State Model](../planning/subsystems/resource-state-model.md)
+Docs: [Pipeline State](../planning/subsystems/pipeline-state.md), [Command Model](../planning/subsystems/command-model.md), [Resource State Model](../planning/subsystems/resource-state-model.md), [Descriptors and Binding](../planning/subsystems/descriptors-and-binding.md)
 - [ ] Implement compute PSO creation, hashing, and caching.
 - [ ] Add compute dispatch commands and binding validation.
 - [ ] Gate async compute usage via driver capabilities.
@@ -51,6 +51,7 @@ Docs: [Pipeline State](../planning/subsystems/pipeline-state.md), [Command Model
 Docs: [Resource System](../planning/subsystems/resource-system.md), [Diagnostics and Tooling](../planning/subsystems/diagnostics-and-tooling.md)
 - [ ] Implement backend memory budget and residency reporting.
 - [ ] Surface allocation failures and eviction telemetry in diagnostics.
+- [ ] Implement budget enforcement and defined fallback behavior on out-of-budget allocations.
 
 ## Phase 5.8: Shader reflection and optimization pipeline
 Docs: [Shader System](../planning/subsystems/shader-system.md)

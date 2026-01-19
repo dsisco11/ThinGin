@@ -35,10 +35,11 @@ Docs: [Shader System](../planning/subsystems/shader-system.md)
 - [ ] Cache compiled shaders by backend and hash.
 
 ## Phase 1.4: Buffers and uploads
-Docs: [Resource System](../planning/subsystems/resource-system.md), [Resource State Model](../planning/subsystems/resource-state-model.md)
+Docs: [Resource System](../planning/subsystems/resource-system.md), [Resource State Model](../planning/subsystems/resource-state-model.md), [Command Model](../planning/subsystems/command-model.md)
 - [ ] Implement vertex buffer creation and staging uploads.
 - [ ] Implement dynamic ring-buffer updates for per-frame data.
 - [ ] Tag intended buffer access states for draw submissions (full validation in Phase 4).
+- [ ] Define a unified copy/transfer command surface (buffer copy, texture copy, blit, resolve).
 - [ ] Implement buffer copy commands for staging and device-local transfers.
 
 ## Phase 1.5: Minimal PSO and draw

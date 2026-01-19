@@ -21,6 +21,7 @@ Docs: [Command Model](../planning/subsystems/command-model.md)
 - [ ] Ensure commands execute through `IRHICommandContext` with pipeline selection.
 - [ ] Define per-thread command allocator ownership and reset policy.
 - [ ] Define how allocator resets are gated by fence/epoch completion.
+- [ ] Define the RHI thread work queue (bounded, submission-level), including shutdown and drain behavior.
 
 ## Phase 0.3: Resource system baseline
 Docs: [Resource System](../planning/subsystems/resource-system.md), [Resource State Model](../planning/subsystems/resource-state-model.md)

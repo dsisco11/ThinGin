@@ -29,7 +29,7 @@ Docs: [Descriptors and Binding](../planning/subsystems/descriptors-and-binding.m
 - [ ] Validate bindings against reflection-driven layouts.
 
 ## Phase 2.3: Pipeline state caching
-Docs: [Pipeline State](../planning/subsystems/pipeline-state.md)
+Docs: [Pipeline State](../planning/subsystems/pipeline-state.md), [Command Model](../planning/subsystems/command-model.md), [Driver Backends](../planning/subsystems/driver-backends.md)
 - [ ] Implement PSO hashing and runtime cache lookup.
 - [ ] Implement dynamic state commands (viewport, scissor, stencil ref, blend factors).
 - [ ] Render a textured mesh end-to-end through the RHI.
@@ -43,3 +43,5 @@ Docs: [Resource System](../planning/subsystems/resource-system.md), [Descriptors
 Docs: [Resource System](../planning/subsystems/resource-system.md), [Resource State Model](../planning/subsystems/resource-state-model.md)
 - [ ] Implement pooled allocator backing for buffers and textures.
 - [ ] Record transient aliasing metadata for compatible resources.
+- [ ] Implement transient aliasing allocation and reuse for compatible resources.
+- [ ] Enforce aliasing lifetime rules across submit boundaries and transitions.

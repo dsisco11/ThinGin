@@ -161,3 +161,9 @@ This file records key architecture decisions that impact the RHI planning docume
 
 - Status: accepted
 - Decision: shader and PSO cache artifacts are invalidated on backend, compiler, shader format, or driver version changes.
+
+## Decision 028: RHI thread submission transport
+
+- Status: accepted
+- Decision: use `System.Threading.Channels` as the default transport for forwarding submissions to an optional dedicated RHI thread.
+- Details: enqueue coarse-grained work items (command list batches, present, and execution-side housekeeping), not individual commands; use a bounded channel to provide backpressure; configure the queue as single-reader and prefer a centralized submit path to keep it single-writer where possible; keep the transport abstract so it can be replaced if profiling warrants.

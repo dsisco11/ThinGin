@@ -41,6 +41,7 @@ Renderer and frame graph
 - Record and replay command lists with task-based parallel recording.
 - Submit through a centralized path with per-thread command allocators.
 - Support graphics and async-compute contexts, with optional dedicated RHI thread.
+- When a dedicated RHI thread is enabled, submissions are forwarded via an internal bounded work queue to provide backpressure.
 - See [Command Model](subsystems/command-model.md).
 
 ## Resource and data flow

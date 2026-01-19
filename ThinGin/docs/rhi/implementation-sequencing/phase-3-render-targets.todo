@@ -23,7 +23,7 @@ Docs: [Resource State Model](../planning/subsystems/resource-state-model.md), [D
 - [ ] Record attachment access intent for render passes (full validation in Phase 4).
 
 ## Phase 3.3: Presentation path
-Docs: [Presentation](../planning/subsystems/presentation.md), [Synchronization](../planning/subsystems/synchronization.md)
+Docs: [Presentation](../planning/subsystems/presentation.md), [Synchronization](../planning/subsystems/synchronization.md), [Command Model](../planning/subsystems/command-model.md)
 - [ ] Implement swapchain/viewport creation using platform surface contract.
 - [ ] Implement present scheduling and vsync selection.
 - [ ] Handle resize, color space, and present mode selection.
