@@ -3,6 +3,7 @@
 References:
 - [Resource State Model](../planning/subsystems/resource-state-model.md)
 - [Synchronization](../planning/subsystems/synchronization.md)
+- [Resource System](../planning/subsystems/resource-system.md)
 - [Diagnostics and Tooling](../planning/subsystems/diagnostics-and-tooling.md)
 
 ## Phase 4.1: Access state tracking

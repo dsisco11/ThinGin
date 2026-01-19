@@ -6,6 +6,7 @@ References:
 - [Driver Backends](../planning/subsystems/driver-backends.md)
 - [Command Model](../planning/subsystems/command-model.md)
 - [Resource System](../planning/subsystems/resource-system.md)
+- [Resource State Model](../planning/subsystems/resource-state-model.md)
 - [Diagnostics and Tooling](../planning/subsystems/diagnostics-and-tooling.md)
 
 ## Phase 0.1: RHI lifecycle and capability gating

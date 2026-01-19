@@ -16,10 +16,12 @@ Docs: [Resource System](../planning/subsystems/resource-system.md)
 Docs: [Resource State Model](../planning/subsystems/resource-state-model.md)
 - [ ] Define framebuffer or render pass descriptors in the RHI.
 - [ ] Map render pass state to OpenGL framebuffers.
-- [ ] Validate attachment access states for render passes.
+- [ ] Record attachment access intent for render passes (full validation in Phase 4).
 
 ## Phase 3.3: Presentation path
-Docs: [Presentation](../planning/subsystems/presentation.md)
+Docs: [Presentation](../planning/subsystems/presentation.md), [Synchronization](../planning/subsystems/synchronization.md)
 - [ ] Implement swapchain/viewport creation using platform surface contract.
 - [ ] Implement present scheduling and vsync selection.
 - [ ] Handle resize, color space, and present mode selection.
+- [ ] Support multi-window and headless swapchain creation paths.
+- [ ] Integrate acquire/present synchronization with the submit boundary.
