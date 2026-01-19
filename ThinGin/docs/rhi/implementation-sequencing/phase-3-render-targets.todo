@@ -5,16 +5,20 @@ References:
 - [Synchronization](../planning/subsystems/synchronization.md)
 - [Resource State Model](../planning/subsystems/resource-state-model.md)
 - [Resource System](../planning/subsystems/resource-system.md)
+- [Driver Backends](../planning/subsystems/driver-backends.md)
+- [Command Model](../planning/subsystems/command-model.md)
 
 ## Phase 3.1: Render targets and depth
-Docs: [Resource System](../planning/subsystems/resource-system.md)
+Docs: [Resource System](../planning/subsystems/resource-system.md), [Command Model](../planning/subsystems/command-model.md), [Resource State Model](../planning/subsystems/resource-state-model.md)
 - [ ] Implement render target textures and views.
 - [ ] Implement depth/stencil textures and views.
 - [ ] Define load/store and clear semantics for render targets.
+- [ ] Implement resolve and blit commands for color/depth targets.
 
 ## Phase 3.2: Render pass and framebuffer mapping
-Docs: [Resource State Model](../planning/subsystems/resource-state-model.md)
+Docs: [Resource State Model](../planning/subsystems/resource-state-model.md), [Driver Backends](../planning/subsystems/driver-backends.md), [Resource System](../planning/subsystems/resource-system.md), [Command Model](../planning/subsystems/command-model.md)
 - [ ] Define framebuffer or render pass descriptors in the RHI.
+- [ ] Implement begin/end render pass command surface in the command context.
 - [ ] Map render pass state to OpenGL framebuffers.
 - [ ] Record attachment access intent for render passes (full validation in Phase 4).
 
@@ -25,3 +29,4 @@ Docs: [Presentation](../planning/subsystems/presentation.md), [Synchronization](
 - [ ] Handle resize, color space, and present mode selection.
 - [ ] Support multi-window and headless swapchain creation paths.
 - [ ] Integrate acquire/present synchronization with the submit boundary.
+- [ ] Define buffering defaults and zero-size/minimized surface behavior.

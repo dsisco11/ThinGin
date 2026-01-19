@@ -4,31 +4,41 @@ References:
 - [Shader System](../planning/subsystems/shader-system.md)
 - [Descriptors and Binding](../planning/subsystems/descriptors-and-binding.md)
 - [Pipeline State](../planning/subsystems/pipeline-state.md)
+- [Command Model](../planning/subsystems/command-model.md)
 - [Resource System](../planning/subsystems/resource-system.md)
+- [Resource State Model](../planning/subsystems/resource-state-model.md)
 
 ## Phase 2.1: Texture resources and uploads
-Docs: [Resource System](../planning/subsystems/resource-system.md)
+Docs: [Resource System](../planning/subsystems/resource-system.md), [Resource State Model](../planning/subsystems/resource-state-model.md), [Command Model](../planning/subsystems/command-model.md)
 - [ ] Implement texture creation with explicit initial access state.
 - [ ] Implement texture SRV/UAV view descriptors and subresource ranges.
 - [ ] Implement staging uploads for textures and mip generation policy.
 - [ ] Implement sampler state creation and binding.
+- [ ] Implement texture copy/blit commands for staging and mip workflows.
 
 ## Phase 2.2: Descriptor layouts for textures
 Docs: [Descriptors and Binding](../planning/subsystems/descriptors-and-binding.md), [Shader System](../planning/subsystems/shader-system.md)
 - [ ] Define binding spaces for per-material and per-draw resources.
 - [ ] Expand reflection to include resource bindings and stage visibility.
 - [ ] Create binding layout objects with stable hashing and merge rules.
+- [ ] Implement backend slot translation for layout slots and stage visibility.
 - [ ] Implement descriptor allocation (per-frame rings + persistent pools).
 - [ ] Implement descriptor table updates for textures and samplers.
+- [ ] Enforce descriptor table lifetime rules (transient reset, persistent ownership).
 - [ ] Validate bindings against reflection-driven layouts.
 
 ## Phase 2.3: Pipeline state caching
 Docs: [Pipeline State](../planning/subsystems/pipeline-state.md)
 - [ ] Implement PSO hashing and runtime cache lookup.
-- [ ] Validate dynamic state (viewport, scissor, stencil ref, blend factors).
+- [ ] Implement dynamic state commands (viewport, scissor, stencil ref, blend factors).
 - [ ] Render a textured mesh end-to-end through the RHI.
 
 ## Phase 2.4: Shader-visible view descriptors
 Docs: [Resource System](../planning/subsystems/resource-system.md), [Descriptors and Binding](../planning/subsystems/descriptors-and-binding.md)
 - [ ] Implement buffer view descriptors for constant, SRV, and UAV usage.
 - [ ] Validate view compatibility with resource formats and usage flags.
+
+## Phase 2.5: Pooled allocators and transient aliasing
+Docs: [Resource System](../planning/subsystems/resource-system.md), [Resource State Model](../planning/subsystems/resource-state-model.md)
+- [ ] Implement pooled allocator backing for buffers and textures.
+- [ ] Record transient aliasing metadata for compatible resources.

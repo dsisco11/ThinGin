@@ -10,13 +10,18 @@ References:
 Docs: [Resource State Model](../planning/subsystems/resource-state-model.md)
 - [ ] Implement the canonical access state set and validation rules.
 - [ ] Track per-subresource access states for textures.
+- [ ] Track access states for buffers.
+- [ ] Track pipeline scope ownership per resource or subresource.
+- [ ] Implement validation-only tracked state updates (no barrier required).
 - [ ] Enforce invalid access mix detection in validation.
 
 ## Phase 4.2: Transitions and barriers
-Docs: [Resource State Model](../planning/subsystems/resource-state-model.md)
+Docs: [Resource State Model](../planning/subsystems/resource-state-model.md), [Synchronization](../planning/subsystems/synchronization.md), [Resource System](../planning/subsystems/resource-system.md)
 - [ ] Implement transition objects and begin/end transition commands.
 - [ ] Handle discard/clear flags and transient aliasing rules.
 - [ ] Integrate logical barrier behavior on OpenGL.
+- [ ] Batch transitions and elide redundant barriers where safe.
+- [ ] Integrate pooled allocator aliasing metadata into transition validation.
 
 ## Phase 4.3: Fences and cross-queue sync
 Docs: [Synchronization](../planning/subsystems/synchronization.md)

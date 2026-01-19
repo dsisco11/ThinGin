@@ -14,7 +14,9 @@ References:
 Docs: [Shader System](../planning/subsystems/shader-system.md), [Pipeline State](../planning/subsystems/pipeline-state.md)
 - [ ] Implement shader library persistence and rehydration.
 - [ ] Implement offline/serialized PSO cache artifacts.
-- [ ] Validate cache invalidation on backend/compiler/driver changes.
+- [ ] Implement permutation key hashing and define-driven variant management.
+- [ ] Implement debug/optimization policy toggles for shader compilation.
+- [ ] Validate cache invalidation on backend/compiler/driver/shader/layout changes.
 
 ## Phase 5.2: Advanced binding features
 Docs: [Descriptors and Binding](../planning/subsystems/descriptors-and-binding.md)
@@ -48,3 +50,8 @@ Docs: [Pipeline State](../planning/subsystems/pipeline-state.md), [Command Model
 Docs: [Resource System](../planning/subsystems/resource-system.md), [Diagnostics and Tooling](../planning/subsystems/diagnostics-and-tooling.md)
 - [ ] Implement backend memory budget and residency reporting.
 - [ ] Surface allocation failures and eviction telemetry in diagnostics.
+
+## Phase 5.8: Shader reflection and optimization pipeline
+Docs: [Shader System](../planning/subsystems/shader-system.md)
+- [ ] Expand SPIR-V reflection coverage for all resource types and stages.
+- [ ] Integrate optional SPIR-V optimization passes for release builds.

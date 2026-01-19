@@ -27,6 +27,7 @@ Docs: [Resource System](../planning/subsystems/resource-system.md), [Resource St
 - [ ] Establish deferred destruction queues and fence/epoch tracking.
 - [ ] Specify pooled allocator interfaces and transient aliasing policy.
 - [ ] Define resource debug naming conventions for diagnostics.
+- [ ] Implement debug name propagation to backend objects and diagnostics.
 
 ## Phase 0.4: Diagnostics baseline
 Docs: [Diagnostics and Tooling](../planning/subsystems/diagnostics-and-tooling.md)
