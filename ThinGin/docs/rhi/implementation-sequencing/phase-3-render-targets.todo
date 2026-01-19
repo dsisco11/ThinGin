@@ -1,0 +1,25 @@
+# Phase 3 - Render Targets, Depth, and Presentation
+
+References:
+- [Presentation](../planning/subsystems/presentation.md)
+- [Synchronization](../planning/subsystems/synchronization.md)
+- [Resource State Model](../planning/subsystems/resource-state-model.md)
+- [Resource System](../planning/subsystems/resource-system.md)
+
+## Phase 3.1: Render targets and depth
+Docs: [Resource System](../planning/subsystems/resource-system.md)
+- [ ] Implement render target textures and views.
+- [ ] Implement depth/stencil textures and views.
+- [ ] Define load/store and clear semantics for render targets.
+
+## Phase 3.2: Render pass and framebuffer mapping
+Docs: [Resource State Model](../planning/subsystems/resource-state-model.md)
+- [ ] Define framebuffer or render pass descriptors in the RHI.
+- [ ] Map render pass state to OpenGL framebuffers.
+- [ ] Validate attachment access states for render passes.
+
+## Phase 3.3: Presentation path
+Docs: [Presentation](../planning/subsystems/presentation.md)
+- [ ] Implement swapchain/viewport creation using platform surface contract.
+- [ ] Implement present scheduling and vsync selection.
+- [ ] Handle resize, color space, and present mode selection.

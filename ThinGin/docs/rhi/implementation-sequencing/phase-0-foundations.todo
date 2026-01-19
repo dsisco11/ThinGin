@@ -1,0 +1,34 @@
+# Phase 0 - Foundations
+
+References:
+- [Architecture Overview](../planning/architecture-overview.md)
+- [Decision Log](../planning/decision-log.md)
+- [Driver Backends](../planning/subsystems/driver-backends.md)
+- [Command Model](../planning/subsystems/command-model.md)
+- [Resource System](../planning/subsystems/resource-system.md)
+- [Diagnostics and Tooling](../planning/subsystems/diagnostics-and-tooling.md)
+
+## Phase 0.1: RHI lifecycle and capability gating
+Docs: [Architecture Overview](../planning/architecture-overview.md), [Driver Backends](../planning/subsystems/driver-backends.md)
+- [ ] Define RHI init/shutdown ownership and driver lifecycle boundaries.
+- [ ] Wire the RHI facade to own driver, resource manager, and frame counters.
+- [ ] Implement capability query and gating plumbing for limits and feature flags.
+
+## Phase 0.2: Command model scaffolding
+Docs: [Command Model](../planning/subsystems/command-model.md)
+- [ ] Define the command list submission boundary and frame counters.
+- [ ] Ensure commands execute through `IRHICommandContext` with pipeline selection.
+- [ ] Define per-thread command allocator ownership and reset policy.
+
+## Phase 0.3: Resource system baseline
+Docs: [Resource System](../planning/subsystems/resource-system.md), [Resource State Model](../planning/subsystems/resource-state-model.md)
+- [ ] Define resource descriptors with explicit initial access state.
+- [ ] Establish deferred destruction queues and fence/epoch tracking.
+- [ ] Specify pooled allocator interfaces and transient aliasing policy.
+- [ ] Define resource debug naming conventions for diagnostics.
+
+## Phase 0.4: Diagnostics baseline
+Docs: [Diagnostics and Tooling](../planning/subsystems/diagnostics-and-tooling.md)
+- [ ] Define validation severity levels and reporting surface.
+- [ ] Add debug marker/event APIs with build/runtime gating.
+- [ ] Establish GPU crash capture hooks (backend capability-gated).

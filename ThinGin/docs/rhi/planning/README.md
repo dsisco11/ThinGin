@@ -9,6 +9,7 @@ This directory defines the architecture-first plan for building a full driver-ce
 - [Replacement Plan (No Backward Compatibility)](replacement-plan.md)
 - [Decision Log](decision-log.md)
 - [Glossary](glossary.md)
+- [Implementation Sequencing](../implementation-sequencing/README.todo)
 - Subsystem Plans
   - [Driver Backends](subsystems/driver-backends.md)
   - [Command Model](subsystems/command-model.md)

@@ -23,6 +23,9 @@ These documents summarize the current state of ThinGin's Render Hardware Interfa
 - [Planning Hierarchy](planning/README.md)
   - Architecture-first plan and subsystem breakdown.
 
+- [Implementation Sequencing](implementation-sequencing/README.todo)
+  - Phased task hierarchy for executing the plan.
+
 ## Quick take
 
 - There is a **new RHI core surface area** in `ThinGin/Core/RenderHardware` that already defines many modern RHI concepts (resource types, pipeline init structs, command list types, fences, etc.).

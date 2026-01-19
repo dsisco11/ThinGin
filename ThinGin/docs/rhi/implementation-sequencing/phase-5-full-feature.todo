@@ -1,0 +1,36 @@
+# Phase 5 - Full Feature Set and Scale
+
+References:
+- [Shader System](../planning/subsystems/shader-system.md)
+- [Pipeline State](../planning/subsystems/pipeline-state.md)
+- [Driver Backends](../planning/subsystems/driver-backends.md)
+- [Diagnostics and Tooling](../planning/subsystems/diagnostics-and-tooling.md)
+- [Command Model](../planning/subsystems/command-model.md)
+
+## Phase 5.1: Shader libraries and PSO cache
+Docs: [Shader System](../planning/subsystems/shader-system.md), [Pipeline State](../planning/subsystems/pipeline-state.md)
+- [ ] Implement shader library persistence and rehydration.
+- [ ] Implement offline/serialized PSO cache artifacts.
+- [ ] Validate cache invalidation on backend/compiler/driver changes.
+
+## Phase 5.2: Advanced binding features
+Docs: [Descriptors and Binding](../planning/subsystems/descriptors-and-binding.md)
+- [ ] Implement bindless resources when capability-gated.
+- [ ] Expand descriptor update batching and pooling policies.
+
+## Phase 5.3: Multithreaded recording and RHI thread
+Docs: [Command Model](../planning/subsystems/command-model.md)
+- [ ] Enable task-based parallel recording at scale.
+- [ ] Integrate optional dedicated RHI thread configuration.
+- [ ] Validate thread-safety in command allocators and submission.
+
+## Phase 5.4: Additional backends
+Docs: [Driver Backends](../planning/subsystems/driver-backends.md)
+- [ ] Bring up a second backend (Vulkan or D3D12) using the same RHI contracts.
+- [ ] Validate capability gating and fallback behavior across backends.
+
+## Phase 5.5: Diagnostics and profiling
+Docs: [Diagnostics and Tooling](../planning/subsystems/diagnostics-and-tooling.md)
+- [ ] Expand GPU profiling counters and memory stats.
+- [ ] Harden GPU crash capture and reporting workflows.
+- [ ] Validate diagnostics overhead and gating.

@@ -1,0 +1,30 @@
+# Phase 4 - Synchronization and Explicit Resource States
+
+References:
+- [Resource State Model](../planning/subsystems/resource-state-model.md)
+- [Synchronization](../planning/subsystems/synchronization.md)
+- [Diagnostics and Tooling](../planning/subsystems/diagnostics-and-tooling.md)
+
+## Phase 4.1: Access state tracking
+Docs: [Resource State Model](../planning/subsystems/resource-state-model.md)
+- [ ] Implement the canonical access state set and validation rules.
+- [ ] Track per-subresource access states for textures.
+- [ ] Enforce invalid access mix detection in validation.
+
+## Phase 4.2: Transitions and barriers
+Docs: [Resource State Model](../planning/subsystems/resource-state-model.md)
+- [ ] Implement transition objects and begin/end transition commands.
+- [ ] Handle discard/clear flags and transient aliasing rules.
+- [ ] Integrate logical barrier behavior on OpenGL.
+
+## Phase 4.3: Fences and cross-queue sync
+Docs: [Synchronization](../planning/subsystems/synchronization.md)
+- [ ] Implement timeline-style fences with binary fallback.
+- [ ] Implement explicit signal/wait ordering across pipelines.
+- [ ] Validate cross-queue dependencies at submit time.
+
+## Phase 4.4: Diagnostics integration
+Docs: [Diagnostics and Tooling](../planning/subsystems/diagnostics-and-tooling.md)
+- [ ] Emit barrier and transition events into diagnostics.
+- [ ] Surface validation errors with resource names and contexts.
+- [ ] Capture GPU crash breadcrumbs when supported.

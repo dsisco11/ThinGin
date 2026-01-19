@@ -1,0 +1,25 @@
+# Phase 2 - Textured Mesh and Basic Pipeline State
+
+References:
+- [Shader System](../planning/subsystems/shader-system.md)
+- [Descriptors and Binding](../planning/subsystems/descriptors-and-binding.md)
+- [Pipeline State](../planning/subsystems/pipeline-state.md)
+- [Resource System](../planning/subsystems/resource-system.md)
+
+## Phase 2.1: Texture resources and uploads
+Docs: [Resource System](../planning/subsystems/resource-system.md)
+- [ ] Implement texture creation with explicit initial access state.
+- [ ] Implement staging uploads for textures and mip generation policy.
+- [ ] Implement sampler state creation and binding.
+
+## Phase 2.2: Descriptor layouts for textures
+Docs: [Descriptors and Binding](../planning/subsystems/descriptors-and-binding.md)
+- [ ] Define binding spaces for per-material and per-draw resources.
+- [ ] Implement descriptor table updates for textures and samplers.
+- [ ] Validate bindings against reflection-driven layouts.
+
+## Phase 2.3: Pipeline state caching
+Docs: [Pipeline State](../planning/subsystems/pipeline-state.md)
+- [ ] Implement PSO hashing and runtime cache lookup.
+- [ ] Validate dynamic state (viewport, scissor, stencil ref, blend factors).
+- [ ] Render a textured mesh end-to-end through the RHI.
