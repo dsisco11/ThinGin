@@ -9,11 +9,13 @@ References:
 - [Descriptors and Binding](../planning/subsystems/descriptors-and-binding.md)
 - [Resource System](../planning/subsystems/resource-system.md)
 - [Resource State Model](../planning/subsystems/resource-state-model.md)
+- [Diagnostics and Tooling](../planning/subsystems/diagnostics-and-tooling.md)
 
 ## Phase 1.1: OpenGL driver bootstrap
-Docs: [Driver Backends](../planning/subsystems/driver-backends.md)
+Docs: [Driver Backends](../planning/subsystems/driver-backends.md), [Diagnostics and Tooling](../planning/subsystems/diagnostics-and-tooling.md)
 - [ ] Initialize the OpenGL driver with capability reporting.
 - [ ] Provide graphics and async-compute contexts (mapped to one context where needed).
+- [ ] Define per-thread context acquisition and pooling policy (single-threaded now, scalable later).
 - [ ] Implement debug marker integration and validation hooks.
 
 ## Phase 1.2: Command submission path
@@ -21,6 +23,7 @@ Docs: [Command Model](../planning/subsystems/command-model.md)
 - [ ] Implement command execution through `IRHICommandContext`.
 - [ ] Implement command list submission with fence signaling.
 - [ ] Integrate a minimal frame loop and frame counter updates.
+- [ ] Reset/recycle command allocators on fence completion.
 - [ ] Define an immediate execution wrapper that funnels through the same command path.
 
 ## Phase 1.3: Shader compilation path (minimal)

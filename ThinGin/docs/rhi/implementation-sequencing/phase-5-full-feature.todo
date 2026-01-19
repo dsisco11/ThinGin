@@ -28,6 +28,7 @@ Docs: [Command Model](../planning/subsystems/command-model.md)
 - [ ] Enable task-based parallel recording at scale.
 - [ ] Integrate optional dedicated RHI thread configuration.
 - [ ] Validate thread-safety in command allocators and submission.
+- [ ] Scale per-thread backend context acquisition/pooling for parallel recording.
 
 ## Phase 5.4: Additional backends
 Docs: [Driver Backends](../planning/subsystems/driver-backends.md)

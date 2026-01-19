@@ -13,7 +13,7 @@ Docs: [Resource System](../planning/subsystems/resource-system.md), [Command Mod
 - [ ] Implement render target textures and views.
 - [ ] Implement depth/stencil textures and views.
 - [ ] Define load/store and clear semantics for render targets.
-- [ ] Implement resolve and blit commands for color/depth targets.
+- [ ] Implement resolve commands and render-target blits using the shared copy/blit surface.
 
 ## Phase 3.2: Render pass and framebuffer mapping
 Docs: [Resource State Model](../planning/subsystems/resource-state-model.md), [Driver Backends](../planning/subsystems/driver-backends.md), [Resource System](../planning/subsystems/resource-system.md), [Command Model](../planning/subsystems/command-model.md)

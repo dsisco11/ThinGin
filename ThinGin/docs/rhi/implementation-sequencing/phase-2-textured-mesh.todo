@@ -5,6 +5,7 @@ References:
 - [Descriptors and Binding](../planning/subsystems/descriptors-and-binding.md)
 - [Pipeline State](../planning/subsystems/pipeline-state.md)
 - [Command Model](../planning/subsystems/command-model.md)
+- [Driver Backends](../planning/subsystems/driver-backends.md)
 - [Resource System](../planning/subsystems/resource-system.md)
 - [Resource State Model](../planning/subsystems/resource-state-model.md)
 
@@ -14,10 +15,10 @@ Docs: [Resource System](../planning/subsystems/resource-system.md), [Resource St
 - [ ] Implement texture SRV/UAV view descriptors and subresource ranges.
 - [ ] Implement staging uploads for textures and mip generation policy.
 - [ ] Implement sampler state creation and binding.
-- [ ] Implement texture copy/blit commands for staging and mip workflows.
+- [ ] Implement texture copy/blit commands for staging and mip workflows (shared copy/blit surface).
 
 ## Phase 2.2: Descriptor layouts for textures
-Docs: [Descriptors and Binding](../planning/subsystems/descriptors-and-binding.md), [Shader System](../planning/subsystems/shader-system.md)
+Docs: [Descriptors and Binding](../planning/subsystems/descriptors-and-binding.md), [Shader System](../planning/subsystems/shader-system.md), [Driver Backends](../planning/subsystems/driver-backends.md)
 - [ ] Define binding spaces for per-material and per-draw resources.
 - [ ] Expand reflection to include resource bindings and stage visibility.
 - [ ] Create binding layout objects with stable hashing and merge rules.

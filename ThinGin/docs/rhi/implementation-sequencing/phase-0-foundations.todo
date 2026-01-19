@@ -20,11 +20,13 @@ Docs: [Command Model](../planning/subsystems/command-model.md)
 - [ ] Define the command list submission boundary and frame counters.
 - [ ] Ensure commands execute through `IRHICommandContext` with pipeline selection.
 - [ ] Define per-thread command allocator ownership and reset policy.
+- [ ] Define how allocator resets are gated by fence/epoch completion.
 
 ## Phase 0.3: Resource system baseline
 Docs: [Resource System](../planning/subsystems/resource-system.md), [Resource State Model](../planning/subsystems/resource-state-model.md)
 - [ ] Define resource descriptors with explicit initial access state.
 - [ ] Establish deferred destruction queues and fence/epoch tracking.
+- [ ] Drain deferred destruction queues on fence/epoch completion.
 - [ ] Specify pooled allocator interfaces and transient aliasing policy.
 - [ ] Define resource debug naming conventions for diagnostics.
 - [ ] Implement debug name propagation to backend objects and diagnostics.
