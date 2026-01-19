@@ -13,7 +13,7 @@ A driver-centric RHI typically stabilizes around these layers:
 5. **Synchronization** (fences, semaphores, resource barriers)
 6. **Shader system** (compilation, reflection, libraries/caches)
 
-ThinGin currently has pieces of (2), (3) (interface only), (4) (type shells), and (5) (type shells), plus a legacy OpenGL engine that already does (3) directly.
+ArcRHI currently has pieces of (2), (3) (interface only), (4) (type shells), and (5) (type shells), plus a legacy OpenGL engine that already does (3) directly.
 
 ## Biggest current gap: integration boundary
 
@@ -83,7 +83,7 @@ Concrete fixes required either way:
 **Important design choice:**
 
 - A driver-centric approach tends to keep RHI resources as small handles and pushes heavier data into driver-managed structures.
-- ThinGin currently has both patterns starting (e.g., `RHIHandle` + OpenGL handle wrapper).
+- ArcRHI currently has both patterns starting (e.g., `RHIHandle` + OpenGL handle wrapper).
 
 ### 4) Pipeline State Objects (PSO) / fixed-function state
 
@@ -212,8 +212,8 @@ If the current examples rely on OpenTK's window/context management, align the ho
 - The type name `IRHI` currently represents the new RHI facade, but many call-sites appear to treat the engine instance as "the RHI". Update those call-sites to depend on a new RHI-owned object and remove the legacy engine pathway.
 
 - There are multiple resource managers:
-  - `ThinGin/Core/RenderHardware/Core/RHIResourceManager`
-  - `ThinGin/Core/Engine/RenderManager.Objects`
+  - `ArcRHI/Core/RenderHardware/Core/RHIResourceManager`
+  - `ArcRHI/Core/Engine/RenderManager.Objects`
 
 Converge on the RHI resource manager to avoid split lifetime control.
 

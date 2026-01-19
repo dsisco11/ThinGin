@@ -8,15 +8,15 @@ This document inventories RHI-related systems currently present in the repositor
 
 The OpenGL backend includes a full “engine” implementation that binds OpenGL directly via OpenTK:
 
-- `ThinGin.OpenGL/Common/Engine/GLEngineBase.cs`
+- `ArcRHI.OpenGL/Common/Engine/GLEngineBase.cs`
   - Owns OpenGL state setup, capability toggles, framebuffer binding, and error checks.
   - Implements `EngineInstance` (core engine abstraction).
 
 This track is wired into the `IGraphicsImplementation` provider model:
 
-- `ThinGin/Core/Common/Interfaces/IGraphicsImplementation.cs`
-- `ThinGin.OpenGL/GL2/Implementation.cs`
-- `ThinGin.OpenGL/GL3/Implementation.cs`
+- `ArcRHI/Core/Common/Interfaces/IGraphicsImplementation.cs`
+- `ArcRHI.OpenGL/GL2/Implementation.cs`
+- `ArcRHI.OpenGL/GL3/Implementation.cs`
 
 This system is **engine-centric** (the engine calls GL directly via provider classes), rather than **driver-centric** (RHI commands recorded and submitted to a driver).
 
@@ -24,7 +24,7 @@ This system is **engine-centric** (the engine calls GL directly via provider cla
 
 The newer RHI effort lives under:
 
-- `ThinGin/Core/RenderHardware/`
+- `ArcRHI/Core/RenderHardware/`
 
 Key observations:
 
@@ -32,18 +32,18 @@ Key observations:
 - Many types are present (textures, buffers, pipeline init structs, fences), but **most implementations are still placeholders**.
 - The new RHI core is **not fully integrated** with the legacy engine/provider runtime.
 
-## Core RHI layer (ThinGin/Core/RenderHardware)
+## Core RHI layer (ArcRHI/Core/RenderHardware)
 
 ### Root interfaces and entry points
 
-- `IRHI` (`ThinGin/Core/RenderHardware/Core/IRHI.cs`)
+- `IRHI` (`ArcRHI/Core/RenderHardware/Core/IRHI.cs`)
   - Minimal: `CurrentFrame`, `Resources`, `Shutdown()`.
 
-- `RenderHardwareInterface` (`ThinGin/Core/RenderHardware/Core/RenderHardwareInterface.cs`)
+- `RenderHardwareInterface` (`ArcRHI/Core/RenderHardware/Core/RenderHardwareInterface.cs`)
   - Intended as the “facade” over an RHI driver.
   - Current implementation is extremely minimal (stores driver, creates a resource manager, `Shutdown()` stub).
 
-- `IRHIDriver` (`ThinGin/Core/RenderHardware/Interfaces/IRHIDriver.cs`)
+- `IRHIDriver` (`ArcRHI/Core/RenderHardware/Interfaces/IRHIDriver.cs`)
   - Intended as the driver interface surface.
   - Already contains real API commitments:
     - Feature/limit reporting (`RHIDriverFeatures`)
@@ -54,17 +54,17 @@ Key observations:
     - Buffer upload and mapping (lock/unlock)
     - Texture creation APIs (many variants)
     - Clearing operations
-  - **Important:** no concrete `IRHIDriver` implementation was found in `ThinGin.OpenGL` yet.
+  - **Important:** no concrete `IRHIDriver` implementation was found in `ArcRHI.OpenGL` yet.
 
 ### Resource lifetime and management
 
-- `RHIResource` (`ThinGin/Core/RenderHardware/Resources/RHIResource.cs`)
+- `RHIResource` (`ArcRHI/Core/RenderHardware/Resources/RHIResource.cs`)
   - This is one of the more complete pieces:
     - Implements `IDisposable` and a finalizer.
     - Supports lazy init/update/release through delegates (`RHIDelegate`).
     - Integrates with an `RHIResourceManager` queue for deferred work.
 
-- `RHIResourceManager` (`ThinGin/Core/RenderHardware/Core/RHIResourceManager.cs`)
+- `RHIResourceManager` (`ArcRHI/Core/RenderHardware/Core/RHIResourceManager.cs`)
   - Tracks resources and provides `LazyInit`, `LazyUpdate`, `LazyRelease` queues.
   - `Process()` drains queues and calls `TryInitialize/TryUpdate/TryRelease`.
   - **Status:** functional queueing logic, but depends on resources providing delegates or their own init path.
@@ -74,7 +74,7 @@ Key observations:
 The RHI resource taxonomy is largely present (even if many methods are placeholders):
 
 - Handles and native object association
-  - `RHIHandle` (`ThinGin/Core/RenderHardware/Resources/RHIHandle.cs`) is a base abstraction.
+  - `RHIHandle` (`ArcRHI/Core/RenderHardware/Resources/RHIHandle.cs`) is a base abstraction.
 
 - Textures
   - Base: `RHITexture` + typed derivatives for 1D/2D/3D/cube/arrays.
@@ -102,7 +102,7 @@ The RHI resource taxonomy is largely present (even if many methods are placehold
 
 Modern pipeline init types exist:
 
-- `GraphicsPipelineStateInit` (`ThinGin/Core/RenderHardware/Pipelines/GraphicsPipelineStateInit.cs`)
+- `GraphicsPipelineStateInit` (`ArcRHI/Core/RenderHardware/Pipelines/GraphicsPipelineStateInit.cs`)
 - `BoundShaderStateInput`, `DepthStencilStateInit`, `ExclusiveDepthStencilAccess`, etc.
 
 Pipeline state classes exist but are largely unimplemented:
@@ -137,12 +137,12 @@ Current gap:
 
 ### OpenGL RHI handle type
 
-- `RHIOpenGLResourceHandle` (`ThinGin.OpenGL/Common/RenderHardware/RHIOpenGLResourceHandle.cs`)
+- `RHIOpenGLResourceHandle` (`ArcRHI.OpenGL/Common/RenderHardware/RHIOpenGLResourceHandle.cs`)
   - Wraps an `int` OpenGL object handle.
 
 ### OpenGL RHI resources (partial)
 
-Under `ThinGin.OpenGL/Common/RenderHardware/Resources/`:
+Under `ArcRHI.OpenGL/Common/RenderHardware/Resources/`:
 
 - `OpenGLTexture2D`, `OpenGLTexture3D`, array/cube variants
 - `OpenGLSamplerState`
@@ -158,7 +158,7 @@ Current gap:
 
 ### OpenGL fences (stub)
 
-- `OpenGLFenceObject` (`ThinGin.OpenGL/OpenGL/RenderHardware/Synchronization/OpenGLFenceObject.cs`)
+- `OpenGLFenceObject` (`ArcRHI.OpenGL/OpenGL/RenderHardware/Synchronization/OpenGLFenceObject.cs`)
   - Exists but throws `NotImplementedException` for initializer/releaser/poll.
 
 ## Rendering-adjacent code that appears to predate the new IRHI
@@ -167,7 +167,7 @@ Several rendering-facing types inherit from `RHIResource` but are constructed wi
 
 Example:
 
-- `ThinGin/Core/Rendering/GBuffer.cs` extends `RHIResource` and calls methods like `RHI.Bind_Framebuffer(...)`.
+- `ArcRHI/Core/Rendering/GBuffer.cs` extends `RHIResource` and calls methods like `RHI.Bind_Framebuffer(...)`.
 - `EngineInstance` exposes framebuffer binding methods (`Bind_Framebuffer`, `Unbind_Framebuffer`), but `IRHI` does not.
 
 This is a strong signal that the repo currently has:
@@ -188,9 +188,9 @@ This matters because it affects what can realistically be considered “implemen
 
 ## Build status snapshot
 
-A `dotnet build` of `ThinGin.sln` currently fails in the `ThinGin` project with errors unrelated to the new RHI driver work, but directly relevant to the ongoing “old texture API → RHITexture” migration:
+A `dotnet build` of `ArcRHI.sln` currently fails in the `ArcRHI` project with errors unrelated to the new RHI driver work, but directly relevant to the ongoing “old texture API → RHITexture” migration:
 
-- `ThinGin/Core/Common/Textures/Types/Texture.cs`: `Texture` does not implement `ITexture.Handle` and `ITexture.Metadata`.
+- `ArcRHI/Core/Common/Textures/Types/Texture.cs`: `Texture` does not implement `ITexture.Handle` and `ITexture.Metadata`.
 
 There are also multiple warnings indicating `ITexture` is obsolete in favor of `RHITexture`, which aligns with the repo’s direction but confirms that the migration is incomplete.
 
